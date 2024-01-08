@@ -16,18 +16,18 @@ function LearningLanguageSection() {
                     Using spin making learning multiple languages easy. with 20+ languages realistic voice-over, progress tracking, custom schedule and more.
 
                 </div>
-                <div className="flex flex-row items-center justify-center mt-5 ">
+                <div className="flex flex-col lg:flex-row items-center justify-center -gap-y-[100px] ">
                     <img src={know_your_progress}
-                    className="object-contain  -mr-32"  />
+                    className="object-contain  lg:-mr-32 mb-3"  />
                     <img src={compare_with_others}
-                     className="object-contain mt-10 "  />
+                     className="object-contain lg:mt-10 -mt-24 "  />
                     <img src={plan_your_lesson} 
-                     className="object-contain -ml-40 " />
+                     className="object-contain lg:-ml-40 -mt-20 " />
 
                 </div>
                 <div className="w-fit">
                     <CTButton active={true} linkWith={"/signup"} >
-                        <div className="font-bold">
+                        <div className="">
 
                         Learn More 
                         </div>

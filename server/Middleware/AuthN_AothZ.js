@@ -5,9 +5,13 @@ require("dotenv").config()
 exports.Auth = async (req, res, next) => {
     try {
 
-        console.log("cookie" + req.cookies.token)
-        const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Berear ", "")
-        // console.log("token value", token)
+        console.log("BEFORE ToKEN EXTRACTION");
+        //extract token
+        const token = req.cookies.token
+            || req.body.token
+            || req.header("Authorization").replace("Bearer ", "");
+        console.log("AFTER ToKEN EXTRACTION", token);
+
 
         if (!token) {
             return res.json({
@@ -18,18 +22,17 @@ exports.Auth = async (req, res, next) => {
 
         try {
             const payload = jwt.verify(token, process.env.JWT_SECRET)
-            // console.log(payload)
+            console.log(payload, "payload for reqbody")
             req.user = payload;
 
-            // console.log(payload,"payload for reqbody")
         } catch (error) {
             return res.status(401).json({
                 success: false,
+                error: error.message,
                 Message: "token is in valid"
 
             })
         }
-        console.log("Next step")
         next();
 
     } catch (error) {
@@ -47,8 +50,8 @@ exports.isStudent = async (req, res, next) => {
     try {
         if (req.user.accountType !== "student") {
             return res.status(401).json({
-                success:false,
-                message:'This is a protected route for student only',
+                success: false,
+                message: 'This is a protected route for student only',
             });
         }
         next();
@@ -69,8 +72,8 @@ exports.isAdmin = async (req, res, next) => {
         console.log("mil gya Admin", req.user)
         if (req.user.accountType !== "Admin") {
             return res.status(401).json({
-                success:false,
-                message:'This is a protected route for Admin only',
+                success: false,
+                message: 'This is a protected route for Admin only',
             });
         }
         next();
@@ -89,8 +92,8 @@ exports.isInstructor = async (req, res, next) => {
     try {
         if (req.user.accountType !== "Instructor") {
             return res.status(401).json({
-                success:false,
-                message:'This is a protected route for instructor only',
+                success: false,
+                message: 'This is a protected route for instructor only',
             });
         }
         next();

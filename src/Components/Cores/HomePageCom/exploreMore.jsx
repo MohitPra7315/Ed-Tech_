@@ -1,6 +1,8 @@
 import HighlightedText from "./HighlightedText"
 import React, { useState } from "react"
 import { HomePageExplore } from "../../../data/homepage-explore"
+import CourseCard from "./CourseCard"
+
 function ExploreMore() {
 
     const TabsName = [
@@ -20,8 +22,10 @@ function ExploreMore() {
     const setMycard = (value) => {
         setCurrentTab(value)
         const result = HomePageExplore.filter((course) => course.tag === value);
+        console.log("result is here ",result)
         setCourses(result[0].courses);
         setCurrentCard(result[0].courses[0].heading);
+        console.log("result ", result)
     }
     return (
         <div>
@@ -44,7 +48,7 @@ function ExploreMore() {
                                         "text-richblack-200"} rounded-full transition-all duration-200 cursor-pointer
                                      hover:bg-richblack-900 hover:text-richblack-5 px-5 py-1
                                 `}
-                                    onClick={() => setMycard(element)}
+                                    onClick={() =>setMycard(element)}
                                 >
                                     {element}
 
@@ -53,21 +57,19 @@ function ExploreMore() {
                         })
                     }
                 </div>
-                <div className="lg:[150px]">
+                <div>
+                    <div className="lg:[150px]">
 
+                        <div className="flex flex-row gap-10 mt-6 mx-10 ">
+
+                            {
+                                courses.map((Course, index) => (<CourseCard key={index} currentCard={currentCard} setCurrentCard={setCurrentCard} Course={Course}></CourseCard>))
+                            }
+
+
+                        </div>
+                    </div>
                 </div>
-                {/* <div className="flex flex-row gap-4 ">
-                    {
-                        courses.map((course, index) => {
-                            return (
-                                <div className="" key={index}>
-                                    {course}
-                                </div>
-                            )
-                        })
-                    }
-
-                </div> */}
             </div>
 
         </div>

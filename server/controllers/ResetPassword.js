@@ -9,8 +9,9 @@ exports.ResetPasswordToken = async (req, res) => {
     try {
 
 
-        const { email } = req.body;
+        const {email} = req.body;
 
+        console.log("validation on email inside the db", email)
         const ValidUser = await user.findOne({ email: email })
         if (!ValidUser) {
             return res.json({
@@ -60,9 +61,15 @@ exports.ResetPasswordToken = async (req, res) => {
 
 exports.ResetPassword = async (req, res) => {
     try {
-        console.log("start the reset password  ",);
+        console.log("start the reset password  ", req.body.token);
         const { token, password, confirmPassword } = req.body;
         // validate password and confirmpassword
+        if (!token || !password || !confirmPassword) {
+            return res.json({
+                success: false,
+                message: "field is required"
+            })
+        }
         if (password !== confirmPassword) {
             return res.json({
                 success: false,
@@ -90,12 +97,12 @@ exports.ResetPassword = async (req, res) => {
 
         const savedpassword = await user.findOneAndUpdate({ token: token }, {
             password: hashPassword,
-            confirmPassword:confirmPassword
+            confirmPassword: confirmPassword
 
         },
             { new: true })
 
-            console.log("data ",savedpassword)
+        console.log("data ", savedpassword)
         return res.json({
             success: true,
             savedpassword,

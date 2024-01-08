@@ -6,9 +6,9 @@ import { TypeAnimation } from "react-type-animation"
 
 function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock, backgroundGraident, codeColor }) {
     return (
-        <div className={`flex ${postion} my-20 gap-10 justify-between  `}>
+        <div className={`flex ${postion} my-20 gap-10 justify-between items-center flex-col lg:flex-row `}>
             {/* section --1 */}
-            <div className="w-[50%] flex flex-col gap-8 font-semibold ">
+            <div className="min-w-[50%]  lg:max-w-[50%] flex flex-col gap-8 font-semibold  items-center ">
                 {heading}
                 <div className="text-richblack-300 font-bold">
                     {Subheading}
@@ -18,7 +18,7 @@ function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock,
                     <div className="flex gap-7 my-10  ">
 
                         <CTButton active={CtaBtn1.active} linkWith={CtaBtn1.linkWith} >
-                            <div className=" flex flex-row  items-center ">
+                            <div className=" flex flex-row  items-center py-[1px] px-5  ">
                                 {CtaBtn1.Text}
                                 <TiArrowRight></TiArrowRight>
                             </div>
@@ -32,9 +32,9 @@ function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock,
             </div>
 
             {/* section--2*/}
-            <div className="relative w-[100%] flex flex-row rounded-md  lg:w-[500px]  border-2 border-blue-100   ">
-                <div className={` absolute -z-1 h-[100%] w-[75%] -top-10 -left-5 bg-gradient-to-r rounded-full `}></div>
-                <div className="absolute z-10  flex bg-transparent ">
+            <div className="relative w-[100%] flex flex-row rounded-md max-w-[500px] lg:w-[500px] bg-[#2421213D]  border-2 border-richblack-500   ">
+                {/* <div className={` absolute z-1  h-[100%] w-[75%] -top-10 -left-5 bg-gradient-to-r bg-richblack-5 rounded-full `}></div> */}
+                <div className=" relative  z-5  flex   ">
 
                     <div className="w-[10%] flex items-center bg-transparent  text-richblack-400 font-inter font-bold flex-col ">
                         <p>1</p>
@@ -47,8 +47,10 @@ function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock,
                         <p>8</p>
                         <p>9</p>
                         <p>10</p>
+                        <p>11</p>
+
                     </div>
-                    <div className={`w-[90%] font-bold flex flex-col font-mono bg-transparent ${codeColor} pr-2`}>
+                    <div className={`w-[90%] font-bold flex flex-col  font-mono bg-transparent ${codeColor} pr-2`}>
                         <TypeAnimation
                             sequence={[CodeBlock, 1000, " "]}
                             speed={50}

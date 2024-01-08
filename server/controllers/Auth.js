@@ -136,6 +136,7 @@ exports.sendotp = async (req, res) => {
         // Find user with provided email
         const checkUserPresent = await user.findOne({ email });
         // to be used in case of signup
+        console.log("User is Already Registered", checkUserPresent)
 
         // If user found with provided email
         if (checkUserPresent) {
@@ -189,11 +190,11 @@ exports.SignUp = async (req, res) => {
             password,
             confirmPassword,
             accountType,
-            contactNumber,
+
             otp
 
         } = req.body
-
+        console.log("request data from bodt", req.body)
         // check if All Details are ther or not
         if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).json({
@@ -217,7 +218,8 @@ exports.SignUp = async (req, res) => {
 
         // check user is already here or not
         const userdata = await user.findOne({ email })
-        console.log(userdata, "user data from  email check")
+        console.log(userdata, " User response is thier");
+
         if (userdata) {
             return res.status(400).json({
                 success: false,
@@ -227,7 +229,7 @@ exports.SignUp = async (req, res) => {
 
         //  validate most recent Otp
         const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-        console.log(response, "response is thier");
+        console.log(response, "OTP response is thier");
         if (response.length === 0) {
             // OTP not found for the email
             return res.status(400).json({
@@ -252,8 +254,9 @@ exports.SignUp = async (req, res) => {
             gender: null,
             dateOfBirth: null,
             about: "",
-            contactNumber: contactNumber
+            contactNumber: null
         })
+
 
         const saveddata = await user.create({
             firstName,
@@ -261,18 +264,18 @@ exports.SignUp = async (req, res) => {
             email,
             password: hashPassword,
             confirmPassword,
-            accountType,
-            contactNumber,
+            accountType: accountType,
             additionalDetails: savedProfile._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
         })
 
+
+        console.log("res", saveddata)
         res.status(200).json({
             success: true,
-            post: saveddata,
+            data: saveddata,
             message: "successfully  user "
         })
-
 
     }
 
@@ -296,86 +299,94 @@ exports.SignUp = async (req, res) => {
 
 
 // Login controllers
-// exports.Login = async (req, res) => {
+// exports.login = async (req, res) => {
 //     try {
-//         // fetch data from req.body
-//         const { email, password } = req.body
+//         // Get email and password from request body
+//         const { email, password } = req.body;
 
-//         console.log("email", email, "password", password)
-//         // validate data
+//         // Check if email or password is missing
 //         if (!email || !password) {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: "inccorect given details"
-//             })
-//         }
-
-//         // check user in db
-//         const userData = await user.find({ email })
-//         if (!userData) {
+//             // Return 400 Bad Request status code with error message
 //             return res.status(400).json({
 //                 success: false,
-//                 message: "user doen't exist please Signup first"
-//             })
+//                 message: `Please Fill up All the Required Fields`,
+//             });
 //         }
-//         const payload = {
-//             email: userData.email,
-//             accountType: userData.accountType,
-//             id: userData._id
+
+//         // Find user with provided email
+//         const userdata = await user.findOne({ email }).populate("additionalDetails");
+
+//         // If user not found with provided email
+//         if (!userdata) {
+//             // Return 401 Unauthorized status code with error message
+//             return res.status(401).json({
+//                 success: false,
+//                 message: `User is not Registered with Us Please SignUp to Continue`,
+//             });
 //         }
-//         if (bcrypt.compare(password, userData.password)) {
-//             const token = jwt.sign(payload, process.env.SCREAT, {
-//                 expiresIn: "2hr"
-//             })
 
-//             userData = userData.toObject();
-//             userData.password = undefined,
-//                 userData.token = token
+//         // Generate JWT token and Compare Password
+//         if (await bcrypt.compare(password, user.password)) {
+//             const token = jwt.sign(
+//                 { email: user.email, id: user._id, accountType: user.accountType },
+//                 process.env.JWT_SECRET,
+//                 {
+//                     expiresIn: "24h",
+//                 }
+//             );
 
-//             let options = {
+//             // Save token to user document in database
+//             userdata = userdata.toObject();
+
+//             userdata.token = token;
+//             userdata.password = undefined;
+//             userdata.confirmNewPassword = undefined
+//             // Set cookie for token and return success response
+//             const options = {
 //                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-//                 httpOnly: true
-//             }
-//             res.cookie("Token", token, options).json({
+//                 httpOnly: true,
+//             };
+//             res.cookie("token", token, options).status(200).json({
 //                 success: true,
 //                 token,
-//                 userData,
-//                 message: "succesfully created data"
-
-//             })
-
-//         }
-//         else {
-//             return res.status(403).json({
+//                 User: userdata,
+//                 message: `User Login Success`,
+//             });
+//         } else {
+//             return res.status(401).json({
 //                 success: false,
-//                 message: "password Incorrect"
-//             })
+//                 message: `Password is incorrect`,
+//             });
 //         }
 //     } catch (error) {
-//         res.status(500).json({
+//         console.error(error);
+//         // Return 500 Internal Server Error status code with error message
+//         return res.status(500).json({
 //             success: false,
-//             message: "error while data Login  in databse",
-//             error: error.message
-//         })
+//             message: `Login Failure Please Try Again`,
+//         });
 //     }
 // }
-
 exports.Login = async (req, res) => {
     try {
         console.log("JWT_SECRET", process.env.JWT_SECRET)
+
+        // Get email and password from request body
         const { email, password } = req.body;
-        //check  valid passoerard or email or not 
-        console.log("email", email, "password", password)
+
+        // Check if email or password is missing
         if (!email || !password) {
+            // Return 400 Bad Request status code with error message
             return res.status(400).json({
                 success: false,
                 message: "plese fill coreect password and email"
             })
         }
 
-        let userdata = await user.findOne({ email });
+        let userdata = await user.findOne({ email }).populate("additionalDetails");
 
         if (!userdata) {
+            // Return 401 Unauthorized status code with error message
             return res.status(401).json({
                 success: false,
                 message: "user is not registered"
@@ -388,48 +399,54 @@ exports.Login = async (req, res) => {
             accountType: userdata.accountType,
 
         }
+        // Generate JWT token and Compare Password
         if (await bcrypt.compare(password, userdata.password)) {
 
             let token = jwt.sign(paylod, process.env.JWT_SECRET, {
                 expiresIn: "2h"
             })
-            console.log("convert to object")
+
             userdata = userdata.toObject();
             userdata.token = token,
                 userdata.password = undefined
             userdata.confirmPassword = undefined
-            console.log("converted to object", userdata)
 
             let options = {
                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 httpOnly: true,
             }
 
+            // return res.status(200).json({
+            //     success: true,
+            //     User: userdata,
+            //     message: "Succesfully Login"
+            // })
 
-            res.cookie("token", token, options).status(200).json({
+           return res.cookie("token", token, options).status(200).json({
                 success: true,
                 token,
-                userdata,
+                User: userdata,
                 message: "succesfully saved"
 
             })
+            
+
 
 
 
         } else {
-            return res.status(403).json({
+            return res.status(401).json({
                 success: false,
-                message: "password Incorrect"
-            })
+                message: `Password is incorrect`,
+            });
         }
-
-
     } catch (error) {
-        res.status(500).json({
+        console.error(error);
+        // Return 500 Internal Server Error status code with error message
+        return res.status(500).json({
             success: false,
-            post: "error while login ",
-            message: error.message
-        })
+            message: `Login Failure Please Try Again`,
+        });
     }
 }
 

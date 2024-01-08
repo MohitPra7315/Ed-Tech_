@@ -1,6 +1,6 @@
 function HighlightedText({ text }) {
     return (
-        <span className="font-bold text-richblue-200">
+        <span className={`font-bold text-blue-300`}>
             {" "}
             {text}</span>
     )

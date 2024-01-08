@@ -1,5 +1,5 @@
 
-const User = require("../Models/User")
+const user = require("../Models/User")
 const Profile = require("../Models/Profile")
 const { uploadImageCloudinary } = require("../Utils/imageUploder")
 
@@ -15,7 +15,7 @@ exports.Createprofile = async (req, res) => {
       })
     }
     // get user data 
-    const userDetails = await User.findById(id);
+    const userDetails = await user.findById(id);
     // get profile data ID
     const ProfileID = await userDetails.additionalDetails
     const ProfileDetail = await Profile.findById(ProfileID);
@@ -141,7 +141,11 @@ exports.getAllUserDetails = async (req, res) => {
 
 
 exports.Profileimage = async (req, res) => {
+  console.log("working .........")
   try {
+    console.log("file in body", req.files)
+    // console.log("file in files", req.files)
+
     const displayPicture = req.files.displayPicture
     const userId = req.user.id
     console.log("Printing ID ", userId)
@@ -153,7 +157,7 @@ exports.Profileimage = async (req, res) => {
       1000
     )
     console.log(image)
-    const updatedProfile = await User.findByIdAndUpdate(
+    const updatedProfile = await user.findByIdAndUpdate(
       { _id: userId },
       { image: image.secure_url },
       { new: true }
@@ -206,21 +210,21 @@ exports.deleteAccount = async (req, res) => {
 
 exports.getEnrolledCourses = async (req, res) => {
   try {
+    console.log("get enrolled backend controller")
     const userId = req.user.id
-    const userDetails = await User.findOne({
+    const userDetails = await user.findOne({
       _id: userId,
-    })
-      .populate("courses")
-      .exec()
+    }).populate("course").exec()
+    console.log("get enrolled user", userDetails)
     if (!userDetails) {
       return res.status(400).json({
         success: false,
         message: `Could not find user with id: ${userDetails}`,
       })
     }
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      data: userDetails.course,
+      data: userDetails.courses,
     })
   } catch (error) {
     return res.status(500).json({

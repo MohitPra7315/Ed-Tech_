@@ -6,11 +6,12 @@ import HighlightedText from "./HighlightedText"
 function IntructorSection() {
     return (
         <div className="mt-[100px]  ">
-            <div className="flex flex-row gap-20 items-center ">
-                <div className="w-[45%]">
-                    <img src={Intructor} alt="" className="shadow-white" />
+            <div className="flex lg:flex-row flex-col  relative gap-20 items-center ">
+                    {/* <div className=" absolute top-4 left-4 -z-1 h-full w-[45%]  bg-richblack-5">                    </div> */}
+                <div className="min-w-[45%] max-h-[550px]  lg:w-[45%]">
+                    <img src={Intructor} alt="" className="  shadow-white h-540 w-360 lg:w-full lg:h-full"  />
                 </div>
-                <div className="flex flex-col gap-10 items-start w-[50%]">
+                <div className="flex flex-col gap-10 items-start min-w-[45 %] lg:w-[50%]">
                     <div className="w-[200px] font-bold text-4xl ">
                         <div className="text-white">
                             Become an

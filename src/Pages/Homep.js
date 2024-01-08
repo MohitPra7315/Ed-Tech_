@@ -44,8 +44,8 @@ function HomePage() {
                 {/* vedios section */}
                 <div className="relative w-full border-l-caribbeangreen-5 mt-7 ">
 
-                    {/* <div className="absolute shadow-blue-100 shadow-2xl w-[600px] rounded-full rotate-180 bg-white top-16  left-96 z-10 h-[400px]"></div> */}
-                    <div className="   z-10 mx-3 my-16 shadow-blue-200 shadow-lg">
+                    {/* <div className="absolute z-10 shadow-blue-100 -my-52 shadow-2xl w-[600px] rounded-full rotate-180 bg-white top-16  left-96 h-[400px]"></div> */}
+                    <div className="  w-full h-full  z-10 mx-3 my-0 shadow-blue-200 shadow-lg">
                         <video loop muted autoPlay>
                             <source src={Banner} />
                         </video>
@@ -79,14 +79,15 @@ function HomePage() {
                         CodeBlock={`<!DOCTYPE html>
                          <html>
                           head><title>Example</title>
-                          <linkrel="stylesheet"href="styles.css">
+                          <linkrel="stylesheet"href="sty
+                          les.css">
                           /head>
                           body>
                           h1><ahref="/">Header</a>/h1>nav>
                           <ahref="one/">One</a><ahref="two/">Two</a>
                           <ahref="three/">Three</a>/nav>`}
                         backgroundGraident={""}
-                        codeColor={"text-yellow-25"}
+                        codeColor={"text-richblue-100 "}
                     />
 
                 </div>
@@ -159,12 +160,12 @@ function HomePage() {
                 </div>
 
                 <div className="mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-center">
-                    <div className="flex flex-row gap-5 mt-[100px] ">
-                        <div className="text-4xl font-semibold w-[45%] ">
+                    <div className="flex lg:flex-row gap-5 mt-[60px] flex-col  ">
+                        <div className="text-4xl font-semibold min-w-[45%] ">
                             Get the skills you need for a
                             <HighlightedText text={"job in demand"} ></HighlightedText>
                         </div>
-                        <div className="flex flex-col gap-10 w-[45%] items-start">
+                        <div className="flex flex-col gap-10 min-w-[45%] items-start">
                             <div className="text-[16px]">
 
                                 The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
@@ -175,8 +176,11 @@ function HomePage() {
 
                         </div>
                     </div>
+                    <div className="">
+
                     <TimelineSection />
                     <LearningLanguageSection />
+                    </div>
 
                 </div>
             </div>

@@ -14,7 +14,7 @@ exports.CreateCourse = async (req, res) => {
 
         // fetch the file frm req files body
         const thumnaileImg = req.files.thumnaileImg;
-        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !tag || !thumnaileImg) {
+        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !tag || !thumnaileImg ) {
             return res.status(400).json({
                 success: false,
                 message: "all required fill the fields"
@@ -33,7 +33,7 @@ exports.CreateCourse = async (req, res) => {
             })
         }
         // tage Id
-        // const tagId = await Tags.find({ tag });
+        const tagId = await Tags.find({ tag });
 
         // data cloudinary url data
         const thumbnailImage = uploadImageCloudinary(thumnaileImg, process.env.FOLDER_NAME)

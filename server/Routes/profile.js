@@ -6,13 +6,7 @@ const upload = multer({ dest: 'uploads/' });
 const { Auth, isAdmin, isInstructor, isStudent } = require("../Middleware/AuthN_AothZ")
 
 
-// const {
-//     deleteAccount,
-//     updateProfile,
-//     getAllUserDetails,
-//     updateDisplayPicture,
-//     getEnrolledCourses,
-// } = require("../controllers/Profile")
+
 
 const {
 

@@ -23,7 +23,7 @@ app.use(cookieParse());
 app.use(express.json())
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
-    origin: "https://localhost:3000",
+    origin: "*",
     credentials: true
 }))
 
@@ -47,7 +47,7 @@ app.use("/api/v1/course", courseRoutes)
 
 
 const { ResetPasswordToken, ResetPassword } = require("./controllers/ResetPassword")
-app.post("/api/v1/profile/reset-password-token", ResetPasswordToken)
+app.post("/api/v1/auth/reset-password-token", ResetPasswordToken)
 
 app.post("/reset-password", ResetPassword)
 
@@ -55,12 +55,6 @@ app.post("/reset-password", ResetPassword)
 
 
 
-app.get("/", (req, res) => {
-    return res.json({
-        success: true,
-        message: "your server is up and Running......"
-    })
-})
 app.listen(PORT, (req, res) => {
     return console.log(`app is working on port ${PORT}`)
 })

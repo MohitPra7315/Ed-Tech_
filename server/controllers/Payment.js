@@ -22,6 +22,8 @@ exports.capturePayment = async (req, res) => {
             })
         }
         // check  courseDetails
+        
+
         let courseDetail;
         try {
             courseDetail = await Course.findById(course_id);
