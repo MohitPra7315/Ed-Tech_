@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useSelector } from "react-redux"
 import { showAllCategories } from "../../../../services/operations/Profile"
+import ProgressBar from "@ramonak/react-progress-bar";
 const EnrolledCouress = () => {
     const { ALL_CATEGORIES_API } = categories
     const [allcoures, setAllcoures] = useState(null)
@@ -32,7 +33,7 @@ const EnrolledCouress = () => {
 
 
     return (
-        <div className="w-11/12 border-2 border-richblack-100 text-3xl text-white">
+        <div className="w-11/12  text-3xl text-white">
             <p className="text-white">Enrolled Couress</p>
             {
                 !allcoures ?
@@ -61,6 +62,12 @@ const EnrolledCouress = () => {
                                             <p>
                                                 {allcoures?.duration}?
                                             </p>
+                                            <div>
+                                                <p>
+                                                    Progress:{allcoures?.progressPercentage || 0}%    </p>
+                                                <ProgressBar completed={50}></ProgressBar>
+
+                                            </div>
                                         </div>
                                     )
                                 })

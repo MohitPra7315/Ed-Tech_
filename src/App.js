@@ -16,8 +16,14 @@ import { Dashboard } from "./Pages/Dashboard";
 import { OpenRoute } from "./Components/Cores/Auth/OpenRoute";
 import { MyProfile } from "./Components/Cores/Dashboard/Myprofile"
 import Settings from "./Components/Cores/Dashboard/setting"
-import EnrolledCouress from "./Components/Cores/Dashboard/ProgressCouress/progressCouress"
+import { Cart } from "./Components/Cores/Dashboard/Cart";
+import Addcourse from "./Components/Cores/Dashboard/AddCourse";
+import EnrolledCouress from "./Components/Cores/Dashboard/EnrolledCouress/EnrolledCouress"
+import { useSelector } from "react-redux"
+import { ACCOUNT_TYPE } from "./utils/constant";
+
 function App() {
+  const { user } = useSelector((state) => state.profile)
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar></Navbar>
@@ -77,7 +83,22 @@ function App() {
           } >
           <Route path="/dashboard/my-profile" element={<Protected><MyProfile></MyProfile></Protected>}></Route>
           <Route path="/dashboard/settings" element={<Protected><Settings></Settings></Protected>}></Route>
-          <Route path="/dashboard/enrolled-courses" element={<Protected><EnrolledCouress></EnrolledCouress></Protected>}></Route>
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (<>
+              <Route path="/dashboard/enrolled-courses" element={<Protected><EnrolledCouress></EnrolledCouress></Protected>}></Route>
+              <Route path="/dashboard/Cart" element={<Protected><Cart></Cart></Protected>}></Route>
+
+            </>)
+          }
+
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (<>
+              <Route path="/dashboard/add-course" element={<Addcourse></Addcourse>}></Route>
+              <Route path="/dashboard/my-courses" element={<div>my course</div>}></Route>
+
+            </>)
+          }
+
 
         </Route>
         <Route path="*" element={<Error />}></Route>

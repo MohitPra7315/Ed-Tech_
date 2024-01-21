@@ -3,12 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom"
 import { FaArrowLeft } from "react-icons/fa"
 import { useState } from "react";
-// import { useSelector } from "react-redux"
-// import OtpInput from 'react-otp-input';
+import { useSelector } from "react-redux"
+import OtpInput from 'react-otp-input';
 
 
 export const verifyEmail = () => {
-    // fetch loader from Redux 
+  
     // const { loading } = useSelector((state) => state.auth)
 
     const loading=false
@@ -24,12 +24,12 @@ export const verifyEmail = () => {
                             <p>A verification code has been sent to you. Enter the code below</p>
                         </div>
                         <form>
-                            {/* <OtpInput
+                            <OtpInput
                                 value={otp}
                                 onChange={setOtp}
                                 numInputs={6}
                                 renderInput={(props) => <input {...props} className="text-richblack-500" />}
-                            /> */}
+                            />
                             <button>
                                 Verify email
                             </button>

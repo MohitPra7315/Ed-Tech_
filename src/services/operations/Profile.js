@@ -21,11 +21,11 @@ export const showAllCategories = async (token) => {
         }
         result = Response.data
     } catch (error) {
-        console.error(error.message)
-        toast.error("fatt gya code")
+        console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
+        toast.error("Could Not Get Enrolled Courses")
     }
     toast.dismiss(toastId)
-    toast.success("fetched")
+   
     return result
 }
 
