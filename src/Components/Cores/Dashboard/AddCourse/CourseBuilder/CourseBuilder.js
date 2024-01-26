@@ -1,86 +1,149 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 
-export function CourseBuilder() {
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { IconBtn } from "../../../../Common/IconBtn"
+import { useSelector, useDispatch } from "react-redux"
+import { FiPlusCircle } from "react-icons/fi";
+import { setCourse, setEditCourse, setStep } from "../../../../../Slices/coursesSlice";
+import { MdNavigateNext } from "react-icons/md";
+import toast from "react-hot-toast";
+import { UpdateSection ,createSection} from "../../../../../services/operations/CourseDetail_Api"
+const CourseBuilder = () => {
 
-  // Destructuring properties from the useForm hook
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { errors, isDirty, isValid, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      // Setting default values for form fields
-      firstName: 'John',
-      lastName: 'Doe',
-      email: '',
-    },
-  });
+    const { register, handleSubmit, getValues, setValue, formState: { errors } } = useForm()
+    const [editSectionName, setEditSectionName] = useState(null)
+    const { course } = useSelector((state) => state.course)
+    const { token } = useSelector((state) => state.auth)
 
-  // useEffect to demonstrate setting default values after form initialization
-  useEffect(() => {
-    setValue('email', 'john.doe@example.com');
-  }, [setValue]);
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
 
-  // Form submission logic
-  const onSubmit = (data) => {
-    console.log('Submitted data:', data);
-  };
+    const handleCancelEdit = () => {
+        setEditSectionName(null)
+        setValue("sectionName", " ")
+    }
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Input fields with registration */}
-      <label>
-        First Name:
-        <input {...register('firstName', { required: 'First name is required' })} />
-      </label>
-      {/* Display error message if there's an error */}
-      {errors.firstName && <p>{errors.firstName.message}</p>}
+    const goBackHandle = () => {
+        dispatch(setStep(1))
+        dispatch(setEditCourse(true))
+    }
 
-      <label>
-        Last Name:
-        <input {...register('lastName', { required: 'Last name is required' })} />
-      </label>
-      {errors.lastName && <p>{errors.lastName.message}</p>}
+    const goNextHandle = () => {
+        if (course.courseContent.length === 0) {
+            toast.error("Please Add Atleast One Section")
+            return
+        }
+        dispatch(setStep(3))
 
-      <label>
-        Email:
-        <input
-          {...register('email', {
-            required: 'Email is required',
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: 'Invalid email address',
-            },
-          })}
-        />
-      </label>
-      {errors.email && <p>{errors.email.message}</p>}
+    }
+    const onSubmit = async (data) => {
+        const toastId = toast.loading("Loading....")
+        let result;
 
-      {/* Displaying form state information */}
-      <p>Form State:</p>
-      <ul>
-        <li>Is Dirty: {isDirty ? 'Yes' : 'No'}</li>
-        <li>Is Valid: {isValid ? 'Yes' : 'No'}</li>
-        <li>Is Submitting: {isSubmitting ? 'Yes' : 'No'}</li>
-      </ul>
+        // this is for when user update or edit old section in selected course category
 
-      {/* Buttons to trigger setValue and getValues */}
-      <button type="button" onClick={() => setValue('firstName', 'New John')}>
-        Set First Name
-      </button>
-      <button type="button" onClick={() => console.log('Current form values:', getValues())}>
-        Log Form Values
-      </button>
+        if (editSectionName) {
+            result = await UpdateSection(
+                {
+                    sectionName: data.sectionName,
+                    sectionId: editSectionName,
+                    courseId: course._id
+                }, token
+            )
+            return result
+        }
+        // this is for create new section in selected course category
+        result = await createSection({
+            sectionName: data.sectionName,
+            courseId: course._id
+        },
+            token
+        )
 
-      {/* Submit button */}
-      <button type="submit" disabled={isSubmitting}>
-        Submit
-      </button>
-    </form>
-  );
+        // when we get response from Update section and add new section we save in redux that data
+        if (result) {
+            dispatch(setCourse(result))
+            setEditSectionName(null)
+            setValue("sectionName", " ")
+        }
+        toast.dismiss(toastId)
+
+    }
+
+
+
+    const handlechangeEditsection = (sectionName, sectionId) => {
+
+        if (editSectionName === sectionId) {
+            handleCancelEdit()
+            return
+        }
+        else {
+            setEditSectionName(true)
+            setValue("sectionName", sectionName)
+        }
+
+    }
+    return (
+        <div className="text-white  rounded-md h-auto  py-8 px-5">
+            <p>Course Builder</p>
+            <form className="w-full " onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col gap-y-3">
+                    <label htmlFor='sectionName'>Section name <sup>*</sup></label>
+                    <input
+                        id='sectionName'
+                        placeholder='Add section name for build a Course'
+                        {...register("sectionName", { required: true })}
+                        className='w-full border-b-richblack-400 rounded-md py-2 bg-richblack-700'
+                    />
+                    {errors.sectionName && (
+                        <span>Section Name is required</span>
+                    )}
+                </div>
+                <div className="flex w-full gap-8 mt-5">
+                    <IconBtn
+                        customClasses={"text-yellow-50"}
+                        text={`${editSectionName ? "Edit section Name" : "Create Course"}`}
+                        type="Submit"
+                        outline={true}
+                    >
+                        <FiPlusCircle />
+
+                    </IconBtn>
+
+                    <button type="button"
+                        onClick={handleCancelEdit}
+                        className="text-richblack-300 underline"
+
+                    >
+                        CancelEdit
+                    </button>
+                </div>
+            </form>
+            <div>
+                {/* section  */}
+                {
+                    course?.courseContent?.section.length > 0 && (
+                        <subSectionCreate handlechangeEditsection={handlechangeEditsection}></subSectionCreate>
+                    )
+                }
+            </div>
+            <div className="flex w-fit float-right gap-4 mt-5">
+                <button className="bg-richblack-300 rounded-md py-2 px-5 font-bold"
+                    onClick={goBackHandle}
+                >
+                    BAck
+                </button>
+                <button className="bg-yellow-50 font-bold text-black rounded-md py-2 px-5 flex gap-5 justify-center items-center"
+                    onClick={goNextHandle}
+                >
+                    Next
+                    <MdNavigateNext></MdNavigateNext>
+                </button>
+            </div>
+
+        </div>
+    )
 }
 
-// e CourseBuilder;
+export default CourseBuilder
