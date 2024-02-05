@@ -383,7 +383,7 @@ exports.Login = async (req, res) => {
             })
         }
 
-        let userdata = await user.findOne({ email }).populate("additionalDetails");
+        let userdata = await user.findOne({ email })
 
         if (!userdata) {
             // Return 401 Unauthorized status code with error message
@@ -422,14 +422,14 @@ exports.Login = async (req, res) => {
             //     message: "Succesfully Login"
             // })
 
-           return res.cookie("token", token, options).status(200).json({
+            return res.cookie("token", token, options).status(200).json({
                 success: true,
                 token,
                 User: userdata,
                 message: "succesfully saved"
 
             })
-            
+
 
 
 

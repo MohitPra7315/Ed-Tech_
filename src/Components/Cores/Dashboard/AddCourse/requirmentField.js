@@ -4,19 +4,20 @@ const RequirmentFields = ({ label, name, register, errors, setValue, getValues }
     const [requirment, setrequirments] = useState("")
     const [allRequirments, setAllRequirements] = useState([])
 
-    console.log("all required", allRequirments)
+
     useEffect(() => {
 
-        // register(name, {
-        //     required: true
+        register(name, {
+            required: true
 
-        // })
+        })
     }, [])
 
-    // useEffect(() => {
-    //     setValue(name, { allRequirments })
-    // }, [allRequirments])
+    useEffect(() => {
+        setValue(name,  allRequirments )
+    }, [allRequirments])
 
+  
 
 
     function handleAddRequment() {

@@ -5,8 +5,6 @@ const initialState = {
     step: "1",
     course: null,
     editCourse: false,
-
-
 }
 
 const courseSlice = createSlice({
@@ -19,9 +17,10 @@ const courseSlice = createSlice({
         setCourse: (state, action) => {
             state.course = action.payload
         },
-        setEditCourse: () => {
-
+        setEditCourse: (state, action) => {
+            state.editCourse = action.payload
         },
+
         resetCourseState: (state) => {
             state.step = 1
             state.course = null

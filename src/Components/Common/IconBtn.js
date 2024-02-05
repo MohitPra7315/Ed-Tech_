@@ -1,25 +1,31 @@
 
 
 export const IconBtn = ({
-    text, children,
-    onClick, disablded,
-    type
+    text,
+    onclick,
+    children,
+    disabled,
+    outline = false,
+    customClasses,
+    type,
 
 }) => {
     return (
         <button
-            className="bg-yellow-50 rounded-lg text-black font-bold   flex py-2 px-4 justify-center items-center"
-            onClick={onClick}
-        >
-            {
-                children ? (
-                    <div className="flex items-center gap-1 justify-center">
-                        <span>{text}</span>
-                        {children}
-                    </div>)
-                    : (<div>{text}</div>)
-            }
-
-        </button>
+        disabled={disabled}
+        onClick={onclick}
+        className={`flex items-center ${outline ? "border border-yellow-50 bg-transparent" : "bg-yellow-50"
+          } cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-900 ${customClasses}`}
+        type={type}
+      >
+        {children ? (
+          <>
+            <span className={`${outline && "text-yellow-50"}`}>{text}</span>
+            {children}
+          </>
+        ) : (
+          text
+        )}
+      </button>
     )
 }

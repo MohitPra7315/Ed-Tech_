@@ -42,18 +42,12 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
-    additionalDetails: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Profile"
-
-    },
-    course: [
+    
+    courses: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "Course"
-        }
+            ref: "Course",
+        },
     ],
     image: {
         type: String,
@@ -77,4 +71,4 @@ const UserSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model("user", UserSchema)
+module.exports = mongoose.model("user", UserSchema) 

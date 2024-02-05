@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-
+// import Bearer from "be\\"
 require("dotenv").config()
 // Auth 
 exports.Auth = async (req, res, next) => {
@@ -10,7 +10,7 @@ exports.Auth = async (req, res, next) => {
         const token = req.cookies.token
             || req.body.token
             || req.header("Authorization").replace("Bearer ", "");
-        console.log("AFTER ToKEN EXTRACTION", token);
+        console.log("AFTER ToKEN EXTRACTION",token);
 
 
         if (!token) {
@@ -33,6 +33,7 @@ exports.Auth = async (req, res, next) => {
 
             })
         }
+        console.log("next is about to hit")
         next();
 
     } catch (error) {

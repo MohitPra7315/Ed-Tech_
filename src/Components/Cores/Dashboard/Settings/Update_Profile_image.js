@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react"
 import { FiUpload } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 
-import { UpdateImage } from "../../../../services/operations/setting"
+import { UpdateImage } from "../../../../services/operations/setting_Api"
 import { IconBtn } from "../../../Common/IconBtn"
-
+import EditProfile from "./EditProfile"
 function UpdatedProfileimage() {
     const { token } = useSelector((state) => state.auth)
     const { user } = useSelector((state) => state.profile)
@@ -18,14 +18,15 @@ function UpdatedProfileimage() {
 
     const handleClick = () => {
         fileInputRef.current.click()
+        console.log("handle click inside select button", fileInputRef.current.value)
     }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
-        // console.log(file)
+        console.log(file)
         if (file) {
             setImageFile(file)
-            previewFile(file)
+            // previewFile(file)
         }
     }
 
@@ -94,6 +95,7 @@ function UpdatedProfileimage() {
                         </div>
                     </div>
                 </div>
+
             </div>
         </>
     )

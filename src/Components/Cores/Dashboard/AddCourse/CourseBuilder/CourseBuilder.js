@@ -7,7 +7,8 @@ import { FiPlusCircle } from "react-icons/fi";
 import { setCourse, setEditCourse, setStep } from "../../../../../Slices/coursesSlice";
 import { MdNavigateNext } from "react-icons/md";
 import toast from "react-hot-toast";
-import { UpdateSection ,createSection} from "../../../../../services/operations/CourseDetail_Api"
+import { UpdateSection, createSection } from "../../../../../services/operations/CourseDetail_Api"
+import SubSectionCreate from "./subSectionCreate"
 const CourseBuilder = () => {
 
     const { register, handleSubmit, getValues, setValue, formState: { errors } } = useForm()
@@ -33,6 +34,11 @@ const CourseBuilder = () => {
             toast.error("Please Add Atleast One Section")
             return
         }
+        if (course.courseContent.some((section) => section.subSection.length === 0)) {
+            toast.error("Please Add Atleast one Lecture in  subSection")
+            return
+
+        }
         dispatch(setStep(3))
 
     }
@@ -53,12 +59,15 @@ const CourseBuilder = () => {
             return result
         }
         // this is for create new section in selected course category
-        result = await createSection({
-            sectionName: data.sectionName,
-            courseId: course._id
-        },
-            token
-        )
+        else {
+            result = await createSection({
+                sectionName: data.sectionName,
+                courseId: course._id
+            },
+                token
+            )
+        }
+        console.log("RESULT FOR CREATE SECTION AND", result);
 
         // when we get response from Update section and add new section we save in redux that data
         if (result) {
@@ -72,35 +81,36 @@ const CourseBuilder = () => {
 
 
 
+
     const handlechangeEditsection = (sectionName, sectionId) => {
 
         if (editSectionName === sectionId) {
             handleCancelEdit()
-            return
+            return;
         }
-        else {
-            setEditSectionName(true)
-            setValue("sectionName", sectionName)
-        }
+
+        setEditSectionName(sectionId)
+        setValue("sectionName", sectionName)
+
 
     }
     return (
-        <div className="text-white  rounded-md h-auto  py-8 px-5">
-            <p>Course Builder</p>
-            <form className="w-full " onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col gap-y-3">
+        <div className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
+            <p className="text-2xl font-semibold text-richblack-5">Course Builder</p>
+            <form className="w-full text-white " onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col space-y-2">
                     <label htmlFor='sectionName'>Section name <sup>*</sup></label>
                     <input
                         id='sectionName'
                         placeholder='Add section name for build a Course'
                         {...register("sectionName", { required: true })}
-                        className='w-full border-b-richblack-400 rounded-md py-2 bg-richblack-700'
+                        className='form-style text-black w-full'
                     />
                     {errors.sectionName && (
                         <span>Section Name is required</span>
                     )}
                 </div>
-                <div className="flex w-full gap-8 mt-5">
+                <div className="flex items-end gap-x-4">
                     <IconBtn
                         customClasses={"text-yellow-50"}
                         text={`${editSectionName ? "Edit section Name" : "Create Course"}`}
@@ -123,8 +133,8 @@ const CourseBuilder = () => {
             <div>
                 {/* section  */}
                 {
-                    course?.courseContent?.section.length > 0 && (
-                        <subSectionCreate handlechangeEditsection={handlechangeEditsection}></subSectionCreate>
+                    course?.courseContent?.length > 0 && (
+                        <SubSectionCreate handlechangeEditsection={handlechangeEditsection}></SubSectionCreate>
                     )
                 }
             </div>

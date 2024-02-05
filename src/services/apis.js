@@ -20,12 +20,17 @@ export const AuthEndPoint = {
     RESETPASSWORDTOKEN_API: BASE_URL + "/auth/reset-password-token",
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password"
 
-}
-export const settingsEndpoints = {
-    UPDATE_DISPLAY_PICTUTRE_API: BASE_URL + "/profile/updateDisplayPicture",
-    UPDATE_PERSONAL_DETAIL: BASE_URL + "/profile/updateProfile"
 
 }
+// SETTINGS PAGE API
+export const settingsEndpoints = {
+    UPDATE_DISPLAY_PICTUTRE_API: BASE_URL + "/profile/updateDisplayPicture",
+    UPDATE_PERSONAL_DETAIL: BASE_URL + "/profile/updateProfile",
+    CHANGE_PASSWORD_API: BASE_URL + "/auth/changePassword",
+    DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile"
+
+}
+
 
 
 // COURSE ENDPOINTS

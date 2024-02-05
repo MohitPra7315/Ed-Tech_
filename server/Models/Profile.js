@@ -7,11 +7,11 @@ const ProfileSchema = new mongoose.Schema({
     }, dateOfBirth: {
         type: String,
     },
-    about:{
-        type:String
+    about: {
+        type: String
     },
-    contactNumber:{
-        type:Number
+    contactNumber: {
+        type: Number
     }
 })
 

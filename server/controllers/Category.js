@@ -4,8 +4,8 @@ const Course = require("../Models/Course")
 exports.CategoryCreate = async (req, res) => {
     try {
 
-        const {userId}=req.user.id;
-        console.log("user",userId)
+        const { userId } = req.user.id;
+        console.log("user", userId)
         const { name, description } = req.body
 
         if (!name || !description) {
@@ -40,7 +40,7 @@ exports.showAllCategory = async (req, res) => {
     try {
         const Alldata = await Category.find({}, { name: true, description: true });
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             Alldata,
             message: "successfully data created in Database"

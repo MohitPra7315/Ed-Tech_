@@ -4,7 +4,7 @@ import { categories } from "../../../../services/apis"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useSelector } from "react-redux"
-import { showAllCategories } from "../../../../services/operations/Profile"
+import { showAllCategories } from "../../../../services/operations/Profile_Api"
 import ProgressBar from "@ramonak/react-progress-bar";
 const EnrolledCouress = () => {
     const { ALL_CATEGORIES_API } = categories

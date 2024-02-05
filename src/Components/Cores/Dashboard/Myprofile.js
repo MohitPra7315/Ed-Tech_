@@ -7,9 +7,6 @@ export const MyProfile = () => {
     const navigate = useNavigate()
 
     return (
-        // <div className="   ">
-
-
         <div className="  text-white  flex flex-col gap-10  ">
             <div className="flex  w-11/12 mx-auto boder-2 justify-evenly items-center  bg-richblack-800 rounded-lg p-6 border-richblack-100">
                 <div className="flex w-[calc(100%)]   border-white ">
@@ -22,7 +19,6 @@ export const MyProfile = () => {
                 <IconBtn text="Edit" children={<FaRegEdit></FaRegEdit>} onClick={() => navigate("/dashboard/settings")}></IconBtn>
             </div>
             {/* section */}
-
             <div className="flex w-11/12 mx-auto boder-2 justify-between items-center  bg-richblack-800 rounded-lg p-6 border-richblack-100">
                 <div className="pl-5">
                     <p className="text-2xl"> About </p>
@@ -53,7 +49,7 @@ export const MyProfile = () => {
                     </div>
                     <div className="w-[50%]">
                         <label className="text-richblack-300" htmlFor="fName">Phone Number</label>
-                        <p>{user?.additionalDetails?.contactNumber?user?.additionalDetails?.contactNumber:"12345 67890"}</p></div>
+                        <p>{user?.additionalDetails?.contactNumber ? user?.additionalDetails?.contactNumber : "12345 67890"}</p></div>
                 </div>
             </div >
         // </div>

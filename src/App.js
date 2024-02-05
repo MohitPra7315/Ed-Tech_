@@ -15,7 +15,7 @@ import { ContactUs } from "./Pages/ContactUs";
 import { Dashboard } from "./Pages/Dashboard";
 import { OpenRoute } from "./Components/Cores/Auth/OpenRoute";
 import { MyProfile } from "./Components/Cores/Dashboard/Myprofile"
-import Settings from "./Components/Cores/Dashboard/setting"
+import Settings from "./Components/Cores/Dashboard/Settings/setting"
 import { Cart } from "./Components/Cores/Dashboard/Cart";
 import Addcourse from "./Components/Cores/Dashboard/AddCourse";
 import EnrolledCouress from "./Components/Cores/Dashboard/EnrolledCouress/EnrolledCouress"

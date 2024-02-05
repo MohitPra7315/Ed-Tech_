@@ -51,10 +51,7 @@ app.post("/api/v1/auth/reset-password-token", ResetPasswordToken)
 
 app.post("/reset-password", ResetPassword)
 
-
-
-
-
 app.listen(PORT, (req, res) => {
     return console.log(`app is working on port ${PORT}`)
 })
+

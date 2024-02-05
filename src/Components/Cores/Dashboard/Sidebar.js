@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 import ConfirmationModal from "../../Common/ConfirmModal"
 import { logout } from "../../../services/operations/authAPI"
 import { VscSettingsGear } from "react-icons/vsc"
+
 export const Sidebar = () => {
     const { user, loading: profileLoading } = useSelector((state) => state.profile)
     const { loading: authLoading } = useSelector((state) => state.auth)
@@ -36,7 +37,7 @@ export const Sidebar = () => {
                         sidebarLinks.map((link, index) => {
                             {
                                 if (link.type && user?.accountType !== link.type) return null
-                                return <SidebarLink key={link.id} link={link} iconName={link.icon}></SidebarLink>
+                                return <SidebarLink key={link.id} link={link}  iconName={link.icon}></SidebarLink>
                             }
                         })
                     }

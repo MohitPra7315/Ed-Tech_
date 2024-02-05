@@ -87,8 +87,15 @@ exports.updateProfile = async (req, res) => {
     const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
     const id = req.user.id;
 
+    if (!gender || !dateOfBirth || !about || !contactNumber) {
+      return res.status(400).json({
+        success: false,
+        message: "field  all Required"
+      })
+    }
+console.log("check data is not null",dateOfBirth)
     // Find the profile by id
-    const userDetails = await User.findById(id);
+    const userDetails = await user.findById(id);
     console.log("updated data", userDetails.additionalDetails)
     const profile = await Profile.findById(userDetails.additionalDetails);
     console.log("updated data", profile)
@@ -120,7 +127,7 @@ exports.updateProfile = async (req, res) => {
 exports.getAllUserDetails = async (req, res) => {
   try {
     const id = req.user.id;
-    const userDetails = await User.findById(id)
+    const userDetails = await user.findById(id)
 
       .populate("additionalDetails")
       .exec();
@@ -184,7 +191,7 @@ exports.deleteAccount = async (req, res) => {
     // });
     const id = req.user.id;
     console.log("printing ID:-", id);
-    const user = await User.findById({ _id: id });
+    const user = await user.findById({ _id: id });
     if (!user) {
       return res.status(404).json({
         success: false,
