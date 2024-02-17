@@ -12,7 +12,7 @@ import toast from "react-hot-toast"
 import { COURSE_STATUS } from "../../../../../utils/constant"
 import { MdNavigateNext } from "react-icons/md"
 import { editCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
-import FetchAllCourseCategory, {addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
+import FetchAllCourseCategory, { addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
 
 export const CourseInformation = () => {
     const {
@@ -29,7 +29,7 @@ export const CourseInformation = () => {
     const [loading, setLoading] = useState(false)
     const [courseCategories, setCourseCategories] = useState([])
 
-    console.log("imgae from register ====>>>>>>",getValues().courseImage)
+    // console.log("imgae from register ====>>>>>>", getValues().courseImage)
     useEffect(() => {
         const getCategories = async () => {
             setLoading(true)
@@ -113,7 +113,7 @@ export const CourseInformation = () => {
                     formData.append("instructions", JSON.stringify(data.courseRequirements))
                 }
                 if (currentValues.courseImage !== course.thumbnail) {
-                    formData.append("thumbnailImage", data.courseImage)
+                    formData.append("thumbnailImage", data.courseImage[0])
                 }
                 console.log("Edit Form data: ", formData.thumbnailImage)
                 setLoading(true)
@@ -138,8 +138,8 @@ export const CourseInformation = () => {
         formData.append("categoryId", data.courseCategory)
         formData.append("status", COURSE_STATUS.DRAFT)
         formData.append("instructions", JSON.stringify(data.courseRequirements))
-        formData.append("thumbnailImage", data.courseImage)
-       
+        formData.append("thumnaileImg", data.courseImage[0])
+
         setLoading(true)
 
         const result = await addCourseDetails(formData, token)
@@ -229,6 +229,7 @@ export const CourseInformation = () => {
                 >
                     <option value="" disabled>
                         Choose a Category
+
                     </option>
                     {!loading &&
                         courseCategories?.map((category, indx) => (
@@ -319,7 +320,7 @@ export const CourseInformation = () => {
                     </button>
                 )}
                 <button
-                    type="Submit"  
+                    type="Submit"
                     className="bg-yellow-50 border-black py-2 px-5 rounded-lg"
                 >
                     {!editCourse ? "Next" : "Save Changes"}

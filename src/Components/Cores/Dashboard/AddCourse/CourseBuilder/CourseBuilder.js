@@ -7,7 +7,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { setCourse, setEditCourse, setStep } from "../../../../../Slices/coursesSlice";
 import { MdNavigateNext } from "react-icons/md";
 import toast from "react-hot-toast";
-import { UpdateSection, createSection } from "../../../../../services/operations/CourseDetail_Api"
+import { updateSection, createSection } from "../../../../../services/operations/CourseDetail_Api"
 import SubSectionCreate from "./subSectionCreate"
 const CourseBuilder = () => {
 
@@ -49,14 +49,13 @@ const CourseBuilder = () => {
         // this is for when user update or edit old section in selected course category
 
         if (editSectionName) {
-            result = await UpdateSection(
+            result = await updateSection(
                 {
                     sectionName: data.sectionName,
                     sectionId: editSectionName,
                     courseId: course._id
                 }, token
             )
-            return result
         }
         // this is for create new section in selected course category
         else {
@@ -66,14 +65,18 @@ const CourseBuilder = () => {
             },
                 token
             )
+            console.log("RESULT FOR CREATE SECTION AND", result);
         }
-        console.log("RESULT FOR CREATE SECTION AND", result);
 
         // when we get response from Update section and add new section we save in redux that data
         if (result) {
+            console.log("editSectionData result", course)
             dispatch(setCourse(result))
             setEditSectionName(null)
             setValue("sectionName", " ")
+            console.log("Updated", course)
+
+
         }
         toast.dismiss(toastId)
 
@@ -85,13 +88,19 @@ const CourseBuilder = () => {
     const handlechangeEditsection = (sectionName, sectionId) => {
 
         if (editSectionName === sectionId) {
-            handleCancelEdit()
-            return;
+            setEditSectionName(null)
+            setValue("sectionName", " ")
+            console.log("sectionID also putted inside the editSectionName")
+            return
         }
+        else {
 
-        setEditSectionName(sectionId)
-        setValue("sectionName", sectionName)
+            console.log("sectionID putt in  the editSectionName")
 
+            setEditSectionName(sectionId)
+            setValue("sectionName", sectionName)
+            return
+        }
 
     }
     return (

@@ -93,10 +93,11 @@ exports.updateProfile = async (req, res) => {
         message: "field  all Required"
       })
     }
-console.log("check data is not null",dateOfBirth)
+
     // Find the profile by id
     const userDetails = await user.findById(id);
     console.log("updated data", userDetails.additionalDetails)
+
     const profile = await Profile.findById(userDetails.additionalDetails);
     console.log("updated data", profile)
 

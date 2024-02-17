@@ -180,6 +180,7 @@ export const logout = (navigate) => {
         dispatch(setUser(null))
         localStorage.removeItem("token")
         localStorage.removeItem("user")
+        // their is pending data 
         toast.success("Logged Out")
 
         navigate("/")
@@ -193,4 +194,5 @@ export const logout = (navigate) => {
 // ******************************************************************************
 //                                      Setting API__
 // ******************************************************************************
+
 

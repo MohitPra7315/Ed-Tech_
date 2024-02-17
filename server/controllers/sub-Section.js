@@ -1,3 +1,4 @@
+const Course = require("../Models/Course")
 const section = require("../Models/Section")
 const Subsection = require("../Models/SubSection")
 const { uploadImageCloudinary } = require("../Utils/imageUploder")
@@ -5,37 +6,70 @@ require("dotenv").config()
 exports.createSubsection = async (req, res) => {
   try {
 
-    const { title, timeDuration, description, sectionId } = req.body;
+    const { title,
+      // timeDuration,
+      // Description,
+      sectionId,
+      courseId } = req.body;
 
+    console.log("check file is their,", req.files.videoFile)
     const videoFile = req.files.videoFile;
+    console.log("REQUEST DATA", title, sectionId, courseId)
 
-    if (!title || !timeDuration || !description || !sectionId || !videoFile) {
+    if (!title ||
+      // !timeDuration ||
+      // !Description ||
+      !videoFile ||
+      !sectionId) {
       return res.status(400).json({
         success: false,
         message: "All fields are required"
       })
     }
 
+
     // Upload file on Cloudinary
     const UploadedFile = await uploadImageCloudinary(videoFile, process.env.FOLDER_NAME)
 
+    console.log("UPLOADERVIDEO....", UploadedFile)
 
     const createdSubSection = await Subsection.create({
-      title, timeDuration, description, videoUrl: UploadedFile.secure_url
+      title,
+      // timeDuration,
+      // Description,
+      videoUrl: UploadedFile.secure_url
     })
     console.log("video File", createdSubSection)
 
-    const Updatedsection = await section.findByIdAndUpdate(sectionId,
+
+
+    const updatedSection = await section.findByIdAndUpdate(
+      { _id: sectionId },
+      { $push: { subSection: createdSubSection._id } },
+      { new: true }
+    ).populate("subSection")
+
+    console.log("Updated section ", updatedSection)
+
+    const UpdatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      // {
+      //   $push: { courseContent: updatedSection }
+      // },
+      { new: true }
+    ).populate(
       {
-        $push: { subSection: createdSubSection._id }
-      },
-      { new: true }).populate("subSection")
-    console.log("Updated Section  File", Updatedsection) 
+        path: "courseContent",
+        populate: { path: "subSection" }
+      })
+      .exec()
+
+    console.log("Updated Course-2 ", UpdatedCourse)
+
 
     return res.status(200).json({
       success: true,
-      Updatedsection,
-      createdSubSection,
+      data: UpdatedCourse,
       message: "successfully sub-Section created "
     })
   } catch (error) {
@@ -49,8 +83,8 @@ exports.createSubsection = async (req, res) => {
 
 exports.updateSubSection = async (req, res) => {
   try {
-    const { sectionId, title, description } = req.body
-    const subSection = await Subsection.findById(sectionId)
+    const { sectionId, subSectionId, title, description } = req.body
+    const subSection = await Subsection.findById(subSectionId)
 
     if (!subSection) {
       return res.status(404).json({

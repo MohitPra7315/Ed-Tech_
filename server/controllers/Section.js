@@ -54,6 +54,7 @@ exports.createSection = async (req, res) => {
 exports.UpdateSection = async (req, res) => {
     try {
         const { sectionName, sectionId, courseId } = req.body;
+        console.log("CHECK API IS WORKING OR NOT....!", sectionName, sectionId, courseId)
 
         if (!sectionId || !sectionName) {
             return res.status(400).json({
@@ -70,11 +71,12 @@ exports.UpdateSection = async (req, res) => {
                 populate: {
                     path: "subSection"
                 },
+                
             })
             .exec()
         return res.status(200).json({
             success: true,
-            data:updatedCourse,
+            data: updatedCourse,
             message: "successfully Updated section Name and Upadted teh course "
         })
 
@@ -94,14 +96,17 @@ exports.DeleteSection = async (req, res) => {
 
     try {
         const { sectionId, courseId } = req.body
-        await Course.findByIdAndUpdate(courseId, {
-            $pull: {
-                courseContent: sectionId,
-            },
-        })
-        const section = await section.findById(sectionId)
+        console.log("DELETE SECTION Backend API ............", sectionId, courseId)
+
+        await Course.findByIdAndUpdate(courseId,
+            {
+                $pull: {
+                    courseContent: sectionId,
+                },
+            })
+        const sectiondata = await section.findById(sectionId)
         console.log(sectionId, courseId)
-        if (!section) {
+        if (!sectiondata) {
             return res.status(404).json({
                 success: false,
                 message: "Section not found",
@@ -121,6 +126,9 @@ exports.DeleteSection = async (req, res) => {
                 },
             })
             .exec()
+
+
+
 
         res.status(200).json({
             success: true,

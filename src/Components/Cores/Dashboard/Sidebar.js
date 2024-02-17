@@ -18,7 +18,7 @@ export const Sidebar = () => {
     const navigate = useNavigate()
     const [confirmModal, setConfirmModal] = useState(null)
 
-    console.log("confirmdata", confirmModal)
+    // console.log("confirmdata", confirmModal)
 
     if (profileLoading || authLoading) {
         return (
@@ -34,10 +34,10 @@ export const Sidebar = () => {
                 <div className="flex flex-col">
 
                     {
-                        sidebarLinks.map((link, index) => {
+                        sidebarLinks.map((link) => {
                             {
                                 if (link.type && user?.accountType !== link.type) return null
-                                return <SidebarLink key={link.id} link={link}  iconName={link.icon}></SidebarLink>
+                                return <SidebarLink key={link.id} link={link} iconName={link.icon}></SidebarLink>
                             }
                         })
                     }
@@ -57,10 +57,7 @@ export const Sidebar = () => {
                             subHeading: "you will be logged out from your account",
                             btn1: "Logout",
                             btn2: "Cancel",
-                            btnHandler1: () => {
-                                dispatch(logout(navigate))
-
-                            },
+                            btnHandler1: () => { dispatch(logout(navigate)) },
                             btnHandler2: () => setConfirmModal(null)
                         })}>
                         <div className=" flex gap-1 px-8 py-2 text-sm font-medium  ">

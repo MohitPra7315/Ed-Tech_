@@ -3,7 +3,7 @@ import { IconBtn } from "../../../Common/IconBtn"
 import { useNavigate } from "react-router-dom"
 
 import { useState } from "react"
-import  UpdatedProfileimage  from "./Update_Profile_image"
+import UpdatedProfileimage from "./Update_Profile_image"
 import EditProfile from "./EditProfile"
 import UpdatePassword from "./UpdatePassword"
 import DeleteAccount from "./DeleteAccount"
@@ -22,10 +22,10 @@ const Settings = () => {
 
             <UpdatedProfileimage></UpdatedProfileimage>
             {/* section */}
-           
-          <EditProfile></EditProfile>
+
+            <EditProfile></EditProfile>
             <UpdatePassword></UpdatePassword>
-<DeleteAccount></DeleteAccount>
+            <DeleteAccount></DeleteAccount>
 
         </div>
     )

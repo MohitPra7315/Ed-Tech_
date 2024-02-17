@@ -8,43 +8,46 @@ import { deleteSection } from "../../../../../services/operations/CourseDetail_A
 import ConfirmationModal from "../../../../Common/ConfirmModal"
 import { IconBtn } from "../../../../Common/IconBtn";
 import { AiOutlinePlus } from "react-icons/ai"
-import {SubsectionModal} from "./subsectionModal"
-import {deleteSubSection} from "../../../../../services/operations/CourseDetail_Api"
+import { SubsectionModal } from "./subsectionModal"
+import { deleteSubSection } from "../../../../../services/operations/CourseDetail_Api"
 import { setCourse } from "../../../../../Slices/coursesSlice";
 
 const SubSectionCreate = ({ handlechangeEditsection }) => {
 
     const { course } = useSelector((state) => state.course)
-    const { token } = useDispatch((state) => state.auth)
+    const { token } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
 
     const [viewSubsection, setViewSubsection] = useState(null)
     const [addSubsection, setAddSubsection] = useState(null)
     const [editSubsection, setEditSubsection] = useState(null)
+    console.log("addsection Data", addSubsection)
 
     const [confirmationModal, setConfirmationModal] = useState(null)
 
-    const deleteSection = async (sectionId) => {
-       const result=await deleteSection({sectionId,courseId:course._id,token})
-       if(result){
-        const subSection=course?.courseContent.map((section)=>
-            section.id===sectionId?result:section)
-            const UpdatedCourse={...course,courseContent:subSection}
-            dispatch(setCourse(UpdatedCourse))
-        dispatch(setCourse(result))
-       }
-       setConfirmationModal(null)
+    const handledeleteSection = async (sectionId) => {
+
+        console.log("CHECK DELETE OR NOT.......!", course._id)
+        const result = await deleteSection({ sectionId, courseId: course._id, token })
+        console.log("...............", result)
+        if (result) {
+
+
+            dispatch(setCourse(result))
+        }
+        setConfirmationModal(null)
 
     }
 
-    const handleDeleteSubSection = async (subSectionId,sectionId) => {
-        const result=await deleteSubSection({sectionId,subSectionId,token})
-        if(result){
-            const subSection=course?.courseContent.map((section)=>
-            section.id===sectionId?result:section)
-            const UpdatedCourse={...course,courseContent:subSection}
-            dispatch(setCourse(UpdatedCourse))
-        
+    const handleDeleteSubSection = async (subSectionId, sectionId) => {
+        const result = await deleteSubSection({ sectionId, subSectionId, token })
+        console.log("Result For ADDing SUB SECTION", result)
+        if (result) {
+            // const subSection = course?.courseContent.map((section) =>
+            //     section.id === sectionId ? result : section)
+            // const UpdatedCourse = { ...course, courseContent: subSection }
+            dispatch(setCourse(result))
+
         }
         setConfirmationModal(null)
 
@@ -65,7 +68,7 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
 
                                 </div>
                                 <div className="flex items-center gap-x-2">
-                                    <button className="cursior-pointer" onClick={handlechangeEditsection(section.sectionName, section._id)}>
+                                    <button className="cursior-pointer" onClick={() => handlechangeEditsection(section.sectionName, section._id)}>
                                         <MdOutlineEdit />
                                     </button>
                                     <button
@@ -74,10 +77,8 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
                                             subHeading: "All the Lectures of this Section will be Deleted",
                                             btn1: "Delete",
                                             btn2: "Cancel",
-                                            btnHandler1: () => {
-                                                dispatch(deleteSection(section.id))
+                                            btnHandler1: () => handledeleteSection(section._id),
 
-                                            },
                                             btnHandler2: () => setConfirmationModal(null)
                                         })}
                                     >
@@ -93,20 +94,23 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
                                 {
                                     section?.subSection?.map((data) =>
                                     (
-                                        <div key={data.id}
-                                            onClick={() => viewSubsection(data)}
+                                        <div
+                                            key={data?._id}
+                                            onClick={() => setViewSubsection(data)}
                                             className="flex items-center justify-between gap-x-2  border-b-2"
                                         >
-                                            <div className="flex items-center justify-between gap-x-2 ">
-                                                <RxDropdownMenu />
-                                                <div>
+                                            <div className="flex items-center gap-x-3 py-2 ">
+                                                <RxDropdownMenu className="text-2xl text-richblack-50" />
+                                                <p className="font-semibold text-richblack-50">
                                                     {data.title}
-                                                </div>
-
+                                                </p>
                                             </div>
-                                            <div className="flex items-center gap-x-2">
+                                            <div
+                                                onClick={(e) => { e.stopPropagation() }}
+                                                className="flex items-center gap-x-2">
                                                 {/* editSubsection for open Modal */}
-                                                <button className="cursior-pointer" onClick={setEditSubsection({ ...data, sectionId: section._id })}>
+                                                <button className="cursior-pointer"
+                                                    onClick={() => setEditSubsection({ ...data, sectionId: section._id })}>
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
@@ -116,8 +120,7 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
                                                         btn1: "Delete",
                                                         btn2: "Cancel",
                                                         btnHandler1: () => {
-                                                            dispatch(handleDeleteSubSection(data._id, section._id))
-
+                                                            handleDeleteSubSection(data._id, section._id)
                                                         },
                                                         btnHandler2: () => setConfirmationModal(null)
                                                     })}
@@ -132,7 +135,9 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
                                 }
                                 <button
                                     className="mt-8 flex items-center gap-x-2 text-yellow-50"
-                                    onClick={() => setAddSubsection(section._id)}>
+                                    onClick={() => {
+                                        setAddSubsection(section._id)
+                                    }}>
                                     <AiOutlinePlus />
                                     <p>    Add Lecture</p>
 
@@ -159,10 +164,10 @@ const SubSectionCreate = ({ handlechangeEditsection }) => {
                         add={true}
                     />)
                     : viewSubsection ?
-                     (<SubsectionModal
-                        modalData={addSubsection}
-                        setModalData={setAddSubsection}
-                        view={true} />)
+                        (<SubsectionModal
+                            modalData={addSubsection}
+                            setModalData={setAddSubsection}
+                            view={true} />)
                         : editSubsection ? (<SubsectionModal
 
                             modalData={addSubsection}

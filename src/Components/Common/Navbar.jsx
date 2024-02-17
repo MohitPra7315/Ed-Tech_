@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { NavbarLinks } from "../../data/navbar-links"
 import { Link, matchPath } from "react-router-dom"
 import logo from "../../assets/Logo/Logo-Full-Light.png"
@@ -6,10 +6,12 @@ import { useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { ProfileDropdown } from "../Cores/Auth/ProfileDropDown"
+import { apiConnector } from "../../services/apiConnection"
+import { courseEndpoints } from "../../services/apis"
 export function Navbar() {
 
     const location = useLocation();
-    function matchroutes(route) {
+    function matchRoute(route) {
         return matchPath({ path: route }, location.pathname)
 
     }
@@ -17,26 +19,40 @@ export function Navbar() {
 
     // test for check the  catalog data show on display
 
-    const [currentCourseLink, setCurrentCourseLink] = useState("")
-    const subLinks = [
-        {
-            course: "web Development",
-            link: "/web-development"
-        },
-        {
-            course: "AI ML Development",
-            link: "/AI ML development"
-        }
-    ]
+    const [currentCourseLink, setCurrentCourseLink] = useState(null)
+    const [subLinks, setSubLinks] = useState([])
+    {
+
+    }
+
+
 
 
 
     const { token } = useSelector((state) => state.auth)
     const { user } = useSelector((state) => state.profile)
     const { totalItem } = useSelector((state) => state.cart)
+    const { course } = useSelector((state) => state.course)
+    const [loading, setLoading] = useState(false)
 
-    console.log("get token for go Dashboard", token)
-    console.log("get UserDetails for go Profile", user)
+
+
+    useEffect(() => {
+        const AllCategory = async () => {
+            setLoading(true)
+            try {
+                const result = await apiConnector("GET", courseEndpoints.COURSE_CATEGORIES_API)
+                console.log("check category of Course", result.data.Alldata)
+
+                setSubLinks([result.data.Alldata])
+            } catch (error) {
+                console.error(error.message)
+            }
+            setLoading(false)
+        }
+        AllCategory();
+    }, [])
+
 
     return (
         <div className="h-14 border-b-[2px] border-richblack-600 justify-center items-center">
@@ -62,10 +78,10 @@ export function Navbar() {
                                                     <p>Catalog</p>
                                                     <IoIosArrowDropdownCircle />
                                                     <div className="absolute invisible bg-richblack-5   left-[50%]
-                                                    translate-x-[-50%] translate-y-[30%]
-                                                    z-[10]
-                                                    top-[50%]
-                                                   flex flex-col
+                                                       translate-x-[-50%] translate-y-[30%]
+                                                        z-[10]
+                                                       top-[50%]
+                                                         flex flex-col
                                                       rounded-md p-4 text-richblack-900 opacity-0 transition-all duration-200  
                                                         group-hover:visible group-hover:opacity-100 lg:w-[300px] ">
                                                         <div className="absolute invisible bg-richblack-5 top-[-0%]  left-[50%]
@@ -76,22 +92,39 @@ export function Navbar() {
                                                         </div>
 
                                                         {
-                                                            subLinks.map((sublink, index) => {
-                                                                return (
-                                                                    <Link to={`${sublink.link}`} key={index}
-
-                                                                    >
-                                                                        <p className={`  group-hover-visible`}>{sublink.course}</p>
-
-                                                                    </Link>
+                                                            loading ?
+                                                                <div>Loading</div>
+                                                                :
+                                                                (
+                                                                    subLinks[0].length > 0 ?
+                                                                        (subLinks[0].map((sublink, index) => (
+                                                                            <Link
+                                                                                key={index}
+                                                                                to={`/catalog/${sublink.name
+                                                                                    .split(" ")
+                                                                                    .join("-")
+                                                                                    .toLowerCase()}`}
+                                                                            >
+                                                                                <p>{sublink.name}</p>
+                                                                            </Link>
+                                                                        ))) :
+                                                                        (<div>
+                                                                            Category Not Found
+                                                                        </div>)
                                                                 )
-                                                            })
                                                         }
                                                     </div>
 
                                                 </div>) :
                                                 (<Link to={link?.path}>
-                                                    <p className={`${matchroutes(link?.path) ? "text-yellow-25" : "text-richblack-25"}`}>{link.title}</p>
+                                                    <p
+                                                        className={`${matchRoute(link?.path)
+                                                            ? "text-yellow-25"
+                                                            : "text-richblack-25"
+                                                            }`}
+                                                    >
+                                                        {link.title}
+                                                    </p>
                                                 </Link>)
                                         }
                                     </li>

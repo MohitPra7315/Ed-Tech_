@@ -4,7 +4,7 @@ import CountryCode from "../../../data/countrycode.json"
 import CTButton from "../HomePageCom/Buttons";
 import toast from "react-hot-toast";
 
-export const ContactUsForm = ({heading,subheading}) => {
+export const ContactUsForm = ({ heading, subheading }) => {
 
     const {
         register,

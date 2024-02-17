@@ -12,7 +12,7 @@ const ConfirmationModal = ({ ModalData }) => {
                 <p className="text-richblack-300">{ModalData.subHeading}</p>
                 <div className="flex gap-10 ">
                     <IconBtn
-                        onClick={ModalData?.btnHandler1}
+                        onclick={ModalData?.btnHandler1}
                         text={ModalData?.btn1}
 
                     ></IconBtn>

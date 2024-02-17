@@ -72,10 +72,11 @@ export const addCourseDetails = async (formData, token) => {
 
 // Edit the Course Details 
 export async function editCourseDetails(formData, token) {
+    console.log("INXEIDE THE EDITCOURSEDETAILS......", Object.fromEntries(formData))
     let result = []
     const toastId = toast.loading("Loading..")
     try {
-        const response = await apiConnector("PUT", EDIT_COURSE_API, { formData },
+        const response = await apiConnector("POST", EDIT_COURSE_API, formData,
             {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`,
@@ -155,7 +156,7 @@ export const createSubSection = async (data, token) => {
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
-            Authorisation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         })
         console.log("CREATE SUB-SECTION API RESPONSE............", response)
         if (!response?.data?.success) {
@@ -173,11 +174,13 @@ export const createSubSection = async (data, token) => {
 
 // update a section
 export const updateSection = async (data, token) => {
+    console.log("UPDATE SECTION API Data............", data)
+
     let result = null
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", UPDATE_SECTION_API, data, {
-            Authorisation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         })
         console.log("UPDATE SECTION API RESPONSE............", response)
         if (!response?.data?.success) {
@@ -195,11 +198,12 @@ export const updateSection = async (data, token) => {
 
 // update a subsection
 export const updateSubSection = async (data, token) => {
+
     let result = null
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
-            Authorisation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         })
         console.log("UPDATE SUB-SECTION API RESPONSE............", response)
         if (!response?.data?.success) {
@@ -217,11 +221,14 @@ export const updateSubSection = async (data, token) => {
 
 // delete a section
 export const deleteSection = async (data, token) => {
+    console.log("DELETE SECTION API ............", data, token)
+
     let result = null
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", DELETE_SECTION_API, data, {
-            Authorisation: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
         })
         console.log("DELETE SECTION API RESPONSE............", response)
         if (!response?.data?.success) {
@@ -236,13 +243,14 @@ export const deleteSection = async (data, token) => {
     toast.dismiss(toastId)
     return result
 }
+
 // delete a subsection
 export const deleteSubSection = async (data, token) => {
     let result = null
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
-            Authorisation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         })
         console.log("DELETE SUB-SECTION API RESPONSE............", response)
         if (!response?.data?.success) {
@@ -328,7 +336,7 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
     } catch (error) {
         console.log("COURSE_FULL_DETAILS_API API ERROR............", error)
         result = error.response.data
-        // toast.error(error.response.data.message);
+        toast.error(error.response.data.message);
     }
     toast.dismiss(toastId)
     //   dispatch(setLoading(false));

@@ -11,7 +11,8 @@ const { Auth, isAdmin, isInstructor, isStudent } = require("../Middleware/AuthN_
 const {
     GetAllCourse,
     CreateCourse,
-    getCourseDetails
+    getCourseDetails,
+    editCourse, deleteCourse, getInstructorCourses
 } = require("../controllers/Course")
 
 
@@ -52,6 +53,14 @@ console.log(router, "course routes")
 router.get("/", async () => {
 })
 router.post('/createCourse', Auth, isInstructor, CreateCourse)
+
+// 
+router.post("/editCourse", Auth, isInstructor, editCourse)
+// DEleted Course
+router.delete("/deleteCourse", deleteCourse)
+
+
+
 // add new section inside courese
 router.post('/addSection', Auth, isInstructor, createSection)
 // router for update section
@@ -75,6 +84,11 @@ router.get('/getAllCourse', GetAllCourse)
 
 router.post('/getCourseDetails', getCourseDetails)
 
+// Get all Courses Under a Specific Instructor
+router.get("/getInstructorCourses", Auth, isInstructor, getInstructorCourses)
+
+// Get Full Course Populated Details for Edit Course
+router.post("/getFullCourseDetails",Auth,isInstructor,getCourseDetails) 
 
 
 

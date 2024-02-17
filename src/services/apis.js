@@ -3,6 +3,7 @@
 const BASE_URL = "http://localhost:5000/api/v1"
 console.log("base url", BASE_URL)
 
+// CATAGORIES API
 export const categories = {
     ALL_CATEGORIES_API: BASE_URL + "/course/showAllCategories"
 }
@@ -33,6 +34,7 @@ export const settingsEndpoints = {
 
 
 
+
 // COURSE ENDPOINTS
 export const courseEndpoints = {
     GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
@@ -48,8 +50,7 @@ export const courseEndpoints = {
     DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
     DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
     DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
-    GET_FULL_COURSE_DETAILS_AUTHENTICATED:
-        BASE_URL + "/course/getFullCourseDetails",
+    GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getFullCourseDetails",
     LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
     CREATE_RATING_API: BASE_URL + "/course/createRating",
 }
