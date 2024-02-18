@@ -23,8 +23,7 @@ import { useSelector } from "react-redux"
 import { ACCOUNT_TYPE } from "./utils/constant";
 import { InstructorCourses } from ".//Pages/Instructor_MyCourseP"
 import { EditCourse } from "../src/Components/Cores/Dashboard/EditCourse/editCourse"
-import { CataloagsDataPage } from "./Pages/Cataloags";
-
+import {CataloagsDataPage} from "./Pages/Cataloags"
 function App() {
   const { user } = useSelector((state) => state.profile)
   return (
@@ -32,7 +31,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="catalog/:catalogName" element={<div className="text-white">Pagal ho rga yhgjhvfjh wkgu</div> }></Route>
+        <Route path="/catalog/:catalogName" element={<CataloagsDataPage/>}></Route>
         <Route path="/login" element={
           <OpenRoute>
             <LoginPage></LoginPage>

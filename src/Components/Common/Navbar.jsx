@@ -8,10 +8,11 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { ProfileDropdown } from "../Cores/Auth/ProfileDropDown"
 import { apiConnector } from "../../services/apiConnection"
 import { courseEndpoints } from "../../services/apis"
+import { toast } from "react-hot-toast"
 export function Navbar() {
 
     const location = useLocation();
-    function matchRoute(route) {
+    function matchroutes(route) {
         return matchPath({ path: route }, location.pathname)
 
     }
@@ -21,9 +22,7 @@ export function Navbar() {
 
     const [currentCourseLink, setCurrentCourseLink] = useState(null)
     const [subLinks, setSubLinks] = useState([])
-    {
-
-    }
+    
 
 
 
@@ -37,18 +36,19 @@ export function Navbar() {
 
 
 
+    console.log("check category of Course", subLinks)
     useEffect(() => {
         const AllCategory = async () => {
             setLoading(true)
             try {
                 const result = await apiConnector("GET", courseEndpoints.COURSE_CATEGORIES_API)
-                console.log("check category of Course", result.data.Alldata)
 
-                setSubLinks([result.data.Alldata])
+                setSubLinks(result.data.data)
             } catch (error) {
                 console.error(error.message)
             }
             setLoading(false)
+
         }
         AllCategory();
     }, [])
@@ -95,36 +95,33 @@ export function Navbar() {
                                                             loading ?
                                                                 <div>Loading</div>
                                                                 :
-                                                                (
-                                                                    subLinks[0].length > 0 ?
-                                                                        (subLinks[0].map((sublink, index) => (
-                                                                            <Link
-                                                                                key={index}
-                                                                                to={`/catalog/${sublink.name
-                                                                                    .split(" ")
-                                                                                    .join("-")
-                                                                                    .toLowerCase()}`}
-                                                                            >
-                                                                                <p>{sublink.name}</p>
-                                                                            </Link>
-                                                                        ))) :
-                                                                        (<div>
-                                                                            Category Not Found
-                                                                        </div>)
+                                                                (subLinks.length > 0 ?
+
+                                                                    (<>
+                                                                        {
+                                                                            subLinks.map((subLink) => (
+                                                                                <Link key={subLink._id}
+                                                                                    to={`/catalog/${subLink.name
+                                                                                        .split(" ")
+                                                                                        .join("-")
+                                                                                        .toLowerCase()}`}
+                                                                                >
+                                                                                    <p>{subLink.name}</p>
+
+                                                                                </Link>
+                                                                            ))
+                                                                        }
+                                                                    </>) :
+                                                                    (<span>
+                                                                        NO Courses Found
+                                                                    </span>)
                                                                 )
                                                         }
                                                     </div>
 
                                                 </div>) :
                                                 (<Link to={link?.path}>
-                                                    <p
-                                                        className={`${matchRoute(link?.path)
-                                                            ? "text-yellow-25"
-                                                            : "text-richblack-25"
-                                                            }`}
-                                                    >
-                                                        {link.title}
-                                                    </p>
+                                                    <p className={`${matchroutes(link?.path) ? "text-yellow-25" : "text-richblack-25"}`}>{link.title}</p>
                                                 </Link>)
                                         }
                                     </li>
@@ -172,6 +169,6 @@ export function Navbar() {
 
             </div>
 
-        </div>
+        </div >
     )
 }
