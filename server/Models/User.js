@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Profile",
-      },
+    },
     token: {
         type: String
     },
@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
-    
+
     courses: [
         {
             type: mongoose.Schema.Types.ObjectId,

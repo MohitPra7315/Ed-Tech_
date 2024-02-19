@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { ProfileDropdown } from "../Cores/Auth/ProfileDropDown"
 import { apiConnector } from "../../services/apiConnection"
-import { courseEndpoints } from "../../services/apis"
+import { categories } from "../../services/apis"
 import { toast } from "react-hot-toast"
 export function Navbar() {
 
@@ -22,7 +22,7 @@ export function Navbar() {
 
     const [currentCourseLink, setCurrentCourseLink] = useState(null)
     const [subLinks, setSubLinks] = useState([])
-    
+
 
 
 
@@ -41,7 +41,7 @@ export function Navbar() {
         const AllCategory = async () => {
             setLoading(true)
             try {
-                const result = await apiConnector("GET", courseEndpoints.COURSE_CATEGORIES_API)
+                const result = await apiConnector("GET", categories.ALL_CATEGORIES_API)
 
                 setSubLinks(result.data.data)
             } catch (error) {

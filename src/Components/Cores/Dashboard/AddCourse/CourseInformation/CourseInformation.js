@@ -32,15 +32,23 @@ export const CourseInformation = () => {
     // console.log("imgae from register ====>>>>>>", getValues().courseImage)
     useEffect(() => {
         const getCategories = async () => {
-            setLoading(true)
-            const categories = await FetchAllCourseCategory()
-            if (categories.length > 0) {
-                // console.log("categories", categories)
-                setCourseCategories(categories)
+            const toastId = toast.loading("Loading....!")
+
+            try {
+               
+                const categories = await FetchAllCourseCategory()
+                console.log("Category data for --->>>", categories)
+                if (categories.length > 0) {
+                    // console.log("categories", categories)
+                    setCourseCategories(categories)
+                }
+            } catch (error) {
+                console.log("error ", error.message)
             }
-            setLoading(false)
+            toast.dismiss(toastId)
         }
         // if form is in edit mode
+        getCategories()
         if (editCourse) {
             // console.log("data populated", editCourse)
             setValue("courseTitle", course.courseName)
@@ -52,7 +60,6 @@ export const CourseInformation = () => {
             setValue("courseRequirements", course.instructions)
             setValue("courseImage", course.thumbnail)
         }
-        getCategories()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

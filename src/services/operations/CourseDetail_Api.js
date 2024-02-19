@@ -3,10 +3,10 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { apiConnector } from "../apiConnection"
 import { courseEndpoints } from "../../services/apis"
-
+import {categories} from "../../services/apis"
+ 
 const {
     COURSE_DETAILS_API,
-    COURSE_CATEGORIES_API,
     GET_ALL_COURSE_API,
     CREATE_COURSE_API,
     EDIT_COURSE_API,
@@ -27,14 +27,14 @@ const FetchAllCourseCategory = async () => {
     let result = [];
 
     try {
-        const response = await apiConnector("GET", COURSE_CATEGORIES_API, null)
+        const response = await apiConnector("GET", categories.ALL_CATEGORIES_API, null)
         console.log("ALL categories Response.....", response?.data?.Alldata)
 
 
         if (!response.data.success) {
             throw new Error(response.message)
         }
-        result = response?.data?.Alldata
+        result = response?.data?.data
 
     } catch (error) {
         console.error("error While Fetiching the Categories data", error.message)

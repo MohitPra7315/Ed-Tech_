@@ -21,7 +21,7 @@ const {
 const {
     CategoryCreate,
     showAllCategory,
-    CategoryPageCourse
+    categoryPageDetails
 } = require("../controllers/Category")
 
 
@@ -88,7 +88,7 @@ router.post('/getCourseDetails', getCourseDetails)
 router.get("/getInstructorCourses", Auth, isInstructor, getInstructorCourses)
 
 // Get Full Course Populated Details for Edit Course
-router.post("/getFullCourseDetails",Auth,isInstructor,getCourseDetails) 
+router.post("/getFullCourseDetails", Auth, isInstructor, getCourseDetails)
 
 
 
@@ -100,7 +100,7 @@ router.post("/getFullCourseDetails",Auth,isInstructor,getCourseDetails)
 
 router.post('/createCategory', Auth, isAdmin, CategoryCreate)
 router.get('/showAllCategories', showAllCategory)
-router.post('/getCategoryPageDetails', CategoryPageCourse)
+router.post('/getCategoryPageDetails', categoryPageDetails)
 
 
 // ********************************************************************************************************

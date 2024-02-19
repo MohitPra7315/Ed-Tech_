@@ -1,6 +1,9 @@
 const Category = require("../Models/Category")
 const Course = require("../Models/Course")
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+}
 exports.CategoryCreate = async (req, res) => {
     try {
 
@@ -42,7 +45,7 @@ exports.showAllCategory = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            data:Alldata,
+            data: Alldata,
             message: "successfully data created in Database"
         })
     } catch (error) {
@@ -59,46 +62,46 @@ exports.showAllCategory = async (req, res) => {
 // we Controllers for category course and different a=couse and Top seling course
 
 
-exports.CategoryPageCourse = async (req, res) => {
-    try {
-        // fetch Category Course ID 
-        const { categoryID } = req.body;
-        // validate the data 
+// exports.CategoryPageCourse = async (req, res) => {
+//     try {
+//         // fetch Category Course ID 
+//         const { categoryID } = req.body;
+//         // validate the data 
 
-        if (!categoryID) {
-            return res.status(400).json({
-                success: false,
-                message: "send the catagory id"
-            })
-        }
-        // 1 type category Course
-        const CategoryCourses = await Category.findById({ categoryID }).populate("course").exec()
-        // 2 Type different from category course
+//         if (!categoryID) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "send the catagory id"
+//             })
+//         }
+//         // 1 type category Course
+//         const CategoryCourses = await Category.findById({ categoryID }).populate("course").exec()
+//         // 2 Type different from category course
 
-        const differentCourses = await Category.find({ _id: { $ne: categoryID } }).populate("Course").exec()
+//         const differentCourses = await Category.find({ _id: { $ne: categoryID } }).populate("Course").exec()
 
-        // 3 Type top selling Course 
-        // Home work 
-
-
-        res.status(200).json({
-            success: true,
-            CategoryCourses: CategoryCourses,
-            differentCourses: differentCourses,
-            topSellingCourses: "pending for  write logic"
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "error occoured while fetching Category courses",
-            error: error.message
-        })
-    }
-}
+//         // 3 Type top selling Course 
+//         // Home work 
 
 
-exports.showAllCategory
+//         res.status(200).json({
+//             success: true,
+//             CategoryCourses: CategoryCourses,
+//             differentCourses: differentCourses,
+//             topSellingCourses: "pending for  write logic"
+//         })
+
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: "error occoured while fetching Category courses",
+//             error: error.message
+//         })
+//     }
+// }
+
+
+// exports.showAllCategory
 
 
 
@@ -111,8 +114,11 @@ exports.categoryPageDetails = async (req, res) => {
             .populate({
                 path: "courses",
                 match: { status: "Published" },
-                populate: "ratingAndReviews",
+                populate: {
+                    path:"instructor"
+                }
             })
+
             .exec()
 
         console.log("SELECTED COURSE", selectedCategory)
@@ -143,6 +149,10 @@ exports.categoryPageDetails = async (req, res) => {
             .populate({
                 path: "courses",
                 match: { status: "Published" },
+                populate: {
+                    path: "instructor",
+                },
+
             })
             .exec()
         console.log()
@@ -151,12 +161,16 @@ exports.categoryPageDetails = async (req, res) => {
             .populate({
                 path: "courses",
                 match: { status: "Published" },
+                populate: {
+                    path: "instructor",
+                },
             })
             .exec()
         const allCourses = allCategories.flatMap((category) => category.courses)
         const mostSellingCourses = allCourses
             .sort((a, b) => b.sold - a.sold)
             .slice(0, 10)
+
 
         res.status(200).json({
             success: true,

@@ -5,7 +5,11 @@ console.log("base url", BASE_URL)
 
 // CATAGORIES API
 export const categories = {
-    ALL_CATEGORIES_API: BASE_URL + "/course/showAllCategories"
+    ALL_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
+
+}
+export const catalogData = {
+    CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
 }
 
 
@@ -40,7 +44,7 @@ export const courseEndpoints = {
     GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
     COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
     EDIT_COURSE_API: BASE_URL + "/course/editCourse",
-    COURSE_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
+    // COURSE_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
     CREATE_COURSE_API: BASE_URL + "/course/createCourse",
     CREATE_SECTION_API: BASE_URL + "/course/addSection",
     CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
@@ -50,7 +54,7 @@ export const courseEndpoints = {
     DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
     DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
     DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
-    GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getFullCourseDetails",
+    GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getCourseDetails",
     LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
     CREATE_RATING_API: BASE_URL + "/course/createRating",
 }

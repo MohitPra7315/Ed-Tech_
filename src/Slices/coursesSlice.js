@@ -29,6 +29,6 @@ const courseSlice = createSlice({
         }
     }
 })
-
+ 
 export const { setStep, setCourse, setEditCourse, resetCourseState } = courseSlice.actions
 export default courseSlice.reducer
