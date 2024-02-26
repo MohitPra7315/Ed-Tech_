@@ -10,7 +10,7 @@ exports.Auth = async (req, res, next) => {
         const token = req.cookies.token
             || req.body.token
             || req.header("Authorization").replace("Bearer ", "");
-        console.log("AFTER ToKEN EXTRACTION",token);
+        console.log("AFTER ToKEN EXTRACTION", token);
 
 
         if (!token) {
@@ -49,12 +49,16 @@ exports.Auth = async (req, res, next) => {
 // isStudent
 exports.isStudent = async (req, res, next) => {
     try {
-        if (req.user.accountType !== "student") {
+        console.log(" Checking  user Accountype is Student ",req.user.accountType)
+
+        if (req.user.accountType !== "Student") {
             return res.status(401).json({
                 success: false,
                 message: 'This is a protected route for student only',
             });
         }
+        console.log(" user Accountype is Student ")
+
         next();
 
     } catch (error) {
@@ -77,6 +81,8 @@ exports.isAdmin = async (req, res, next) => {
                 message: 'This is a protected route for Admin only',
             });
         }
+        console.log(" user Accountype is Admin ")
+
         next();
 
     } catch (error) {
@@ -97,6 +103,8 @@ exports.isInstructor = async (req, res, next) => {
                 message: 'This is a protected route for instructor only',
             });
         }
+        console.log(" user Accountype is Instructor ")
+
         next();
 
     } catch (error) {

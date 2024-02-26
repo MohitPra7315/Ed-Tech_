@@ -23,8 +23,8 @@ import { useSelector } from "react-redux"
 import { ACCOUNT_TYPE } from "./utils/constant";
 import { InstructorCourses } from ".//Pages/Instructor_MyCourseP"
 import { EditCourse } from "../src/Components/Cores/Dashboard/EditCourse/editCourse"
-import {CataloagsDataPage} from "./Pages/Cataloags"
-import {Course_Details} from "./Pages/Course_Details"
+import { CataloagsDataPage } from "./Pages/Cataloags"
+import { Course_Details } from "./Pages/Course_Details"
 function App() {
   const { user } = useSelector((state) => state.profile)
   return (
@@ -32,8 +32,8 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="/catalog/:catalogName" element={<CataloagsDataPage/>}></Route>
-        <Route path="/courses/:id" element={<Course_Details/>}></Route>
+        <Route path="/catalog/:catalogName" element={<CataloagsDataPage />}></Route>
+        <Route path="/courses/:id" element={<Course_Details />}></Route>
         <Route path="/login" element={
           <OpenRoute>
             <LoginPage></LoginPage>
@@ -77,15 +77,11 @@ function App() {
         } />
 
         <Route
-
-          element={
-            <Protected>
-
-              <Dashboard></Dashboard>
-
-            </Protected>
-
+          element={<Protected>
+            <Dashboard></Dashboard>
+          </Protected>
           } >
+            {/* This is for Using OUTLET */}
           <Route path="/dashboard/my-profile" element={<Protected><MyProfile></MyProfile></Protected>}></Route>
           <Route path="/dashboard/settings" element={<Protected><Settings></Settings></Protected>}></Route>
           {

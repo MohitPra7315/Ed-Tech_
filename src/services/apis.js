@@ -8,6 +8,13 @@ export const categories = {
     ALL_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
 
 }
+
+
+export const PaymentEndPoint = {
+    CREATEORDER_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+    VERIFY_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
+    SENDPAYMENT_SUCCES_MAIL_API:BASE_URL+"/payment/sendPaymentSuccessEmail"
+}
 export const catalogData = {
     CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
 }
