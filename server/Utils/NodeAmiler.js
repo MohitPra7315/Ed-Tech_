@@ -4,16 +4,16 @@ const mailSender = async (email, title, body) => {
     try {
 
         const transporter = nodemailer.createTransport({
-            host: process.env.Mail_host,
+            host:'smtp.gmail.com',
             auth: {
-                user: process.env.Mail_User,
-                pass: process.env.Mail_Pass
+                user:'mohitprajapati14101998@gmail.com',
+                pass: 'nxckrhzadtnutvlh'
             }
         })
 
         let info = await transporter.sendMail({
             from: 'StudyNotion || CodeHelp - by Babbar',
-            to:`${email}`,
+            to:`mohitprajapati7315@gmail.com`,
             subject: `${title}`,
             html: `${body}`,
         })
@@ -21,6 +21,7 @@ const mailSender = async (email, title, body) => {
         return info
     } catch (error) {
         console.log(error.message)
+        console.error("Mail sender faat rha h ")
     }
 
 }

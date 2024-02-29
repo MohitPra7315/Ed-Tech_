@@ -7,25 +7,47 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 
 export const Course_Details = () => {
-const navigate=useNavigate()
+    const navigate = useNavigate()
     const courseID = useParams()
 
-
+    const dispatch = useDispatch()
     const { token } = useSelector((state) => state.auth)
     const { user } = useSelector((state) => state.profile)
 
-    console.log("token",token)
-    console.log("user",user)
 
+    const [courseData, setCourseData] = useState("")
+
+    const fetchCourseAllData = async () => {
+        try {
+            const data = await fetchCourseDetails(courseID.id)
+            console.log("fetchCourseDetails",data)
+            setCourseData(data)
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    // 1 APi-==> fetch Fulll Course Details
+    useEffect(() => {
+        fetchCourseAllData()
+    }, [courseID])
+
+
+    // 2 Api-==> fetch Rating and review
+    const [avgRatingAndReview, setavgRatingAndReview] = useState(0)
+    // const count = courseData
+    useEffect(() => {
+
+    }, [courseData])
 
 
     const handleBuyCourse = async () => {
         if (token) {
-            BuyCourse([courseID], token, user)
+            BuyCourse([courseID], token, user, navigate, dispatch)
         }
         else {
             toast.error("user is Not logged in")
-           navigate("/login")
+            navigate("/login")
         }
     }
 
