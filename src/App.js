@@ -25,6 +25,7 @@ import { InstructorCourses } from ".//Pages/Instructor_MyCourseP"
 import { EditCourse } from "../src/Components/Cores/Dashboard/EditCourse/editCourse"
 import { CataloagsDataPage } from "./Pages/Cataloags"
 import { Course_Details } from "./Pages/Course_Details"
+import {ViewCourse} from "./Pages/viewCourse"
 function App() {
   const { user } = useSelector((state) => state.profile)
   return (
@@ -81,7 +82,7 @@ function App() {
             <Dashboard></Dashboard>
           </Protected>
           } >
-            {/* This is for Using OUTLET */}
+          {/* This is for Using OUTLET */}
           <Route path="/dashboard/my-profile" element={<Protected><MyProfile></MyProfile></Protected>}></Route>
           <Route path="/dashboard/settings" element={<Protected><Settings></Settings></Protected>}></Route>
           {
@@ -101,6 +102,21 @@ function App() {
           }
 
 
+        </Route>
+
+
+
+
+{/* viewCourse page only for Student */}
+        <Route>
+          <Route element={<Protected><ViewCourse></ViewCourse></Protected> }>
+            {
+              user.accountType===ACCOUNT_TYPE.STUDENT&&(
+                <Route path="view-course/course/:courseId/section/:sectionId/subSection/:subSectionId"/>
+              )
+            }
+
+          </Route>
         </Route>
         <Route path="*" element={<Error />}></Route>
 

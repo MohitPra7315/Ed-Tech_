@@ -59,13 +59,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    courseProgress: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "CourseProgress"
-        }
-    ],
+   
     createdAt: {
         type: Date,
         default: Date.now()
@@ -73,8 +67,14 @@ const UserSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now()
-    }
-})
+    },
+    courseProgress: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "courseProgress",
+        },
+    ],
+}, { timestamps: true })
 
 
 module.exports = mongoose.model("user", UserSchema) 

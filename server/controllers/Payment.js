@@ -5,6 +5,7 @@ const mailSender = require("../Utils/NodeAmiler");
 const { courseEnrollmentEmail } = require("../mail/templates/courseEnrollmentEmail");
 const mongoose = require("mongoose")
 const { paymentSuccessEmail } = require("../mail/templates/PaymentSuccessEmail");
+// const courseProgress = require("../Models/CourseProgress")
 
 const crypto = require("crypto")
 
@@ -43,13 +44,13 @@ exports.capturePayment = async (req, res) => {
             const uid = new mongoose.Types.ObjectId(userId)
             console.log(typeof (uid))
 
-            // if (course.studentsEnrolled.includes(uid)) {
-            //     console.log("Student is already Enrolled")
-            //     return res
-            //         .status(200)
-            //         .json({ success: false, message: "Student is already Enrolled" })
+            if (course.studentsEnrolled.includes(uid)) {
+                console.log("Student is already Enrolled")
+                return res
+                    .status(200)
+                    .json({ success: false, message: "Student is already Enrolled" })
 
-            // }
+            }
 
 
 
@@ -104,7 +105,7 @@ module.exports.verifyPayment = async (req, res) => {
     const courses = req.body?.Courses
     const userId = req.user
 
-   
+
 
 
 
@@ -175,13 +176,25 @@ const enrolledCourses = async (Courses, userId, res) => {
             }
             console.log("Updated course: ", enrolledCourse)
 
+            // 
+            // const courseProgress = await courseProgress.create({
+            //     courseID: course_id.id,
+            //     userId: userId,
+            //     completedVideos: [],
+            // })
             // step-2 Find the student and add the course to their list of enrolled courses
-            console.log("types of User id,", typeof (userId))
-            console.log(" User id,", userId)
+
+
 
 
             const enrolledStudent = await User.findOneAndUpdate({ _id: userId.id },
-                { $push: { courses: course_id.id } },
+                {
+                    $push:
+                    {
+                        courses: course_id.id,
+                        // courseProgress: courseProgress._id,
+                    }
+                },
                 { new: true })
 
             if (!enrolledStudent) {
@@ -202,16 +215,13 @@ const enrolledCourses = async (Courses, userId, res) => {
                 )
             )
             console.log("Email sent successfully: ", emailResponse)
-
-
         } catch (error) {
             console.log(error)
             return res.status(400).json({ success: false, error: error.message })
         }
-
     }
-
 }
+
 
 
 

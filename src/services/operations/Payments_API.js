@@ -67,11 +67,11 @@ export const BuyCourse = async (Courses, token, user_details, navigate, dispatch
                 email: `mohitprajapati7315@gmail.com`,
                 contact: "8398058545"
             },
-            handler:  function (response) {
+            handler: function (response) {
                 // send succcesfully mail
 
                 sendPaymentSuccessEmail(response, orderResponse.data.data.amount, token)
-        verifyPayment({ ...response, Courses }, token, navigate, dispatch)
+                verifyPayment({ ...response, Courses }, token, navigate, dispatch)
                 console.log("verify Payment has been sent")
                 //   console.log("sendPAYMent succesfully mail has been sent", response)
 

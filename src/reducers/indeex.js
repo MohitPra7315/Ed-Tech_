@@ -7,7 +7,7 @@ import coursesReducer from "../Slices/coursesSlice";
 const rootReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
-    cart: cartReducer,
+cart:cartReducer,
     course: coursesReducer
 })
 

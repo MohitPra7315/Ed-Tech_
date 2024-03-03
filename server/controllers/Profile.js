@@ -1,7 +1,9 @@
 
 const user = require("../Models/User")
 const Profile = require("../Models/Profile")
-const { uploadImageCloudinary } = require("../Utils/imageUploder")
+const Course =require("../Models/Course")
+const { uploadImageCloudinary } = require("../Utils/imageUploder");
+const { default: mongoose } = require("mongoose");
 
 exports.Createprofile = async (req, res) => {
   try {
@@ -186,28 +188,37 @@ exports.Profileimage = async (req, res) => {
 
 exports.deleteAccount = async (req, res) => {
   try {
-    // TODO: Find More on Job Schedule
-    // const job = schedule.scheduleJob("10 * * * * *", function () {
-    console.log("The answer to life, the universe, and everything!");
-    // });
-    const id = req.user.id;
-    console.log("printing ID:-", id);
-    const user = await user.findById({ _id: id });
-    if (!user) {
+
+    // step-1 fetch userID 
+    const id = req.user.id
+       const UserData = await user.findById({ _id: id })
+    if (!UserData) {
       return res.status(404).json({
         success: false,
         message: "User not found",
-      });
+      })
     }
     // Delete Assosiated Profile with the User
-    await Profile.findByIdAndDelete({ _id: user.additionalDetails });
-    // TODO: Unenroll User From All the Enrolled Courses
-    // Now Delete User
-    await User.findByIdAndDelete({ _id: id });
+
+    await Profile.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(user.additionalDetails) });
+ 
+    // deleted enrolled course from user Course Entry
+
+    for(const courseId of UserData.courses){
+      await Course.findByIdAndUpdate(
+        courseId,
+        { $pull: { studentsEnrolled: id } },
+        { new: true }
+      )
+    }
+    
+    
+    const UserDatas = await user.findByIdAndDelete({ _id: id })
     res.status(200).json({
       success: true,
       message: "User deleted successfully",
     });
+
   } catch (error) {
     console.log(error);
     res
@@ -220,10 +231,18 @@ exports.getEnrolledCourses = async (req, res) => {
   try {
     console.log("get enrolled backend controller")
     const userId = req.user.id
-    const userDetails = await user.findOne({
-      _id: userId,
-    }).populate("course").exec()
-    console.log("get enrolled user", userDetails)
+    console.log(" userId", userId)
+
+    const userDetails = await user.findById(userId).populate({
+      path: "courses",
+      populate: {
+        path: "courseContent",
+        populate: {
+          path: "subSection"
+        }
+      }
+    }).exec()
+    console.log("get enrolled user", userDetails.courses)
     if (!userDetails) {
       return res.status(400).json({
         success: false,

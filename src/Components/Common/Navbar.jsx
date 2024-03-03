@@ -9,6 +9,7 @@ import { ProfileDropdown } from "../Cores/Auth/ProfileDropDown"
 import { apiConnector } from "../../services/apiConnection"
 import { categories } from "../../services/apis"
 import { toast } from "react-hot-toast"
+import { PiShoppingCartLight } from "react-icons/pi";
 export function Navbar() {
 
     const location = useLocation();
@@ -131,11 +132,13 @@ export function Navbar() {
                     </ul>
                 </nav>
 
+
                 <div className="flex gap-x-4 items-center justify-center">
+
                     {
                         user && user?.accounType != "Instructor" && (
                             <Link to="/dashboard/cart">
-
+                                <PiShoppingCartLight className="text-white" />
                             </Link>
                         )
                     }

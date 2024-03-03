@@ -416,11 +416,7 @@ exports.Login = async (req, res) => {
                 httpOnly: true,
             }
 
-            // return res.status(200).json({
-            //     success: true,
-            //     User: userdata,
-            //     message: "Succesfully Login"
-            // })
+
 
             return res.cookie("token", token, options).status(200).json({
                 success: true,
