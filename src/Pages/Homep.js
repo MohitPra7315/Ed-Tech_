@@ -148,7 +148,7 @@ function HomePage() {
                         <CTButton active={true} linkWith={"sigup"} >
 
                             <div className="flex  justify-center items-center gap-3">
-                                pagal h k
+                               Learn 
                                 <TiArrowRight className="text-[18px]"></TiArrowRight>
                             </div>
                         </CTButton>

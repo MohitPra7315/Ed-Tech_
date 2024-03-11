@@ -36,7 +36,7 @@ export function SignupForm() {
         }
     )
 
-    // console.log(formData)
+ 
 
     function changeHandler(event) {
 
@@ -66,13 +66,13 @@ export function SignupForm() {
         // send otp for verifying the email
         dispatch(sendOtp(formData.email, navigate))
 
-        setFormData = {
+        setFormData({
             fName: "",
             lName: "",
             email: "",
             password: "",
             confirm: ""
-        }
+        })
         setAccounttype(ACCOUNT_TYPE.STUDENT)
 
     }

@@ -215,19 +215,15 @@ exports.SignUp = async (req, res) => {
                 message: "Password and Confirm Password do not match. Please try again."
             })
         }
-
         // check user is already here or not
         const userdata = await user.findOne({ email })
-        console.log(userdata, " User response is thier");
-
-        if (userdata) {
+              if (userdata) {
             return res.status(400).json({
                 success: false,
                 message: "User aldready registered,please Sign in to Continue"
             })
-        }
-
-        //  validate most recent Otp
+        }   
+       //  validate most recent Otp
         const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
         console.log(response, "OTP response is thier");
         if (response.length === 0) {
@@ -496,3 +492,4 @@ exports.changePasssword = async (req, res) => {
         })
     }
 }
+
