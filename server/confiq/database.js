@@ -14,18 +14,3 @@ exports.dbconnection =  async() => {
             process.exit(1)
         })
 }
-//  const connection = async () => {
-//     mongoose.connect(process.env.MONGODB_URL, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-
-//     }).then(() => console.log("Dbconnection succesfully "))
-//         .catch((error) => {
-//             console.log("Databse connention Error")
-//             console.error(error);
-//             process.exit(1)
-
-//         })
-// }
-
-// module.exports=connection();

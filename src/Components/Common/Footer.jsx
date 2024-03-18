@@ -7,6 +7,7 @@ import Logo from "../../assets/Logo/Logo-Full-Light.png";
 
 // Icons
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
+console.log(FooterLink2)
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
@@ -158,11 +159,10 @@ const Footer = () => {
               return (
                 <div
                   key={i}
-                  className={` ${
-                    BottomFooter.length - 1 === i
+                  className={` ${BottomFooter.length - 1 === i
                       ? ""
                       : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
-                  } px-3 `}
+                    } px-3 `}
                 >
                   <Link to={ele.split(" ").join("-").toLocaleLowerCase()}>
                     {ele}

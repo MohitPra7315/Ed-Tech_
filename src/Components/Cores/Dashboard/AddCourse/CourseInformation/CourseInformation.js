@@ -29,26 +29,19 @@ export const CourseInformation = () => {
     const [loading, setLoading] = useState(false)
     const [courseCategories, setCourseCategories] = useState([])
 
-    // console.log("imgae from register ====>>>>>>", getValues().courseImage)
+
+
+
     useEffect(() => {
-        const getCategories = async () => {
-            const toastId = toast.loading("Loading....!")
-
-            try {
-
-                const categories = await FetchAllCourseCategory()
-                console.log("Category data for --->>>", categories)
-                if (categories.length > 0) {
-                    // console.log("categories", categories)
-                    setCourseCategories(categories)
-                }
-            } catch (error) {
-                console.log("error ", error.message)
+        setLoading(true)
+        const fetcheAllCategory = async () => {
+            const response = await FetchAllCourseCategory()
+            if (response.length > 0) {
+                setCourseCategories(response)
             }
-            toast.dismiss(toastId)
         }
-        // if form is in edit mode
-        getCategories()
+        fetcheAllCategory()
+        setLoading(false)
         if (editCourse) {
             // console.log("data populated", editCourse)
             setValue("courseTitle", course.courseName)
@@ -60,103 +53,108 @@ export const CourseInformation = () => {
             setValue("courseRequirements", course.instructions)
             setValue("courseImage", course.thumbnail)
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const isFormUpdated = () => {
-        const currentValues = getValues()
-        // console.log("changes after editing form values:", currentValues)
-        if (
-            currentValues.courseTitle !== course.courseName ||
-            currentValues.courseShortDesc !== course.courseDescription ||
-            currentValues.coursePrice !== course.price ||
-            currentValues.courseTags.toString() !== course.tag.toString() ||
-            currentValues.courseBenefits !== course.whatYouWillLearn ||
-            currentValues.courseCategory._id !== course.category._id ||
-            currentValues.courseRequirements.toString() !==
-            course.instructions.toString() ||
-            currentValues.courseImage !== course.thumbnail
-        ) {
+    const formUpdate = () => {
+        let current = getValues()
+        if (current.courseTitle !== course.courseName ||
+            current.courseShortDesc !== course.courseDescription ||
+            current.coursePrice !== course.price ||
+            current.courseTags.toString() !== course.tag.toString() ||
+            current.courseBenefits !== course.whatYouWillLearn ||
+            current.courseCategory._id !== course.category._id ||
+            current.courseRequirements.toString() !== course.instructions.toString() ||
+            current.courseImage !== course.thumbnail) {
             return true
         }
-        return false
+        else {
+            return false
+        }
     }
 
-    //   handle next button click
-    const onSubmit = async (data) => {
-        console.log("Clicked on onSumbit handler", data)
 
+    const onSubmit = async (data) => {
+        const toastId = toast.loading("Loading...")
+        // Edit  course logic from there
         if (editCourse) {
-            // const currentValues = getValues()
-            // console.log("changes after editing form values:", currentValues)
-            // console.log("now course:", course)
-            // console.log("Has Form Changed:", isFormUpdated())
-            if (isFormUpdated()) {
-                const currentValues = getValues()
-                const formData = new FormData()
-                // console.log(data)
-                formData.append("courseId", course._id)
-                if (currentValues.courseTitle !== course.courseName) {
-                    formData.append("courseName", data.courseTitle)
+            console.log("redux data for Edit course".course)
+            if (course) {
+                setValue("courseName", course.courseName)
+                setValue("courseDescription", course.courseDescription)
+                setValue("price", course.price)
+                setValue("tag", course.tag)
+                setValue("whatYouWillLearn", course.whatYouWillLearn)
+                setValue("categoryId", course.category)
+                setValue("status", course.status)
+                setValue("instructions", JSON.stringify(course.Requirements))
+                setValue("thumnaileImg", course.thumbnail[0])
+            }
+            if (formUpdate()) {
+                const current = getValues()
+                let formdataEdit = new FormData()
+                if (course.courseName !== current.courseName) {
+                    formdataEdit.append("courseName", data.courseName)
                 }
-                if (currentValues.courseShortDesc !== course.courseDescription) {
-                    formData.append("courseDescription", data.courseShortDesc)
+                if (current.courseShortDesc !== course.courseDescription) {
+                    formdataEdit.append("courseDescription", data.courseShortDesc)
                 }
-                if (currentValues.coursePrice !== course.price) {
-                    formData.append("price", data.coursePrice)
+                if (current.coursePrice !== course.price) {
+                    formdataEdit.append("price", data.coursePrice)
                 }
-                if (currentValues.courseTags.toString() !== course.tag.toString()) {
-                    formData.append("tag", JSON.stringify(data.courseTags))
+                if (current.courseTags.toString() !== course.tag.toString()) {
+                    formdataEdit.append("tag", JSON.stringify(data.courseTags))
                 }
-                if (currentValues.courseBenefits !== course.whatYouWillLearn) {
-                    formData.append("whatYouWillLearn", data.courseBenefits)
+                if (current.courseBenefits !== course.whatYouWillLearn) {
+                    formdataEdit.append("whatYouWillLearn", data.courseBenefits)
                 }
-                if (currentValues.courseCategory._id !== course.category._id) {
-                    formData.append("categoryId", data.courseCategory)
+                if (current.courseCategory._id !== course.category._id) {
+                    formdataEdit.append("categoryId", data.courseCategory)
                 }
                 if (
-                    currentValues.courseRequirements.toString() !== course.instructions.toString()) {
-                    formData.append("instructions", JSON.stringify(data.courseRequirements))
+                    current.courseRequirements.toString() !== course.instructions.toString()) {
+                    formdataEdit.append("instructions", JSON.stringify(data.courseRequirements))
                 }
-                if (currentValues.courseImage !== course.thumbnail) {
-                    formData.append("thumbnailImage", data.courseImage[0])
+                if (current.courseImage !== course.thumbnail) {
+                    formdataEdit.append("thumnaileImg", data.courseImage[0])
                 }
-                console.log("Edit Form data: ", formData.thumbnailImage)
-                setLoading(true)
-                const result = await editCourseDetails(formData, token)
-                setLoading(false)
+                const toastId = toast.loading("Loading...")
+                const result = await editCourseDetails(formdataEdit, token)
+                console.log("edit course response", result)
+                toast.dismiss(toastId)
                 if (result) {
                     dispatch(setStep(2))
                     dispatch(setCourse(result))
                 }
             } else {
-                toast.error("No changes made to the form")
+                toast.error("No made change in Course")
             }
             return
         }
 
-        let formData = new FormData()
-        formData.append("courseName", data.courseTitle)
-        formData.append("courseDescription", data.courseShortDesc)
-        formData.append("price", data.coursePrice)
-        formData.append("tag", JSON.stringify(data.courseTags))
-        formData.append("whatYouWillLearn", data.courseBenefits)
-        formData.append("categoryId", data.courseCategory)
-        formData.append("status", COURSE_STATUS.DRAFT)
-        formData.append("instructions", JSON.stringify(data.courseRequirements))
-        formData.append("thumnaileImg", data.courseImage[0])
-
-        setLoading(true)
-
-        const result = await addCourseDetails(formData, token)
-        console.log("RESPOSE OF CREATE COURSE", result)
-        if (result) {
-            dispatch(setCourse(result))
-            dispatch(setStep(2))
+        // add course login from there
+        const formdataa = {
+            courseName: data.courseTitle,
+            courseDescription: data.courseShortDesc,
+            price: data.coursePrice,
+            tag: JSON.stringify(data.courseTags),
+            categoryId: data.courseCategory,
+            status: COURSE_STATUS.DRAFT,
+            instructions: JSON.stringify(data.courseRequirements),
+            thumnaileImg: data.courseImage[0],
+            whatYouWillLearn: data.courseBenefits
         }
-        setLoading(false)
+        console.log("byu ggy7y7", formdataa)
+        const addcourseData = async () => {
+            const res = await addCourseDetails(formdataa, token)
+            if (res) {
+                dispatch(setCourse(res))
+                dispatch(setStep(2))
+            }
+        }
+        toast.dismiss(toastId)
     }
+
 
     return (
         <form
@@ -169,11 +167,12 @@ export const CourseInformation = () => {
                     Course Title <sup className="text-pink-200">*</sup>
                 </label>
                 <input
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
+                    name="courseTitle"
+                    id="courseTitle"
+
+                    placeholder="Enter Course Title"
                     className="mb-4"
-                    {...register("userName", { required: true })}
+                    {...register("courseTitle", { required: true })}
                 />
                 {errors.courseTitle && (
                     <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -237,7 +236,6 @@ export const CourseInformation = () => {
                 >
                     <option value="" disabled>
                         Choose a Category
-
                     </option>
                     {!loading &&
                         courseCategories?.map((category, indx) => (
@@ -263,7 +261,6 @@ export const CourseInformation = () => {
                 getValues={getValues}
             />
             {/* Course Thumbnail Image */}
-
             <div className="flex flex-col space-y-2">
                 <label className="text-sm text-richblack-5" htmlFor="courseThumbnail">
                     Course Thumbnail <sup className="text-pink-200">*</sup>
@@ -281,7 +278,6 @@ export const CourseInformation = () => {
                     </span>
                 )}
             </div>
-
             {/* <Upload
                 name="courseImage"
                 label="Course Thumbnail"
@@ -323,8 +319,7 @@ export const CourseInformation = () => {
                         onClick={() => dispatch(setStep(2))}
                         disabled={loading}
                         className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
-                    >
-                        Continue Wihout Saving
+                    > Continue Wihout Saving
                     </button>
                 )}
                 <button

@@ -14,7 +14,7 @@ const VedioCourseDetails = () => {
     console.log(" courseEntire data", courseEntireDetail)
     const [vedioData, setVedioData] = useState([])
     const isFirstvedio = () => {
-        if (courseEntireDetail) {
+        if (courseEntireDetail.courseContent) {
             const currentSection = courseEntireDetail.courseContent.findIndex((section) => section._id === sectionId)
             console.log(" coursection", currentSection)
             const currentSubSectionIndex = courseEntireDetail.courseContent[currentSection].subSection.findIndex((subSection) => subSection._id === subSectionId)
@@ -24,7 +24,8 @@ const VedioCourseDetails = () => {
             const currentVedio = courseEntireDetail.courseContent[currentSection].subSection[currentSubSectionIndex]._id
             console.log(" currentSubsection", currentVedio)
         } else {
-          return  false
+
+            return false
         }
     }
     isFirstvedio()

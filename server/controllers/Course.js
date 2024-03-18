@@ -15,7 +15,7 @@ exports.CreateCourse = async (req, res) => {
         // fetch data from rerquest ki body
         const { courseName, courseDescription, price, whatYouWillLearn, categoryId,
             tag, instructions, status } = req.body;
-        console.log("Check file is thier", req.files.thumnaileImg)
+        console.log("Check file is thier", req.files)
         console.log("Data from body in database--====>>>", courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions)
 
 
@@ -244,13 +244,12 @@ exports.getFullCourseDetails = async (req, res) => {
                 },
             })
             .exec()
+        let courseProgressCount = await courseProgress.findOne({
+            courseID: courseId,
+            userId: userId,
+        })
 
-        // let courseProgressCount = await courseProgress.findOne({
-        //     courseID: courseId,
-        //     userId: userId,
-        // })
-
-        // console.log("courseProgressCount : ", courseProgressCount)
+        console.log("courseProgressCount : ", courseProgressCount)
 
         if (!courseDetails) {
             return res.status(400).json({
@@ -259,12 +258,12 @@ exports.getFullCourseDetails = async (req, res) => {
             })
         }
 
-        // if (courseDetails.status === "Draft") {
-        //   return res.status(403).json({
-        //     success: false,
-        //     message: `Accessing a draft course is forbidden`,
-        //   });
-        // }
+        if (courseDetails.status === "Draft") {
+            return res.status(403).json({
+                success: false,
+                message: `Accessing a draft course is forbidden`,
+            });
+        }
 
         let totalDurationInSeconds = 0
         courseDetails.courseContent.forEach((content) => {
@@ -273,7 +272,7 @@ exports.getFullCourseDetails = async (req, res) => {
                 totalDurationInSeconds += timeDurationInSeconds
             })
         })
-        console.log("totalDurationInSeconds",totalDurationInSeconds)
+        console.log("totalDurationInSeconds", totalDurationInSeconds)
 
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
@@ -282,9 +281,9 @@ exports.getFullCourseDetails = async (req, res) => {
             data: {
                 courseDetails,
                 totalDuration,
-                // completedVideos: courseProgressCount?.completedVideos
-                //     ? courseProgressCount?.completedVideos
-                //     : [],
+                completedVideos: courseProgressCount?.completedVideos
+                    ? courseProgressCount?.completedVideos
+                    : [],
             },
         })
     } catch (error) {
@@ -351,15 +350,12 @@ exports.getCourseDetails = async (req, res) => {
 
 // Get a list of Course for a given Instructor
 exports.getInstructorCourses = async (req, res) => {
-    try {
-        // Get the instructor ID from the authenticated user or request body
+    try {// Get the instructor ID from the authenticated user or request body
         const instructorId = req.user.id
-
         // Find all courses belonging to the instructor
         const instructorCourses = await Course.find({
             instructor: instructorId,
         }).sort({ createdAt: -1 })
-
         // Return the instructor's courses
         res.status(200).json({
             success: true,
@@ -394,7 +390,6 @@ exports.deleteCourse = async (req, res) => {
                 $pull: { courses: courseId },
             });
         }
-
         // Delete sections and sub-sections
         const courseSections = course.courseContent;
         for (const sectionId of courseSections) {
@@ -409,11 +404,9 @@ exports.deleteCourse = async (req, res) => {
             // Delete the section
             await section.findByIdAndDelete(sectionId);
         }
-
         // Delete the course
         console.log("END COURSE DELETE ");
         await Course.findByIdAndDelete(courseId);
-
         return res.status(200).json({
             success: true,
             message: "Course deleted successfully",

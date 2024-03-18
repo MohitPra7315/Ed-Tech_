@@ -20,10 +20,11 @@ const VedioCourseSlider = ({ courseData, setActive, ReviewToggle }) => {
         courseEntireDetail,
         courseSectionDetails,
         noOfLectures
-      
+
     } = useSelector((state) => state.courseViewDetail)
     console.log("courseData", vedioStatus)
     useEffect(() => {
+        // first render fetched from url current course sectionId and SubSectionId
         const firstrender = () => {
             if (!courseData?.courseContent)
                 return

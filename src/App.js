@@ -26,6 +26,7 @@ import { EditCourse } from "../src/Components/Cores/Dashboard/EditCourse/editCou
 import { CataloagsDataPage } from "./Pages/Cataloags"
 import { Course_Details } from "./Pages/Course_Details"
 import { ViewCourse } from "./Pages/viewCourse"
+import  instructorDetail  from "./Pages/InstructorDetails";
 import VedioCourseDetails from "./Components/Cores/ViewCourse/VedioCourseDetails"
 function App() {
   const { user } = useSelector((state) => state.profile)
@@ -33,9 +34,11 @@ function App() {
     <div className="w-screen min-h-screen  bg-richblack-900 flex flex-col font-inter">
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" element={<HomePage></HomePage>}></Route>
+        <Route path="/" element={<HomePage />}></Route>
         <Route path="/catalog/:catalogName" element={<CataloagsDataPage />}></Route>
         <Route path="/courses/:id" element={<Course_Details />}></Route>
+        <Route path="/instructor-detail" element={<div className="text-3xl text-white ">this is Suces instructor page....</div>}></Route>
+        <Route path="/success-stories" element={<div className="text-3xl text-white">this is Suces Stories page....</div>}></Route>
         <Route path="/login" element={
           <OpenRoute>
             <LoginPage></LoginPage>
@@ -45,8 +48,8 @@ function App() {
           <OpenRoute>
             <SignupPage />
           </OpenRoute>
-        }></Route>
-
+        }>
+        </Route>
         <Route path="/forgot-password"
           element={
             <OpenRoute>
@@ -64,32 +67,21 @@ function App() {
 
 
         <Route path="/verify-email"
-          element={
-            <OpenRoute>
-              <VerifyValidEmailPage />
-            </OpenRoute>
-          } />
-
-        <Route path="/about" element={
-          <About></About>
-        } />
-
-        <Route path="/contact" element={
-          <ContactUs></ContactUs>
-        } />
+          element={<OpenRoute><VerifyValidEmailPage /></OpenRoute>}
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
 
         <Route
-          element={<Protected>
-            <Dashboard></Dashboard>
-          </Protected>
-          } >
-          {/* This is for Using OUTLET */}
-          <Route path="/dashboard/my-profile" element={<Protected><MyProfile></MyProfile></Protected>}></Route>
-          <Route path="/dashboard/settings" element={<Protected><Settings></Settings></Protected>}></Route>
+          element={<Protected><Dashboard /></Protected>}
+        >
+          {/* This is for Using OUTLET  this routes for all user role*/}
+          <Route path="/dashboard/my-profile" element={<Protected><MyProfile /></Protected>}></Route>
+          <Route path="/dashboard/settings" element={<Protected><Settings /></Protected>}></Route>
           {
             user?.accountType === ACCOUNT_TYPE.STUDENT && (<>
-              <Route path="/dashboard/enrolled-courses" element={<Protected><EnrolledCouress></EnrolledCouress></Protected>}></Route>
-              <Route path="/dashboard/Cart" element={<Protected><Cart></Cart></Protected>}></Route>
+              <Route path="/dashboard/enrolled-courses" element={<Protected><EnrolledCouress /></Protected>}></Route>
+              <Route path="/dashboard/Cart" element={<Protected><Cart /></Protected>}></Route>
 
             </>)
           }
@@ -110,10 +102,10 @@ function App() {
 
         {/* viewCourse page only for Student */}
         <Route>
-          <Route element={<Protected><ViewCourse></ViewCourse></Protected>}>
+          <Route element={<Protected><ViewCourse /></Protected>}>
             {
               user && user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VedioCourseDetails/>} />
+                <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VedioCourseDetails />} />
               )
             }
 

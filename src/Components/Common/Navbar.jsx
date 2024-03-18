@@ -59,7 +59,7 @@ export function Navbar() {
     }, [])
 
     useEffect(() => {
-        // let token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null
+        let token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null
         !token && (dispatch(logout(navigate))  )
     }, [])
 
