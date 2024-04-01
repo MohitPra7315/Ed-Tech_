@@ -18,7 +18,7 @@ export const sendOtp = (email, navigate) => {
         dispatch(setLoading(true))
         try {
             // const response = await apiConnector("POST", SENDOTP_API, { email })
-            const response = await axios.post("http://localhost:5000/api/v1/auth/sendOtp", { email })
+            const response = await axios.post("http://localhost:5000/v1/auth/sendOtp", { email })
             console.log("sendotp is got in response", response.data)
             if (!response.data.success) {
                 throw new Error(response.data.message)
@@ -26,8 +26,8 @@ export const sendOtp = (email, navigate) => {
             toast.success("otp sended succesfully")
             navigate("/verify-email")
         } catch (error) {
-            console.error("fatt rha h code otp send m ", error)
-            toast.error("fatt rha h code otp send m ")
+            console.error("Couldn't send Otp", error);
+            toast.error("Couldn't send Otp")
         }
         dispatch(setLoading(false))
         toast.dismiss(toastId)

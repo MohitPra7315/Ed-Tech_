@@ -9,11 +9,7 @@ module.exports = {
       "edu-sa": ["Edu SA Beginner", "cursive"],
       mono: ["Roboto Mono", "monospace"],
     },
-<<<<<<< HEAD
-    light:{
-=======
     light: {
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
       background: '#FFFFFF',
     },
     colors: {
@@ -41,7 +37,7 @@ module.exports = {
       richblack: {
         5: "#F1F2FF",
         25: "#DBDDEA",
-        50: "#C5C7D4",
+        50: "#7786666",
         100: "#AFB2BF",
         200: "#999DAA",
         300: "#838894",
@@ -49,8 +45,8 @@ module.exports = {
         500: "#585D69",
         600: "#424854",
         700: "#2C333F",
-        800: "#161D29",
-        900: "#000814",
+        800: "#167746",
+        900: "#ffffff",
       },
       richblue: {
         5: "#ECF5FF",
