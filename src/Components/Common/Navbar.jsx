@@ -10,6 +10,11 @@ import { apiConnector } from "../../services/apiConnection"
 import { categories } from "../../services/apis"
 import { toast } from "react-hot-toast"
 import { PiShoppingCartLight } from "react-icons/pi";
+import { AiOutlineMenu } from "react-icons/ai"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { logout } from "../../services/operations/authAPI"
+import { resetCart } from "../../Slices/cartSlice"
 export function Navbar() {
 
     const location = useLocation();
@@ -18,7 +23,8 @@ export function Navbar() {
 
     }
 
-
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     // test for check the  catalog data show on display
 
     const [currentCourseLink, setCurrentCourseLink] = useState(null)
@@ -36,8 +42,6 @@ export function Navbar() {
     const [loading, setLoading] = useState(false)
 
 
-
-    console.log("check category of Course", subLinks)
     useEffect(() => {
         const AllCategory = async () => {
             setLoading(true)
@@ -54,6 +58,10 @@ export function Navbar() {
         AllCategory();
     }, [])
 
+    useEffect(() => {
+        // let token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null
+        !token && (dispatch(logout(navigate))  )
+    }, [])
 
     return (
         <div className="h-14 border-b-[2px] border-richblack-600 justify-center items-center">
@@ -67,7 +75,7 @@ export function Navbar() {
                     </img>
                 </Link>
 
-                <nav>
+                <nav className="hidden md:block">
                     <ul className="flex flex-row gap-4">
                         {
                             NavbarLinks.map((link, index) => {
@@ -167,8 +175,10 @@ export function Navbar() {
                         token !== null && (<ProfileDropdown></ProfileDropdown>)
                     }
 
+                    <button className="mr-4 md:hidden">
+                        <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+                    </button>
                 </div>
-
 
             </div>
 

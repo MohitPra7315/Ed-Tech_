@@ -7,126 +7,6 @@ const jwt = require("jsonwebtoken")
 const mailSender = require("../Utils/NodeAmiler")
 
 require("dotenv").config()
-// exports.sendOtp = async (req, res) => {
-//     try {
-//         // fetch email from req body
-//         const { email } = req.body;
-//         // user exist or not 
-
-//         const USerdata = await user.findOne({ email })
-
-//         //  ifuser will get 401
-//         if (USerdata) {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: "user already registered"
-//             })
-//         }
-
-//         // otp generate
-
-
-
-//         // check Unique  Otp  or Not ?
-
-//         try {
-
-//             const resultOtp = await OTP.find({ otp: otp }).
-//                 console.log("Result is Generate OTP Func");
-//             console.log("OTP", otp);
-//             console.log("Result", resultOtp);
-//             while (resultOtp) {
-//                 otp = otpGenerator.generate(6, {
-//                     upperCaseAlphabets: false,
-//                     lowerCaseAlphabets: false,
-//                     specialChars: false
-//                 });
-
-//                 const resultOtp = await OTP.findOne({ otp: otp })
-//             }
-//             return res.status(200).json({
-//                 success: true,
-//                 message: "otp uniquew created"
-//             })
-//         } catch (error) {
-//             return res.status(500).json({
-//                 success: false,
-//                 message: "otp  not error uniquew created"
-//             })
-//         }
-//         // created the otp inside the otp Schema
-
-
-
-//         const savedOtp = await OTP.create({
-//             email, otp
-//         })
-
-//         console.log("saved oto")
-//         // send the otp on mail for confirmation
-
-//         res.status(200).json({
-//             success: true,
-//             otp: savedOtp,
-//             message: "created new otp at database"
-//         })
-
-
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "error wjile creating new otp at database",
-//             error: error.message
-//         })
-//     }
-// }
-
-
-// exports.sendOtp = async (req, res) => {
-//     try {
-//         const { email } = req.body;
-
-//         // Check if user is already present
-//         // Find user with provided email
-//         const checkUserPresent = await user.findOne({ email });
-//         // to be used in case of signup
-
-//         // If user found with provided email
-//         if (checkUserPresent) {
-//             // Return 401 Unauthorized status code with error message
-//             return res.status(401).json({
-//                 success: false,
-//                 message: `User is Already Registered`,
-//             });
-//         }
-
-//         var ottp = otpGenerator.generate(6, {
-//             upperCaseAlphabets: false,
-//             lowerCaseAlphabets: false,
-//             specialChars: false,
-//         });
-//         const result = await OTP.findOne({ otp: ottp });
-//         console.log("Result is Generate OTP Func");
-//         console.log("OTP", ottp);
-//         console.log("Result", result);
-//         while (result) {
-//             otp = otpGenerator.generate(6, {
-//                 upperCaseAlphabets: false,
-//             });
-//         }
-//         const otpPayload = { email, ottp };
-//         const otpBody = await OTP.create(otpPayload);
-//         console.log("OTP Body", otpBody);
-//         res.status(200).json({
-//             success: true,
-//             message: `OTP Sent Successfully`,
-//             otp,
-//         });
-//     } catch (error) {
-//         console.log(error.message);
-//         return res.status(500).json({ success: false, error: error.message });
-//     }
-// };
 
 exports.sendotp = async (req, res) => {
     try {
@@ -215,19 +95,15 @@ exports.SignUp = async (req, res) => {
                 message: "Password and Confirm Password do not match. Please try again."
             })
         }
-
         // check user is already here or not
         const userdata = await user.findOne({ email })
-        console.log(userdata, " User response is thier");
-
-        if (userdata) {
+              if (userdata) {
             return res.status(400).json({
                 success: false,
                 message: "User aldready registered,please Sign in to Continue"
             })
-        }
-
-        //  validate most recent Otp
+        }   
+       //  validate most recent Otp
         const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
         console.log(response, "OTP response is thier");
         if (response.length === 0) {
@@ -288,88 +164,10 @@ exports.SignUp = async (req, res) => {
     }
 }
 
-// validate email
-// 2 password metch
-// find most recent otp from DB
-// valid Otp
-// Hash password
-// Entery create DB
 
-
-
-
-// Login controllers
-// exports.login = async (req, res) => {
-//     try {
-//         // Get email and password from request body
-//         const { email, password } = req.body;
-
-//         // Check if email or password is missing
-//         if (!email || !password) {
-//             // Return 400 Bad Request status code with error message
-//             return res.status(400).json({
-//                 success: false,
-//                 message: `Please Fill up All the Required Fields`,
-//             });
-//         }
-
-//         // Find user with provided email
-//         const userdata = await user.findOne({ email }).populate("additionalDetails");
-
-//         // If user not found with provided email
-//         if (!userdata) {
-//             // Return 401 Unauthorized status code with error message
-//             return res.status(401).json({
-//                 success: false,
-//                 message: `User is not Registered with Us Please SignUp to Continue`,
-//             });
-//         }
-
-//         // Generate JWT token and Compare Password
-//         if (await bcrypt.compare(password, user.password)) {
-//             const token = jwt.sign(
-//                 { email: user.email, id: user._id, accountType: user.accountType },
-//                 process.env.JWT_SECRET,
-//                 {
-//                     expiresIn: "24h",
-//                 }
-//             );
-
-//             // Save token to user document in database
-//             userdata = userdata.toObject();
-
-//             userdata.token = token;
-//             userdata.password = undefined;
-//             userdata.confirmNewPassword = undefined
-//             // Set cookie for token and return success response
-//             const options = {
-//                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-//                 httpOnly: true,
-//             };
-//             res.cookie("token", token, options).status(200).json({
-//                 success: true,
-//                 token,
-//                 User: userdata,
-//                 message: `User Login Success`,
-//             });
-//         } else {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: `Password is incorrect`,
-//             });
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         // Return 500 Internal Server Error status code with error message
-//         return res.status(500).json({
-//             success: false,
-//             message: `Login Failure Please Try Again`,
-//         });
-//     }
-// }
 exports.Login = async (req, res) => {
     try {
-        console.log("JWT_SECRET", process.env.JWT_SECRET)
+       
 
         // Get email and password from request body
         const { email, password } = req.body;
@@ -408,7 +206,7 @@ exports.Login = async (req, res) => {
 
             userdata = userdata.toObject();
             userdata.token = token,
-                userdata.password = undefined
+           userdata.password = undefined
             userdata.confirmPassword = undefined
 
             let options = {
@@ -496,3 +294,4 @@ exports.changePasssword = async (req, res) => {
         })
     }
 }
+

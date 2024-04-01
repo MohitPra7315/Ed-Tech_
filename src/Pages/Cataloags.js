@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { apiConnector } from "../services/apiConnection"
-import { categories } from "../services/apis"
+import { catalogData, categories } from "../services/apis"
 import { toast } from "react-hot-toast"
 import { useSelector } from "react-redux"
 import { Error } from "../Pages/ErrorPage";
@@ -11,45 +11,36 @@ import { CourseSlider } from "../Components/Cores/Catalog/CourseSlider"
 import { Course_Card } from "../Components/Cores/Catalog/Course_Card"
 export const CataloagsDataPage = () => {
 
-    const catalogName = useParams()
+    const { catalogName } = useParams()
 
     const { token } = useSelector((state) => state.auth)
     const [loading, setLoading] = useState(false)
     const [catalogPageData, setCatalogPageData] = useState("")
     const [catagoryId, setCatagoryId] = useState("65bb44447cae281381f56934")
     const [categoryData, setCategoryData] = useState("")
-    const [active,setActive]=useState(1) 
-    console.log("chech id of Category", catagoryId)
+    const [active, setActive] = useState(1)
+    console.log("chech id of Category",categoryData)
 
-    // useEffect(() => {
-    //     const fetchCatagoryNameData = async () => {
+    useEffect(() => {
+        const fetchCatagoryNameData = async () => {
 
-    //         const toastId = toast.loading("Loading...")
-    //         try {
-
-    //             const res = await apiConnector("GET", categories.ALL_CATEGORIES_API)
-
-
-    //             setCategoryData(res.data.data)
-
-
-
-    //             // const category = categoryData.find(
-    //             //     (ct) => ct.name.toLowerCase() === catalogName.toLowerCase()
-    //             // );
-
-    //             const categoryID = '65bb44447cae281381f56934'
-    //             setCatagoryId(categoryID)
-
-
-
-    //         } catch (error) {
-    //             console.error(error.message)
-    //         }
-    //         toast.dismiss(toastId)
-    //     }
-    //     fetchCatagoryNameData()
-    // }, [catalogName])
+            const toastId = toast.loading("Loading...")
+            try {
+                const res = await apiConnector("GET", categories.ALL_CATEGORIES_API)
+                console.log("chech id of Category",res.data.data)
+                const category = res.data.data.find((ct) => ct.name.split("-").join(" ").toLowerCase() === catalogName)[0]._id;
+                setCategoryData(category)
+                
+                console.log(category)
+                const categoryID = '65bb44447cae281381f56934'
+                setCatagoryId(categoryID)
+            } catch (error) {
+                console.error(error.message)
+            }
+            toast.dismiss(toastId)
+        }
+        fetchCatagoryNameData()
+    }, [catalogName])
 
 
 
@@ -101,14 +92,14 @@ export const CataloagsDataPage = () => {
                 {/* Section-1 */}
                 <h1 className=" text-2xl font-bold text-richblack-5 lg:text-4xl">Courses to get You Started</h1>
                 <div className="flex gap-x-3 w-full">
-                    <p 
-                    onClick={()=>setActive(1)}
-                    className={``}
+                    <p
+                        onClick={() => setActive(1)}
+                        className={``}
 
                     >Most Popular</p>
-                    <p 
-                      onClick={()=>setActive(2)}
-                      className={``}
+                    <p
+                        onClick={() => setActive(2)}
+                        className={``}
                     >NEw</p>
 
                 </div>

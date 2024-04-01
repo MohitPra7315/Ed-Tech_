@@ -35,7 +35,7 @@ export const CourseInformation = () => {
             const toastId = toast.loading("Loading....!")
 
             try {
-               
+
                 const categories = await FetchAllCourseCategory()
                 console.log("Category data for --->>>", categories)
                 if (categories.length > 0) {
@@ -168,11 +168,12 @@ export const CourseInformation = () => {
                 <label className="text-sm text-richblack-5" htmlFor="courseTitle">
                     Course Title <sup className="text-pink-200">*</sup>
                 </label>
-                <input
-                    id="courseTitle"
-                    placeholder="Enter Course Title"
-                    {...register("courseTitle", { required: true })}
-                    className="form-style w-full"
+                <TextField
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                    className="mb-4"
+                    {...register("userName", { required: true })}
                 />
                 {errors.courseTitle && (
                     <span className="ml-2 text-xs tracking-wide text-pink-200">

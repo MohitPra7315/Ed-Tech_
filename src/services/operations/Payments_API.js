@@ -26,7 +26,6 @@ const loadScript = (src) => {
 
 
 export const BuyCourse = async (Courses, token, user_details, navigate, dispatch) => {
-
     const toastId = toast.loading("Loading....")
     try {
         // step-1 load the Script File 

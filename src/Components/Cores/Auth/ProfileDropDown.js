@@ -4,6 +4,8 @@ import { VscDashboard, VscSignOut } from "react-icons/vsc"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
+import { setUser } from "../../../Slices/profileSlice"
+
 import useOnClickOutside from "../../../hooks/useOnClickOutside"
 import { logout } from "../../../services/operations/authAPI"
 

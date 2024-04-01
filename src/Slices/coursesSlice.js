@@ -5,7 +5,7 @@ const initialState = {
     step: 1,
     course: null,
     editCourse: false,
-    paymentLoading:false
+    paymentLoading: false
 }
 
 const courseSlice = createSlice({
@@ -16,7 +16,7 @@ const courseSlice = createSlice({
             state.step = action.payload
         },
         setCourse: (state, action) => {
-            console.log("data inside Redux",action.payload)
+            console.log("data inside Redux", action.payload)
             state.course = action.payload
         },
         setEditCourse: (state, action) => {
@@ -24,7 +24,7 @@ const courseSlice = createSlice({
         },
         setPaymentLoading: (state, action) => {
             state.paymentLoading = action.payload
-          },
+        },
 
         resetCourseState: (state) => {
             state.step = 1
@@ -33,6 +33,6 @@ const courseSlice = createSlice({
         }
     }
 })
- 
-export const { setStep, setCourse, setEditCourse, resetCourseState,setPaymentLoading } = courseSlice.actions
+
+export const { setStep, setCourse, setEditCourse, resetCourseState, setPaymentLoading } = courseSlice.actions
 export default courseSlice.reducer

@@ -83,16 +83,16 @@ export const Course_Details = () => {
             BuyCourse([courseID], token, user, navigate, dispatch)
             return
         }
-       
-            setConfirmationMadalLogin({
-                heading: "are you sure ?",
-                subHeading: "you please Login  your account",
-                btn1: "Log In",
-                btn2: "Cancel",
-                btnHandler1: () => { navigate("/Login") },
-                btnHandler2: () => setConfirmationMadalLogin(null)
-            })
-        
+
+        setConfirmationMadalLogin({
+            heading: "are you sure ?",
+            subHeading: "you please Login  your account",
+            btn1: "Log In",
+            btn2: "Cancel",
+            btnHandler1: () => { navigate("/Login") },
+            btnHandler2: () => setConfirmationMadalLogin(null)
+        })
+
     }
     if (loading || !courseData) {
         return
@@ -110,7 +110,6 @@ export const Course_Details = () => {
                     <div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative">
                         <div className="min-w-[800px] h-full flex flex-col gap-3 justify-start py-10">
                             <p className="text-richblack-200 font-bold">Home / Learning /<span className="text-yellow-50">{`${courseData.courseName}`}</span></p>
-
                             <p className="text-3xl text-white font-bold">{courseData.category?.description}</p>
                             <p className="text-richblack-200 font-bold">{courseData.courseDescription}</p>
                             <div className="flex flex-row gap-4">
@@ -134,7 +133,6 @@ export const Course_Details = () => {
                                     <HiOutlineGlobeAlt /> English
                                 </p>
                             </div>
-
                         </div>
                         {/* CARD buy Card component */}
                         <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">

@@ -12,7 +12,8 @@ const cors = require("cors")
 const fileUploader = require("express-fileupload")
 const dotenv = require("dotenv")
 
-PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT
+
 app.use(fileUploader(
     {
         useTempFiles: true,
@@ -29,26 +30,16 @@ app.use(cors({
 
 
 const { Auth } = require("./Middleware/AuthN_AothZ")
-
-
-
-
-
 require("./confiq/database").dbconnection();
-
-
 require("./confiq/Cloudinary").cloudinaryConnect();
-
 
 app.use("/api/v1/auth", userRoutes)
 app.use("/api/v1/profile", profileRoutes)
 app.use("/api/v1/course", courseRoutes)
 app.use("/api/v1/payment", paymentRoutes)
 
-
 const { ResetPasswordToken, ResetPassword } = require("./controllers/ResetPassword")
 app.post("/api/v1/auth/reset-password-token", ResetPasswordToken)
-
 app.post("/reset-password", ResetPassword)
 
 app.listen(PORT, (req, res) => {

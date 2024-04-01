@@ -4,7 +4,7 @@ const Category = require("../Models/Category")
 const subSection = require("../Models/SubSection")
 const section = require("../Models/Section")
 const { uploadImageCloudinary } = require("../Utils/imageUploder")
-
+const { convertSecondsToDuration } = require("../Utils/secToDuration")
 const cloudinary = require("cloudinary").v2
 
 
@@ -61,7 +61,6 @@ exports.CreateCourse = async (req, res) => {
             })
         }
         // data cloudinary url data
-        console.log("category of course", catagoryDetails)
 
         const thumbnailImage = await uploadImageCloudinary(thumnaileImg, process.env.FOLDER_NAME)
 
@@ -90,7 +89,6 @@ exports.CreateCourse = async (req, res) => {
             },
             { new: true }
         )
-
         const updateCategory = await Category.findByIdAndUpdate(
             { _id: categoryId },
             {
@@ -99,9 +97,7 @@ exports.CreateCourse = async (req, res) => {
                 }
             }, { new: true })
 
-        console.log("HEREEEEEEEE", updateCategory)
-
-        // Update the Tag 
+       // Update the Tag 
         // HW
 
         res.status(200).json({
@@ -122,7 +118,6 @@ exports.CreateCourse = async (req, res) => {
 
 // Edit Course Details
 exports.editCourse = async (req, res) => {
-    console.log("START THE EDITCOURSE CONTROLLERS")
     try {
         const { courseId } = req.body
         console.log("COURSE ID", courseId)
@@ -163,12 +158,12 @@ exports.editCourse = async (req, res) => {
                 new: true
             }
         )
-            // .populate({
-            //     path: "instructor",
-            //     // populate: {
-            //     //     path: "additionalDetails",
-            //     // },
-            // })
+            .populate({
+                path: "instructor",
+                populate: {
+                    path: "additionalDetails",
+                },
+            })
             .populate("category")
             // .populate("ratingAndReviews")
             .populate({
@@ -223,6 +218,9 @@ exports.getFullCourseDetails = async (req, res) => {
     try {
         const { courseId } = req.body
         const userId = req.user.id
+        console.log("COURSE ID", courseId, userId
+        )
+
         const courseDetails = await Course.findOne({
             _id: courseId,
         })
@@ -242,12 +240,12 @@ exports.getFullCourseDetails = async (req, res) => {
             })
             .exec()
 
-        let courseProgressCount = await CourseProgress.findOne({
-            courseID: courseId,
-            userId: userId,
-        })
+        // let courseProgressCount = await courseProgress.findOne({
+        //     courseID: courseId,
+        //     userId: userId,
+        // })
 
-        console.log("courseProgressCount : ", courseProgressCount)
+        // console.log("courseProgressCount : ", courseProgressCount)
 
         if (!courseDetails) {
             return res.status(400).json({
@@ -270,6 +268,7 @@ exports.getFullCourseDetails = async (req, res) => {
                 totalDurationInSeconds += timeDurationInSeconds
             })
         })
+        console.log("totalDurationInSeconds", totalDurationInSeconds)
 
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
@@ -278,9 +277,9 @@ exports.getFullCourseDetails = async (req, res) => {
             data: {
                 courseDetails,
                 totalDuration,
-                completedVideos: courseProgressCount?.completedVideos
-                    ? courseProgressCount?.completedVideos
-                    : [],
+                // completedVideos: courseProgressCount?.completedVideos
+                //     ? courseProgressCount?.completedVideos
+                //     : [],
             },
         })
     } catch (error) {

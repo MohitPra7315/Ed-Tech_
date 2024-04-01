@@ -2,7 +2,6 @@ const express = require("express")
 
 const router = express.Router();
 
-// console.log(route, "course routes")
 
 // Authantigation and authorization controllers
 const { Auth, isAdmin, isInstructor, isStudent } = require("../Middleware/AuthN_AothZ")
@@ -49,7 +48,6 @@ const {
 //                                      Course routes
 // ********************************************************************************************************
 
-console.log(router, "course routes")
 router.get("/", async () => {
 })
 router.post('/createCourse', Auth, isInstructor, CreateCourse)

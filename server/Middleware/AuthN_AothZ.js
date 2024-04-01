@@ -5,24 +5,18 @@ require("dotenv").config()
 exports.Auth = async (req, res, next) => {
     try {
 
-        console.log("BEFORE ToKEN EXTRACTION");
         //extract token
         const token = req.cookies.token
             || req.body.token
             || req.header("Authorization").replace("Bearer ", "");
-        console.log("AFTER ToKEN EXTRACTION", token);
-
-
         if (!token) {
             return res.json({
                 success: false,
                 message: "token is invalid"
             })
         }
-
         try {
             const payload = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(payload, "payload for reqbody")
             req.user = payload;
 
         } catch (error) {
@@ -33,7 +27,6 @@ exports.Auth = async (req, res, next) => {
 
             })
         }
-        console.log("next is about to hit")
         next();
 
     } catch (error) {
@@ -49,7 +42,6 @@ exports.Auth = async (req, res, next) => {
 // isStudent
 exports.isStudent = async (req, res, next) => {
     try {
-        console.log(" Checking  user Accountype is Student ",req.user.accountType)
 
         if (req.user.accountType !== "Student") {
             return res.status(401).json({
@@ -57,7 +49,6 @@ exports.isStudent = async (req, res, next) => {
                 message: 'This is a protected route for student only',
             });
         }
-        console.log(" user Accountype is Student ")
 
         next();
 
@@ -74,14 +65,12 @@ exports.isStudent = async (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
     try {
-        console.log("mil gya Admin", req.user)
         if (req.user.accountType !== "Admin") {
             return res.status(401).json({
                 success: false,
                 message: 'This is a protected route for Admin only',
             });
         }
-        console.log(" user Accountype is Admin ")
 
         next();
 
@@ -103,7 +92,6 @@ exports.isInstructor = async (req, res, next) => {
                 message: 'This is a protected route for instructor only',
             });
         }
-        console.log(" user Accountype is Instructor ")
 
         next();
 
