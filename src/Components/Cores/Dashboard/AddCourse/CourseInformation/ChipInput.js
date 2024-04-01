@@ -10,11 +10,7 @@ export const ChipInput = ({ label, name, placeholder, setValue, getValues, regis
     const [allTags, setAllTags] = useState("")
     function handleKeyDown(event) {
         if (event.key == "Enter" || event.key == ",") {
-
             event.preventDefault()
-
-
-
             const chipValue = event.target.value
             // console.log("Tag single chip", chipValue)
             if (chipValue && !allTags.includes(chipValue)) {
@@ -29,14 +25,10 @@ export const ChipInput = ({ label, name, placeholder, setValue, getValues, regis
 
     const handleDelete = (index) => {
         // console.log("check Updated tags", index)
-
         const Updatedtags = [...allTags]
         Updatedtags.splice(index, 1)
-
-
         // console.log("check Updated tags", Updatedtags)
         setAllTags(Updatedtags)
-
     }
 
     useEffect(() => {

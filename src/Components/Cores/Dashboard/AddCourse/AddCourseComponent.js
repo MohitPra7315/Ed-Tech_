@@ -1,12 +1,15 @@
 import { useSelector } from "react-redux"
 import { FaCheck } from "react-icons/fa"
-
+import { useDispatch } from "react-redux"
 import { CourseInformation } from "./CourseInformation/CourseInformation"
 import CourseBuilderForm from "./CourseBuilder/CourseBuilder"
 import { PublishCourse } from "./PulblishCourse/publishCourse"
+import { setStep } from "../../../../Slices/coursesSlice"
+
+
 export const RenderAddcourses = () => {
     const { step } = useSelector((state) => state.course)
-
+    const dispatch = useDispatch()
     const steps = [
         {
             id: 1,
@@ -32,19 +35,12 @@ export const RenderAddcourses = () => {
                             className="flex flex-col items-center "
                             key={item.id}
                         >
-                            <button
-                                className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px] ${step === item.id
-                                    ? "border-yellow-50 bg-yellow-900 text-yellow-50"
-                                    : "border-richblack-700 bg-richblack-800 text-richblack-300"}
-                                    ${step > item.id && "bg-yellow-50 text-yellow-50"}} `}
-                            >
-                                {step > item.id ? (
-                                    <FaCheck className="font-bold text-richblack-900" />
-                                ) : (
-                                    item.id
-                                )}
+                            <button className={` ${2 === item.id ? "border-yellow-50 bg-yellow-900 text-yellow-50 " : "border-richblack-700 bg-richblack-800 text-richblack-300"} grid cursor-default  rounded-full
+                             place-items-center w-[34px]  aspect-square mb-4 border-[1px]   text-[10px]
+                                ${2 > item.id ? "bg-yellow-5 text-black " : ""}`
+                            }>
+                                {2 > item.id ? (<FaCheck className="font-bold text-richblack-900" />) : (item.id)}
                             </button>
-
                         </div>
                         {item.id !== steps.length && (
                             <>
@@ -57,7 +53,6 @@ export const RenderAddcourses = () => {
                     </>
                 ))}
             </div>
-
             <div className="relative mb-16 flex w-full select-none justify-between">
                 {steps.map((item) => (
                     <>
@@ -65,7 +60,6 @@ export const RenderAddcourses = () => {
                             className="flex min-w-[130px] flex-col items-center gap-y-2"
                             key={item.id}
                         >
-
                             <p
                                 className={`text-sm ${step >= item.id ? "text-richblack-5" : "text-richblack-500"
                                     }`}
@@ -73,7 +67,6 @@ export const RenderAddcourses = () => {
                                 {item.title}
                             </p>
                         </div>
-
                     </>
                 ))}
             </div>
@@ -82,62 +75,5 @@ export const RenderAddcourses = () => {
             {step == 2 && <CourseBuilderForm />}
             {step == 3 && <PublishCourse />}
         </div>
-        // <div className="">
-        //     {/* steps for  */}
-        //     <div className="relative mb-2 flex w-full justify-center">
-        //         {
-        //             steps.map((item) => {
-        //                 return (
-        //                     <>
-        //                         <div className=" flex flex-col items-center  " key={item.id}>
-        //                             <button className={`${item.id === step ?
-        //                                 "bg-yellow-900  border-yellow-50 rounded-full text-yellow-50" :
-        //                                 "bg-richblack-800 border-richblack-700 text-richblack-300"}`}>
-        //                                 {step > item.id ? (
-        //                                     <FaCheck className="font-bold text-richblack-900" />
-        //                                 ) : (
-        //                                     item.id
-        //                                 )}
-        //                             </button>
-        //                         </div>
-        //                         {item.id !== steps.length && (
-        //                             <>
-        //                                 <div
-        //                                     className={`h-[calc(34px/2)] w-[33%]  border-dashed border-b-2 ${step > item.id ? "border-yellow-50" : "border-richblack-500"
-        //                                         } `}
-        //                                 ></div>
-        //                             </>
-        //                         )}
-        //                     </>
-        //                 )
-        //             })
-        //         }
-        //     </div>
-        //     <div className="relative mb-16 flex w-full select-none justify-between">
-        //         {
-        //             steps.map((item) => {
-        //                 return (
-        //                     <div key={item.id}
-        //                     >
-        //                         <p>
-        //                             {item.title}
-        //                         </p>
-
-        //                     </div>
-        //                 )
-        //             })
-        //         }
-        //     </div>
-        //     {/* section 2  */}
-
-        //     <div>
-        //         {
-        //             step == 1 && (<CourseInformation />)
-        //         }
-        //         {
-        //             step == 2 && (<CourseBuilder></CourseBuilder>)
-        //         }
-        //     </div>
-        // </div>
     )
 }

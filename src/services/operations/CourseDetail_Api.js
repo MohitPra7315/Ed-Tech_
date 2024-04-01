@@ -73,6 +73,7 @@ export const fetchCourseDetails = async (courseId) => {
 
 // add the course details
 export const addCourseDetails = async (formData, token) => {
+    console.log("redux data",formData)
     let result = null
     const toastId = toast.loading("Loading...")
     try {

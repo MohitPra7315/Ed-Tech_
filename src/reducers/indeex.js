@@ -10,7 +10,11 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     cart: cartReducer,
     course: coursesReducer,
+<<<<<<< HEAD
     courseViewDetail:courseViewDetailReducer
+=======
+    courseViewDetail: courseViewDetailReducer
+>>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
 })
 
 

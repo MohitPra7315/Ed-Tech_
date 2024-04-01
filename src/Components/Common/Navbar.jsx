@@ -59,7 +59,11 @@ export function Navbar() {
     }, [])
 
     useEffect(() => {
+<<<<<<< HEAD
         // let token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null
+=======
+        let token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null
+>>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
         !token && (dispatch(logout(navigate))  )
     }, [])
 
@@ -68,11 +72,13 @@ export function Navbar() {
             <div className="flex w-11/12 h-full max-w-maxContent flex-row mx-auto justify-between items-center gap-4 ">
 
                 <Link to={"/"} >
-                    <img
+                    {/* <img
                         src={logo}>
 
 
-                    </img>
+                    </img> */}
+
+                    <h1 className="text-2xl text-vistuatBlue-200 font-bold ">Virtual <span className="text-3xl text-faceBookTheme-tertiary">Classes</span></h1>
                 </Link>
 
                 <nav className="hidden md:block">

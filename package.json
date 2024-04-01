@@ -8,6 +8,7 @@
     "axios": "^1.6.2",
     "concurrently": "^8.2.2",
     "copy-to-clipboard": "^3.3.3",
+    "google-auth-library": "^9.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^11.2.4",
