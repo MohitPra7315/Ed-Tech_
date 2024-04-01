@@ -9,10 +9,31 @@ module.exports = {
       "edu-sa": ["Edu SA Beginner", "cursive"],
       mono: ["Roboto Mono", "monospace"],
     },
+    light:{
+      background: '#FFFFFF',
+    },
     colors: {
       white: "#fff",
       black: "#000",
       transparent: "#ffffff00",
+      // facebook theme
+      vistuatBlue: {
+        100: "#1763CF",
+        200: "#1877f2"
+      },
+      faceBookTheme: {
+        primary: '#4267B2',
+        secondary: '#1877F2',
+        tertiary: '#F0F2F5',
+        text: '#050505',
+        background: '#FFFFFF',
+        border: '#E4E6EB',
+        accent: '#E60023',
+        error: '#D93025',
+        success: '#00A400',
+        warning: '#FFD200',
+        info: '#1C6BF0',
+      },
       richblack: {
         5: "#F1F2FF",
         25: "#DBDDEA",
@@ -132,7 +153,7 @@ module.exports = {
         maxContentTab: "650px"
       },
     },
-   
+
   },
   plugins: [],
 };
