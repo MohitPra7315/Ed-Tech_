@@ -1,6 +1,7 @@
 
 
 const BASE_URL = "http://localhost:5000/v1"
+console.log("base url", BASE_URL)
 
 // CATAGORIES API
 export const categories = {

@@ -9,30 +9,49 @@ import LearningLanguageSection from "../Components/Cores/HomePageCom/LearningLan
 import IntructorSection from "../Components/Cores/HomePageCom/IntructorSection";
 import Footer from "../Components/Common/Footer";
 import ExploreMore from "../Components/Cores/HomePageCom/exploreMore";
+import deshboard from "../assets/Images/deshboard.svg"
 function HomePage() {
 
     return (
         <div>
             {/* section 1 */}
-            <div className="relative mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between text-white">
+            <div className="relative mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between text-white ">
+
+
+                <div className="w-full flex justify-around items-center bg-richgray-50 gap-2  mt-5 h-[400px]">
+                    <div className="flex flex-col gap-10 w-[60%] ">
+                        <p className="  text-richblack-900 text-4xl font-semibold">Launch Yourself in new Direction </p>
+                        <p className="text-richblack-300 space-x-1 ">VirtualClasses is the one-stop destination for your upskilling journey. Brace yourself to find the best job-ready courses and high-end technologies available in the sector. And if that weren't good enough, get the highest quality course content at the most affordable prices!
+                           What are we waiting for ? Let's push Start!</p>
+                          <Link to={"/AllCourses"}>
+                          <div className="flex flex-row items-center bg-faceBookTheme-secondary w-fit  gap-2 rounded-full px-10  py-[5px] group-hover:bg-buttonblue-100">
+                                <p>ALL Courses</p>
+                                <TiArrowRight className="text-2xl"></TiArrowRight>
+                            </div>
+                          </Link>
+                    </div>
+
+                            <img className="w-[30%] h-[60%]" src={deshboard}/>
+
+                  
+                </div>
 
                 {/* button  */}
                 <div className="flex items-center flex-col">
-
                     <Link to={"/signup"}>
-                        <div className="group  mt-16 mx-auto p-1 rounded-full bg-richblack-800 font-bold shadow-2xl shadow-richblack-700 text-richblack-200 transition-all duration-200 hover:scale-95 w-fit">
-                            <div className="flex flex-row items-center  gap-2 rounded-full px-10  py-[5px] group-hover:bg-richblack-900">
+                        <div className="group  mt-16 mx-auto p-1 rounded-full bg  bg-faceBookTheme-secondary  font-bold shadow-2xl shadow-richblack-700  transition-all duration-200 hover:scale-95 w-fit">
+                            <div className="flex flex-row items-center  gap-2 rounded-full px-10  py-[5px] group-hover:bg-buttonblue-50">
                                 <p>Become an Instructor</p>
                                 <TiArrowRight className="text-2xl"></TiArrowRight>
                             </div>
                         </div>
                     </Link>
-                    <div className="text-4xl font-semibold text-center mt-6 ">
+                    <div className="text-4xl font-semibold text-center mt-6 text-richblack-900 ">
                         Empower Your Future with
                         <HighlightedText text={"Coding Skills"}></HighlightedText>
                     </div>
 
-                    <div className="text-richblack-300 text-center text-lg font-bold w-[90%] mt-4">
+                    <div className="text-richblack-300 text-center text-lg  w-[90%] mt-4 ">
                         With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors.
                     </div>
 
@@ -87,7 +106,7 @@ function HomePage() {
                           <ahref="one/">One</a><ahref="two/">Two</a>
                           <ahref="three/">Three</a>/nav>`}
                         backgroundGraident={""}
-                        codeColor={"text-richblue-100 "}
+                        codeColor={"text-richblack-300 "}
                     />
 
                 </div>
@@ -126,7 +145,7 @@ function HomePage() {
                           <ahref="one/">One</a><ahref="two/">Two</a>
                           <ahref="three/">Three</a>/nav>`}
                         backgroundGraident={""}
-                        codeColor={"text-richblue-100 "}
+                        codeColor={"text-richblack-300 "}
                     />
 
                 </div>
@@ -148,7 +167,7 @@ function HomePage() {
                         <CTButton active={true} linkWith={"sigup"} >
 
                             <div className="flex  justify-center items-center gap-3">
-                               Learn 
+                                Learn
                                 <TiArrowRight className="text-[18px]"></TiArrowRight>
                             </div>
                         </CTButton>
@@ -178,8 +197,8 @@ function HomePage() {
                     </div>
                     <div className="">
 
-                    <TimelineSection />
-                    <LearningLanguageSection />
+                        <TimelineSection />
+                        <LearningLanguageSection />
                     </div>
 
                 </div>

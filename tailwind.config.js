@@ -5,10 +5,13 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
+      nunito: ["Nunito Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],
       "edu-sa": ["Edu SA Beginner", "cursive"],
       mono: ["Roboto Mono", "monospace"],
     },
+
+
     light: {
       background: '#FFFFFF',
     },
@@ -24,7 +27,6 @@ module.exports = {
       faceBookTheme: {
         primary: '#4267B2',
         secondary: '#1877F2',
-        tertiary: '#F0F2F5',
         text: '#050505',
         background: '#FFFFFF',
         border: '#E4E6EB',
@@ -34,10 +36,45 @@ module.exports = {
         warning: '#FFD200',
         info: '#1C6BF0',
       },
+      buttonblue: {
+        5:"#E7F3FF",
+        100: "#0866FF",
+        200:"0068DI"
+        
+      },
+      richgray: {
+        5: "#8a8d91",
+        25: "#F8F8F8",
+        50:"#F0F2F5",
+        100:"#B3B6BF",
+        200:"#86888E"
+      },
+      richwhite: {
+        0: "#FFFFFF",
+        5: "#ECF5FF",
+        25: "#5979C9",
+        50: "#F2F4FA",
+        100: "#7A98A6",
+        200: "#537988",
+        300: "#2D5A6A",
+        400: "#073B4C",
+        500: "#063544",
+        600: "#042E3B",
+        700: "#032833",
+        800: "#01212A",
+        900: "#496ECB",
+        1100: "#4764AD",
+        1200: "#6888D9",
+      },
+      newRichblack: {
+        5: "#3D3D3D",
+
+
+      },
       richblack: {
         5: "#F1F2FF",
         25: "#DBDDEA",
-        50: "#7786666",
+        50: "#C5C7D4",
         100: "#AFB2BF",
         200: "#999DAA",
         300: "#838894",
@@ -45,8 +82,8 @@ module.exports = {
         500: "#585D69",
         600: "#424854",
         700: "#2C333F",
-        800: "#167746",
-        900: "#ffffff",
+        800: "#161D29",
+        900: "#000814",
       },
       richblue: {
         5: "#ECF5FF",

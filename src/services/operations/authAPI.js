@@ -26,8 +26,8 @@ export const sendOtp = (email, navigate) => {
             toast.success("otp sended succesfully")
             navigate("/verify-email")
         } catch (error) {
-            console.error("Couldn't send Otp", error);
-            toast.error("Couldn't send Otp")
+            console.error("Couldn't send Otp", error.message);
+            toast.error(error.message)
         }
         dispatch(setLoading(false))
         toast.dismiss(toastId)
@@ -128,7 +128,7 @@ export const SignupA = (firstName, lastName, email, password, confirmPassword, a
                 // Handle other errors
                 console.error('Error:', error.message);
             }
-            toast.error("Failed to SignUp  ")
+            toast.error(error.message)
         }
         dispatch(setLoading(false))
 
