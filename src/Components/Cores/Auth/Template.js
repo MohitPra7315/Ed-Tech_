@@ -8,12 +8,12 @@ export function Template({ title, desc1, desc2, image, formtype }) {
     return (
         <div className='w-11/12 max-w-[1160px] py-28 mx-auto justify-between gap-y-0 flex '>
             <div className='w-11/12 max-w-[450px]' >
-                <h1 className=' text-richblack-5 font-semibold text-[1.875rem] leading-[2.375rem] '>{title}</h1>
+                <h1 className=' text-vistuatBlue-200 font-bold text-[1.875rem] leading-[2.375rem] '>{title}</h1>
                 <p className='text-[1.125rem] leading [1.625rem] mt-4 '>
-                    <span className='text-richblack-100'>{desc1}</span>
+                    <span className='text-newRichblack-50'>{desc1}</span>
                     <br>
                     </br>
-                    <span className='text-blue-100 italic'> {desc2}</span>
+                    <span className='text-richgray-300 italic'> {desc2}</span>
 
                 </p>
                 {

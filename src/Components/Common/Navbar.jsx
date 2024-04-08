@@ -135,7 +135,7 @@ export function Navbar() {
 
                                                 </div>) :
                                                 (<Link to={link?.path}>
-                                                    <p className={`${matchroutes(link?.path) ? "bg-richgray-25 p-3 text-newRichblack-5 " : "text-newRichblack-5"}`}>{link.title}</p>
+                                                    <p className={`${matchroutes(link?.path) ? "text-vistuatBlue-200  " : "text-newRichblack-5"}`}>{link.title}</p>
                                                 </Link>)
                                         }
                                     </li>
