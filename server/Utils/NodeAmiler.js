@@ -11,11 +11,7 @@ const mailSender = async (email, title, body) => {
             }
         })
         let info = await transporter.sendMail({
-<<<<<<< HEAD
-            from: 'StudyNotion || CodeHelp - by Babbar',
-=======
             from: 'Virtualclasses || Socailflue - by Mohit',
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`,
