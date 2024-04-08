@@ -97,13 +97,13 @@ exports.SignUp = async (req, res) => {
         }
         // check user is already here or not
         const userdata = await user.findOne({ email })
-              if (userdata) {
+        if (userdata) {
             return res.status(400).json({
                 success: false,
                 message: "User aldready registered,please Sign in to Continue"
             })
-        }   
-       //  validate most recent Otp
+        }
+        //  validate most recent Otp
         const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
         console.log(response, "OTP response is thier");
         if (response.length === 0) {
@@ -119,8 +119,7 @@ exports.SignUp = async (req, res) => {
                 message: "The OTP is not valid",
             });
         }
-        console.log("otp matched is equeal", typeof otp)
-        console.log("most recent  matched is equeal", typeof response[0].otp)
+
 
         // hashpassword for saving inside db
         const hashPassword = await bcrypt.hash(password, 10)
@@ -167,7 +166,7 @@ exports.SignUp = async (req, res) => {
 
 exports.Login = async (req, res) => {
     try {
-       
+
 
         // Get email and password from request body
         const { email, password } = req.body;
@@ -206,7 +205,7 @@ exports.Login = async (req, res) => {
 
             userdata = userdata.toObject();
             userdata.token = token,
-           userdata.password = undefined
+                userdata.password = undefined
             userdata.confirmPassword = undefined
 
             let options = {

@@ -30,18 +30,6 @@ export const CourseInformation = () => {
     const [courseCategories, setCourseCategories] = useState([])
 
 
-<<<<<<< HEAD
-            try {
-
-                const categories = await FetchAllCourseCategory()
-                console.log("Category data for --->>>", categories)
-                if (categories.length > 0) {
-                    // console.log("categories", categories)
-                    setCourseCategories(categories)
-                }
-            } catch (error) {
-                console.log("error ", error.message)
-=======
 
 
     useEffect(() => {
@@ -50,7 +38,6 @@ export const CourseInformation = () => {
             const response = await FetchAllCourseCategory()
             if (response.length > 0) {
                 setCourseCategories(response)
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
             }
         }
         fetcheAllCategory()
@@ -133,7 +120,6 @@ export const CourseInformation = () => {
                 }
                 const toastId = toast.loading("Loading...")
                 const result = await editCourseDetails(formdataEdit, token)
-                console.log("edit course response", result)
                 toast.dismiss(toastId)
                 if (result) {
                     dispatch(setStep(2))
@@ -157,7 +143,6 @@ export const CourseInformation = () => {
             thumnaileImg: data.courseImage[0],
             whatYouWillLearn: data.courseBenefits
         }
-        console.log("byu ggy7y7", formdataa)
         const addcourseData = async () => {
             const res = await addCourseDetails(formdataa, token)
             if (res) {
@@ -179,14 +164,6 @@ export const CourseInformation = () => {
                 <label className="text-sm text-richblack-5" htmlFor="courseTitle">
                     Course Title <sup className="text-pink-200">*</sup>
                 </label>
-<<<<<<< HEAD
-                <TextField
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    className="mb-4"
-                    {...register("userName", { required: true })}
-=======
                 <input
                     name="courseTitle"
                     id="courseTitle"
@@ -194,7 +171,6 @@ export const CourseInformation = () => {
                     placeholder="Enter Course Title"
                     className="mb-4"
                     {...register("courseTitle", { required: true })}
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
                 />
                 {errors.courseTitle && (
                     <span className="ml-2 text-xs tracking-wide text-pink-200">

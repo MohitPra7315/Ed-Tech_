@@ -14,32 +14,30 @@ exports.CreateCourse = async (req, res) => {
     try {
         // fetch data from rerquest ki body
         const { courseName, courseDescription, price, whatYouWillLearn, categoryId,
-            tag, instructions, status } = req.body;
-        console.log("Check file is thier", req.files)
-        console.log("Data from body in database--====>>>", courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions)
+            tag, instructions, status, coveredTopic } = req.body;
+        const thumnaileImg = req.files.thumnaileImg;
+        const demoVedioUrl = req.files.demoVedioUrl;
+        console.log("Data from body in database--====>>>", req.user.id, courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions, coveredTopic)
 
 
         // fetch the file frm req files body
-        const thumnaileImg = req.files.thumnaileImg;
-
-        console.log("THUMNAIL....", thumnaileImg)
-        if (!thumnaileImg) {
+        if (!thumnaileImg || !demoVedioUrl) {
             res.status(400).json({
                 success: false,
-                message: "Thumbnail is Not prsent",
+                message: "Thumbnail is Not present",
                 error: error.message
             })
         }
 
-        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag) {
+        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag || !coveredTopic) {
             res.status(400).json({
                 success: false,
                 message: "all required fill the fields"
             })
         }
-        if (!status || status === undefined) {
-            status = "Draft"
-        }
+        // if (!status || status === undefined) {
+        //     status = "Draft"
+        // }
         // check instructor
         const instructor = req.user.id;
         const instructorDetail = await user.findById({ _id: instructor });
@@ -60,16 +58,20 @@ exports.CreateCourse = async (req, res) => {
                 message: "Category Details Not Found",
             })
         }
+        console.log("category id--===>>>")
         // data cloudinary url data
+        const UploadedFile = await uploadImageCloudinary(demoVedioUrl, process.env.FOLDER_NAME)
 
         const thumbnailImage = await uploadImageCloudinary(thumnaileImg, process.env.FOLDER_NAME)
 
-        console.log("URL OF IMAGE", thumbnailImage)
+        console.log("URL OF IMAGE", UploadedFile)
         // Create the Course schema1
         const createCourse = await Course.create({
             courseName,
             courseDescription,
             price,
+            demoVedioUrl: UploadedFile.secure_url,
+            coveredTopic,
             instructor: instructorDetail._id,
             whatYouWillLearn: whatYouWillLearn,
             tag: tag,
@@ -97,7 +99,7 @@ exports.CreateCourse = async (req, res) => {
                 }
             }, { new: true })
 
-       // Update the Tag 
+        // Update the Tag 
         // HW
 
         res.status(200).json({
@@ -107,10 +109,12 @@ exports.CreateCourse = async (req, res) => {
         })
 
     } catch (error) {
+        console.log(error.message)
+
         res.status(500).json({
             success: false,
             message: "error while saving data in dB",
-            error: error.message
+            error: error.message,
         })
     }
 }
@@ -239,20 +243,13 @@ exports.getFullCourseDetails = async (req, res) => {
                 },
             })
             .exec()
-<<<<<<< HEAD
 
         // let courseProgressCount = await courseProgress.findOne({
         //     courseID: courseId,
         //     userId: userId,
         // })
-=======
-        let courseProgressCount = await courseProgress.findOne({
-            courseID: courseId,
-            userId: userId,
-        })
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
 
-        // console.log("courseProgressCount : ", courseProgressCount)
+
 
         if (!courseDetails) {
             return res.status(400).json({

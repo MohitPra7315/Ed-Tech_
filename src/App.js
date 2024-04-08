@@ -26,19 +26,14 @@ import { EditCourse } from "../src/Components/Cores/Dashboard/EditCourse/editCou
 import { CataloagsDataPage } from "./Pages/Cataloags"
 import { Course_Details } from "./Pages/Course_Details"
 import { ViewCourse } from "./Pages/viewCourse"
-<<<<<<< HEAD
-=======
 import  instructorDetail  from "./Pages/InstructorDetails";
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
 import VedioCourseDetails from "./Components/Cores/ViewCourse/VedioCourseDetails"
 function App() {
   const { user } = useSelector((state) => state.profile)
   return (
-<<<<<<< HEAD
-    <div className="w-screen min-h-screen light:background bg-richblack-900 flex flex-col font-inter">
-=======
-    <div className="w-screen min-h-screen  bg-richblack-900 flex flex-col font-inter">
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
+    <>
+
+    <div className="w-screen min-h-screen  bg-richwhite-0 flex flex-col font-inter">
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
@@ -108,28 +103,27 @@ function App() {
 
 
         {/* viewCourse page only for Student */}
-<<<<<<< HEAD
-        {/* <Route>
-          <Route element={<Protected><ViewCourse></ViewCourse></Protected>}>
-            {
-              user && user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VedioCourseDetails/>} />
-=======
+
+       
+
         <Route>
           <Route element={<Protected><ViewCourse /></Protected>}>
             {
               user && user?.accountType === ACCOUNT_TYPE.STUDENT && (
                 <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VedioCourseDetails />} />
->>>>>>> 11c233078fee4c77d0803b95ea12528abe9eeeb9
+
               )
             }
 
           </Route>
-        </Route> */}
+        </Route> 
         <Route path="*" element={<Error />}></Route>
 
       </Routes>
     </div >
+    
+    </>
+
   );
 }
 
