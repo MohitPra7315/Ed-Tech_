@@ -55,9 +55,9 @@ export function LoginForm() {
         >
 
             <label htmlFor="email" className="w-full">
-                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Wmail Address<span className="text-pink-200">*</span></p>
+                {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Wmail Address<span className="text-pink-200">*</span></p> */}
                 <input
-                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px]  "
+                    className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px]  "
                     type="email"
                     required
                     onChange={changeHandler}
@@ -69,9 +69,9 @@ export function LoginForm() {
             </label>
 
             <label htmlFor="password" className="relative w-full">
-                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Passsword<span className="text-pink-200">*</span></p>
+                {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Passsword<span className="text-pink-200">*</span></p> */}
                 <input
-                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+                    className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px] "
 
                     type={hidden ? "password" : "text"}
                     required
@@ -83,7 +83,7 @@ export function LoginForm() {
                 />
 
                 <span
-                    className="absolute text-white right-3 top-[40px] cursor-pointer"
+                    className="absolute text-newRichblack-50 right-3 top-[15px] cursor-pointer"
                     onClick={hiddenHandler}>
                     {
                         hidden ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />) :

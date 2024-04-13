@@ -29,7 +29,7 @@ export const Sidebar = () => {
     return (
         // side bar 
         <>
-            <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] text-richblack-100 border-r-richblack-700 bg-richblack-800 py-10">
+            <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px]  py-10">
 
                 <div className="flex flex-col">
 
@@ -67,10 +67,6 @@ export const Sidebar = () => {
 
                     </button>
                 </div>
-
-
-
-
                 {
                     confirmModal !== null && <ConfirmationModal ModalData={confirmModal}></ConfirmationModal>
                 }

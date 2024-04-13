@@ -39,7 +39,7 @@ module.exports = {
       buttonblue: {
         5:"#E7F3FF",
         100: "#0866FF",
-        200:"0068DI"
+        200:"#0068DI"
         
       },
       richgray: {
@@ -47,7 +47,8 @@ module.exports = {
         25: "#F8F8F8",
         50:"#F0F2F5",
         100:"#B3B6BF",
-        200:"#86888E"
+        200:"#86888E",
+        300:"#606770"
       },
       richwhite: {
         0: "#FFFFFF",
@@ -68,6 +69,7 @@ module.exports = {
       },
       newRichblack: {
         5: "#3D3D3D",
+        50:"#1C1E21"
 
 
       },
@@ -84,6 +86,7 @@ module.exports = {
         700: "#2C333F",
         800: "#161D29",
         900: "#000814",
+        
       },
       richblue: {
         5: "#ECF5FF",

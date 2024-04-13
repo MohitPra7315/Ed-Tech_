@@ -36,7 +36,7 @@ export function SignupForm() {
         }
     )
 
- 
+
 
     function changeHandler(event) {
 
@@ -106,10 +106,10 @@ export function SignupForm() {
                     <div className="flex justify-between">
 
                         <label htmlFor="fName">
-                            <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  First Name<sup className="text-pink-200"> *</sup></p>
+                            {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  First Name<sup className="text-pink-200"> *</sup></p> */}
 
                             <input
-                                className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+                                className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px] "
 
                                 type="text"
                                 required
@@ -121,10 +121,10 @@ export function SignupForm() {
                             />
                         </label>
                         <label htmlFor="lName">
-                            <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Last Name<sup className="text-pink-200"> *</sup></p>
+                            {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Last Name<sup className="text-pink-200"> *</sup></p> */}
 
                             <input
-                                className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+                                className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px] "
 
                                 type="text"
                                 required
@@ -148,10 +148,10 @@ export function SignupForm() {
 
 
                         <label htmlFor="email mt-6 ">
-                            <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Email<sup className="text-pink-200"> *</sup></p>
+                            {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Email<sup className="text-pink-200"> *</sup></p> */}
 
                             <input
-                                className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+                                className="bg-richblack-5 rounded-[0.8rem] w-full p-[12px] "
 
                                 type="email"
                                 required
@@ -169,9 +169,9 @@ export function SignupForm() {
                     <div className="flex justify-between mt-[20px]  ">
                         <div className="relative">
                             <label htmlFor="password">
-                                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Create  Passsword<sup className="text-pink-200"> *</sup></p>
+                                {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Create  Passsword<sup className="text-pink-200"> *</sup></p> */}
                                 <input
-                                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+                                    className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px] "
 
                                     type={hidden ? "password" : "text"}
                                     required
@@ -182,25 +182,20 @@ export function SignupForm() {
                                     placeholder="Password"
                                 />
                                 <span
-                                    className="absolute text-white right-3 top-[40px] cursor-pointer"
+                                    className="absolute text-white right-3 top-[10px] cursor-pointer"
 
                                     onClick={hiddenHandler}>
                                     {
                                         hidden ? (<AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />) : (<AiOutlineEye fontSize={24} fill='#AFB2BF' />)
                                     }
                                 </span>
-
                             </label>
                         </div>
-
                         <div className="relative">
-
-
                             <label htmlFor="Confirm">
-                                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Confirm Password<sup className="text-pink-200"> *</sup></p>
+                                {/* <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Confirm Password<sup className="text-pink-200"> *</sup></p> */}
                                 <input
-                                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
-
+                                    className="bg-richblack-5 rounded-[0.8rem]  w-full p-[12px] "
                                     type={Conhidden ? "password" : "text"}
                                     required
                                     onChange={changeHandler}
@@ -209,10 +204,8 @@ export function SignupForm() {
                                     id="confirm"
                                     placeholder="Confirm password"
                                 />
-
-
                                 <span
-                                    className="absolute text-white right-3 top-[40px] cursor-pointer"
+                                    className="absolute text-white right-3 top-[10px] cursor-pointer"
 
                                     onClick={ConHiddenHandler}>
                                     {
