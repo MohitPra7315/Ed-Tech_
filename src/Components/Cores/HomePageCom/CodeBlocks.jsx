@@ -10,7 +10,7 @@ function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock,
             {/* section --1 */}
             <div className="min-w-[50%]  lg:max-w-[50%] flex flex-col gap-8 font-semibold  items-center ">
                 {heading}
-                <div className="text-richblack-300 font-bold">
+                <div className="text-black font-bold">
                     {Subheading}
                 </div>
                 {/* buttons */}
@@ -32,11 +32,11 @@ function CodeBlocks({ heading, Subheading, postion, CtaBtn1, CtaBtn2, CodeBlock,
             </div>
 
             {/* section--2*/}
-            <div className="relative w-[100%] flex flex-row rounded-md max-w-[500px] lg:w-[500px] bg-[#2421213D]  border-2 border-richblack-500   ">
+            <div className="relative w-[100%] flex flex-row rounded-md max-w-[500px] lg:w-[500px] bg-richgray-50  border-2 border-richblack-200   ">
                 {/* <div className={` absolute z-1  h-[100%] w-[75%] -top-10 -left-5 bg-gradient-to-r bg-richblack-5 rounded-full `}></div> */}
                 <div className=" relative  z-5  flex   ">
 
-                    <div className="w-[10%] flex items-center bg-transparent  text-richblack-400 font-inter font-bold flex-col ">
+                    <div className="w-[10%] flex items-center bg-transparent  text-richblack-900 font-inter font-bold flex-col ">
                         <p>1</p>
                         <p>2</p>
                         <p>3</p>

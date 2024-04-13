@@ -12,6 +12,12 @@ const CourseSchema = new mongoose.Schema({
     whatYouWillLearn: {
         type: String,
     },
+    demoVedioUrl: {
+        type: String
+    },
+    coveredTopic: {
+        type: [String]
+    },
     courseContent: [
         {
             type: mongoose.Schema.Types.ObjectId,
