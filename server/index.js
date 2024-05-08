@@ -11,7 +11,7 @@ const cors = require("cors")
 const fileUploader = require("express-fileupload")
 const dotenv = require("dotenv")
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT||5000
 
 app.use(fileUploader(
     {
