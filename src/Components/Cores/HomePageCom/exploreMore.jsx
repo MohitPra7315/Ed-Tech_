@@ -52,7 +52,7 @@ function ExploreMore() {
                                 >
                                     {element}
 
-                                </div >
+                                </div>
                             )
                         })
                     }
