@@ -18,7 +18,7 @@ export const EditCourse = () => {
         const populateFullCourseDetails = async () => {
             setLoading(true)
             const result = await getFullDetailsOfCourse(courseId.id, token)
-            console.log(result)
+            console.log(result[0])
             
             if (result[0]) {
                 dispatch(setEditCourse(true))

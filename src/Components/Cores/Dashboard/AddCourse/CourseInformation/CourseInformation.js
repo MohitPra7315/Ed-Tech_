@@ -11,7 +11,7 @@ import { setStep } from "../../../../../Slices/coursesSlice"
 import toast from "react-hot-toast"
 import { COURSE_STATUS } from "../../../../../utils/constant"
 import { MdNavigateNext } from "react-icons/md"
-import { editCourseDetails,addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
+import { editCourseDetails, addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
 import FetchAllCourseCategory from "../../../../../services/operations/CourseDetail_Api"
 
 export const CourseInformation = () => {
@@ -76,7 +76,6 @@ export const CourseInformation = () => {
 
     const onSubmit = async (data) => {
         const toastId = toast.loading("Loading...")
-        console.log("working upto here")
         // Edit  course logic from there
         if (editCourse) {
             console.log("redux data for Edit course".course)
@@ -131,7 +130,6 @@ export const CourseInformation = () => {
             }
             return
         }
-        console.log("working upto here ---2")
 
         // add course login from there
         const formdataa = {
@@ -145,22 +143,15 @@ export const CourseInformation = () => {
             thumnaileImg: data.courseImage[0],
             whatYouWillLearn: data.courseBenefits
         }
-        console.log("working upto here ---3")
-
         const addcourseData = async () => {
-        console.log("working upto here--==4")
-
-            console.log("clicked Next button for create new Course", formdataa)
+            console.log("clicked Next button for create new Course",)
             const res = await addCourseDetails(formdataa, token)
             if (res) {
                 dispatch(setCourse(res))
                 dispatch(setStep(2))
             }
-        console.log("working upto here----==>>> 5")
-
         }
         toast.dismiss(toastId)
-        addcourseData();
     }
 
 

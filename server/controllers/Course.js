@@ -16,12 +16,12 @@ exports.CreateCourse = async (req, res) => {
         const { courseName, courseDescription, price, whatYouWillLearn, categoryId,
             tag, instructions, status, coveredTopic } = req.body;
         const thumnaileImg = req.files.thumnaileImg;
-        const demoVedioUrl = req.files.demoVedioUrl;
-        console.log("Data from body in database--====>>>", req.user.id, courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions, coveredTopic)
+        // const demoVedioUrl = req.files.demoVedioUrl;
+        console.log("Data from body in database--====>>>", req.user.id, courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions,thumnaileImg)
 
 
         // fetch the file frm req files body
-        if (!thumnaileImg || !demoVedioUrl) {
+        if (!thumnaileImg ) {
             res.status(400).json({
                 success: false,
                 message: "Thumbnail is Not present",
@@ -29,15 +29,15 @@ exports.CreateCourse = async (req, res) => {
             })
         }
 
-        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag || !coveredTopic) {
+        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag) { // ||!coveredTopic) {
             res.status(400).json({
                 success: false,
                 message: "all required fill the fields"
             })
         }
-        // if (!status || status === undefined) {
-        //     status = "Draft"
-        // }
+        if (!status || status === undefined) {
+            status = "Draft"
+        }
         // check instructor
         const instructor = req.user.id;
         const instructorDetail = await user.findById({ _id: instructor });
@@ -47,7 +47,7 @@ exports.CreateCourse = async (req, res) => {
         if (!instructorDetail) {
             return res.status(400).json({
                 success: false,
-                message: "instructoer didn't get "
+                message: "instructoer didn't get  "
             })
         }
         // category Id
@@ -58,19 +58,19 @@ exports.CreateCourse = async (req, res) => {
                 message: "Category Details Not Found",
             })
         }
-        console.log("category id--===>>>")
+        console.log("category id--===>>>", catagoryDetails)
         // data cloudinary url data
-        const UploadedFile = await uploadImageCloudinary(demoVedioUrl, process.env.FOLDER_NAME)
+        // const UploadedFile = await uploadImageCloudinary(demoVedioUrl, process.env.FOLDER_NAME)
 
         const thumbnailImage = await uploadImageCloudinary(thumnaileImg, process.env.FOLDER_NAME)
 
-        console.log("URL OF IMAGE", UploadedFile)
+        console.log("URL OF IMAGE", thumbnailImage)
         // Create the Course schema1
         const createCourse = await Course.create({
             courseName,
             courseDescription,
             price,
-            demoVedioUrl: UploadedFile.secure_url,
+            // demoVedioUrl: UploadedFile.secure_url,
             coveredTopic,
             instructor: instructorDetail._id,
             whatYouWillLearn: whatYouWillLearn,
@@ -110,7 +110,6 @@ exports.CreateCourse = async (req, res) => {
 
     } catch (error) {
         console.log(error.message)
-
         res.status(500).json({
             success: false,
             message: "error while saving data in dB",
