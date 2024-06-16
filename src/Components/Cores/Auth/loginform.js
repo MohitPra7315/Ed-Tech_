@@ -1,87 +1,101 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { getLogin } from "../../../services/operations/authAPI";
-import TextField from "@mui/material/TextField";
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { useState } from "react";
+import toast from "react-hot-toast";
+import {getLogin} from "../../../services/operations/authAPI"
+import { useSelector, useDispatch } from "react-redux"
 
 export function LoginForm() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const [hidden, setHidden] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
 
-  function toggleVisibility() {
-    setHidden((prev) => !prev);
-  }
+    const [hidden, setHidden] = useState(false)
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+    function hiddenHandler() {
+        setHidden((prevd) => !prevd)
+    }
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getLogin(formData.email, formData.password, navigate));
-    setFormData({
-      email: "",
-      password: "",
-    });
-  }
+    const [formData, setFormData] = useState(
+        {
+            email: "",
+            password: ""
+        }
+    )
 
-  return (
-    <form onSubmit={handleSubmit} className="flex flex-col w-full gap-4 mt-6">
-      <TextField
-        label="Email Address *"
-        variant="outlined"
-        fullWidth
-        value={formData.email}
-        onChange={handleChange}
-        name="email"
-        id="email"
-        placeholder="Enter email address"
-      />
+    // console.log(formData)
 
-      <TextField
-        label="Password *"
-        variant="outlined"
-        fullWidth
-        type={hidden ? "password" : "text"}
-        value={formData.password}
-        onChange={handleChange}
-        name="password"
-        id="password"
-        placeholder="Password"
-        InputProps={{
-          endAdornment: (
-            <span style={{ cursor: "pointer" }} onClick={toggleVisibility}>
-              {hidden ? (
-                <AiOutlineEyeInvisible fontSize={18} fill="#718096" />
-              ) : (
-                <AiOutlineEye fontSize={18} fill="#718096" />
-              )}
-            </span>
-          ),
-        }}
-      />
+    function changeHandler(event) {
 
-      <Link to="/forgot-password">
-        <p className="text-vistuatBlue-500 text-xs -mt-4 ml-auto">
-          Forgot password?
-        </p>
-      </Link>
+        setFormData((prevdata) => {
+            return {
+                ...prevdata,
+                [event.target.name]: event.target.value
+            }
+        })
 
-      <button className="w-full bg-yellow-400 text-white h-10 rounded-md font-semibold hover:bg-yellow-500 transition duration-300">
-        Login
-      </button>
-    </form>
-  );
+    }
+
+
+    function submitHandler(e) {
+        e.preventDefault();
+        dispatch(getLogin(formData.email,formData.password,navigate))
+        setFormData({
+            email:"",
+            password:" "
+        })
+
+
+    }
+    return (
+        <form onSubmit={submitHandler}
+            className="flex flex-col w-full gap-y-4 mt-6"
+        >
+
+            <label htmlFor="email" className="w-full">
+                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">Wmail Address<span className="text-pink-200">*</span></p>
+                <input
+                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px]  "
+                    type="email"
+                    required
+                    onChange={changeHandler}
+                    value={formData.email}
+                    name="email"
+                    id="email"
+                    placeholder="Enter email address"
+                />
+            </label>
+
+            <label htmlFor="password" className="relative w-full">
+                <p className="text-[0.857rem] text-richblack-5 mb-1 leading-[1.385rem]">  Passsword<span className="text-pink-200">*</span></p>
+                <input
+                    className="bg-richblack-800 rounded-[0.8rem] text-richblack-5 w-full p-[12px] "
+
+                    type={hidden ? "password" : "text"}
+                    required
+                    onChange={changeHandler}
+                    value={formData.password}
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                />
+
+                <span
+                    className="absolute text-white right-3 top-[40px] cursor-pointer"
+                    onClick={hiddenHandler}>
+                    {
+                        hidden ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />) :
+                            (<AiOutlineEye fontSize={24} fill='#AFB2BF' />)
+                    }
+                </span>
+            </label>
+
+            <Link to="/forgot-password">
+                <p className="text-blue-100 text-xs -mt-4  max-w-max ml-auto" >Forget password</p>
+            </Link >
+            <button className="w-full bg-yellow-400 h-10 mt-4 rounded-md font-mono ">Login</button>
+        </form>
+    )
 }
