@@ -55,7 +55,7 @@ exports.capturePayment = async (req, res) => {
 
 
             TotalAmount += course?.price
-            console.log("FIND userId in string ,,.....",)
+            console.log("FIND userId in string ,,.....", TotalAmount)
 
         } catch (error) {
             console.log(error)
@@ -75,8 +75,8 @@ exports.capturePayment = async (req, res) => {
     // create instience of order 
     try {
 
-        console.log("CREATED Options,,.....",)
-        const paymentResponse = await instance.orders.create(options)
+        console.log("CREATED Options,,.....",  instance)
+        const paymentResponse = await instance.orders.create(options);
 
         console.log("Response....", paymentResponse)
         res.status(200).json({
@@ -88,6 +88,7 @@ exports.capturePayment = async (req, res) => {
         console.log(error.message)
         res.status(500).json({
             success: false,
+            error: error.message,
             message: "Could not initiate order.",
         })
     }

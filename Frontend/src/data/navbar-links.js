@@ -7,9 +7,9 @@ export const NavbarLinks = [
     title:"Courses",
     path:"/AllCourses"
   },
-  {
+    {
     title: "Instructor",
-    path: "/instructor-detail",
+    path: "/All-Instructor",
   },
   {
     title: "Catalog",

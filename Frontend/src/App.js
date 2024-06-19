@@ -28,6 +28,7 @@ import { Course_Details } from "./Pages/Course_Details"
 import { ViewCourse } from "./Pages/viewCourse"
 import  instructorDetail  from "./Pages/InstructorDetails";
 import VedioCourseDetails from "./Components/Cores/ViewCourse/VedioCourseDetails"
+import { AllInstructors } from "./Pages/AllInstructors";
 function App() {
   const { user } = useSelector((state) => state.profile)
   return (
@@ -39,8 +40,9 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/catalog/:catalogName" element={<CataloagsDataPage />}></Route>
         <Route path="/courses/:id" element={<Course_Details />}></Route>
-        <Route path="/instructor-detail" element={<div className="text-3xl text-white ">this is Suces instructor page....</div>}></Route>
+        <Route path="All-Instructor" element={<AllInstructors></AllInstructors>}></Route>
         <Route path="/success-stories" element={<div className="text-3xl text-white">this is Suces Stories page....</div>}></Route>
+       
         <Route path="/login" element={
           <OpenRoute>
             <LoginPage></LoginPage>

@@ -5,6 +5,7 @@ const courseRoutes = require("./Routes/Course")
 const userRoutes = require("./Routes/User")
 const paymentRoutes = require("./Routes/Payment")
 const profileRoutes = require("./Routes/profile");
+const AllInstructors=require("./Routes/AllInstructors");
 
 const cookieParse = require("cookie-parser")
 const cors = require("cors")
@@ -33,6 +34,7 @@ app.use("/v1/auth", userRoutes)
 app.use("/v1/profile", profileRoutes)
 app.use("/v1/course", courseRoutes)
 app.use("/v1/payment", paymentRoutes)
+app.use("/v1/AllInstructor",AllInstructors)
 const { ResetPasswordToken, ResetPassword } = require("./controllers/ResetPassword")
 app.post("/v1/auth/reset-password-token", ResetPasswordToken)
 app.post("/reset-password", ResetPassword)

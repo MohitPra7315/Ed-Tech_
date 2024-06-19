@@ -9,6 +9,9 @@ export const categories = {
 
 }
 
+export const allInstructor={
+    ALL_INSTRUCTOR_API:BASE_URL+"/AllInstructor/ShowAllInstructor"
+}
 
 export const PaymentEndPoint = {
     CREATEORDER_PAYMENT_API: BASE_URL + "/payment/capturePayment",

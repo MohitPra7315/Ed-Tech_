@@ -9,6 +9,8 @@ import ReviewForm from "../Components/Cores/ViewCourse/ReviewForm"
 import { getFullDetailsOfCourse } from "../services/operations/CourseDetail_Api"
 import VedioCourseSlider from "../Components/Cores/ViewCourse/vedioCourseSlider"
 import { setCourseEntireDetail, setcourseSectionDetails, setCompleteLectures, setNoOfLectures } from "../Slices/viewCourseSlice";
+
+
 export const ViewCourse = () => {
 
     const [courseData, setCourseData] = useState([])
@@ -17,8 +19,7 @@ export const ViewCourse = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const { token } = useSelector((state) => state.auth)
-    const  {courseEntireDetail,courseSectionDetails}  = useSelector((state) => state.courseViewDetail)
-    console.log("redu xi  u dhfjdkjojyj", courseEntireDetail)
+    const { courseEntireDetail, courseSectionDetails } = useSelector((state) => state.courseViewDetail)
 
 
     const ReviewToggle = () => {

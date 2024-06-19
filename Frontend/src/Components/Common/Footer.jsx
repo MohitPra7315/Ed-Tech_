@@ -31,15 +31,15 @@ const Footer = () => {
           {/* Section 1 */}
           <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-richblack-700 pl-3 lg:pr-5 gap-3">
             <div className="w-[30%] flex flex-col gap-3 lg:w-[30%] mb-7 lg:pl-0">
-            <Link to={"/"} >
-                    {/* <img
+              <Link to={"/"} >
+                {/* <img
                         src={logo}>
 
 
                     </img> */}
 
-                    <h1 className="text-2xl text-vistuatBlue-200 font-bold ">Virtual <span className="text-3xl text-faceBookTheme-tertiary">Classes</span></h1>
-                </Link>
+                <h1 className="text-2xl text-vistuatBlue-200 font-bold ">Virtual <span className="text-3xl text-faceBookTheme-tertiary">Classes</span></h1>
+              </Link>
 
               <h1 className="text-richblack-50 font-semibold text-[16px]">
                 Company
@@ -169,8 +169,8 @@ const Footer = () => {
                 <div
                   key={i}
                   className={` ${BottomFooter.length - 1 === i
-                      ? ""
-                      : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
+                    ? ""
+                    : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
                     } px-3 `}
                 >
                   <Link to={ele.split(" ").join("-").toLocaleLowerCase()}>
