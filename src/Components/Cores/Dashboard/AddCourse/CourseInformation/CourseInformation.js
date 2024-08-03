@@ -11,8 +11,8 @@ import { setStep } from "../../../../../Slices/coursesSlice"
 import toast from "react-hot-toast"
 import { COURSE_STATUS } from "../../../../../utils/constant"
 import { MdNavigateNext } from "react-icons/md"
-import { editCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
-import FetchAllCourseCategory, { addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
+import { editCourseDetails, addCourseDetails } from "../../../../../services/operations/CourseDetail_Api"
+import FetchAllCourseCategory from "../../../../../services/operations/CourseDetail_Api"
 
 export const CourseInformation = () => {
     const {
@@ -118,9 +118,9 @@ export const CourseInformation = () => {
                 if (current.courseImage !== course.thumbnail) {
                     formdataEdit.append("thumnaileImg", data.courseImage[0])
                 }
-                const toastId = toast.loading("Loading...")
+                // const toastId = toast.loading("Loading...")
                 const result = await editCourseDetails(formdataEdit, token)
-                toast.dismiss(toastId)
+                // toast.dismiss(toastId)
                 if (result) {
                     dispatch(setStep(2))
                     dispatch(setCourse(result))
@@ -144,6 +144,7 @@ export const CourseInformation = () => {
             whatYouWillLearn: data.courseBenefits
         }
         const addcourseData = async () => {
+            console.log("clicked Next button for create new Course",)
             const res = await addCourseDetails(formdataa, token)
             if (res) {
                 dispatch(setCourse(res))

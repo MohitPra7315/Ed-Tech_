@@ -16,12 +16,12 @@ exports.CreateCourse = async (req, res) => {
         const { courseName, courseDescription, price, whatYouWillLearn, categoryId,
             tag, instructions, status, coveredTopic } = req.body;
         const thumnaileImg = req.files.thumnaileImg;
-        const demoVedioUrl = req.files.demoVedioUrl;
-        console.log("Data from body in database--====>>>", req.user.id, courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions, coveredTopic)
+        // const demoVedioUrl = req.files.demoVedioUrl;
+        console.log("Data from body in database--====>>>", req.user.id, courseName, courseDescription, price, whatYouWillLearn, price, categoryId, tag, instructions,thumnaileImg)
 
 
         // fetch the file frm req files body
-        if (!thumnaileImg || !demoVedioUrl) {
+        if (!thumnaileImg ) {
             res.status(400).json({
                 success: false,
                 message: "Thumbnail is Not present",
@@ -29,15 +29,15 @@ exports.CreateCourse = async (req, res) => {
             })
         }
 
-        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag || !coveredTopic) {
+        if (!courseName || !courseDescription || !price || !whatYouWillLearn || !categoryId || !instructions || !tag) { // ||!coveredTopic) {
             res.status(400).json({
                 success: false,
                 message: "all required fill the fields"
             })
         }
-        // if (!status || status === undefined) {
-        //     status = "Draft"
-        // }
+        if (!status || status === undefined) {
+            status = "Draft"
+        }
         // check instructor
         const instructor = req.user.id;
         const instructorDetail = await user.findById({ _id: instructor });
@@ -47,7 +47,7 @@ exports.CreateCourse = async (req, res) => {
         if (!instructorDetail) {
             return res.status(400).json({
                 success: false,
-                message: "instructoer didn't get "
+                message: "instructoer didn't get  "
             })
         }
         // category Id
@@ -58,19 +58,19 @@ exports.CreateCourse = async (req, res) => {
                 message: "Category Details Not Found",
             })
         }
-        console.log("category id--===>>>")
+        console.log("category id--===>>>", catagoryDetails)
         // data cloudinary url data
-        const UploadedFile = await uploadImageCloudinary(demoVedioUrl, process.env.FOLDER_NAME)
+        // const UploadedFile = await uploadImageCloudinary(demoVedioUrl, process.env.FOLDER_NAME)
 
         const thumbnailImage = await uploadImageCloudinary(thumnaileImg, process.env.FOLDER_NAME)
 
-        console.log("URL OF IMAGE", UploadedFile)
+        console.log("URL OF IMAGE", thumbnailImage)
         // Create the Course schema1
         const createCourse = await Course.create({
             courseName,
             courseDescription,
             price,
-            demoVedioUrl: UploadedFile.secure_url,
+            // demoVedioUrl: UploadedFile.secure_url,
             coveredTopic,
             instructor: instructorDetail._id,
             whatYouWillLearn: whatYouWillLearn,
@@ -110,7 +110,6 @@ exports.CreateCourse = async (req, res) => {
 
     } catch (error) {
         console.log(error.message)
-
         res.status(500).json({
             success: false,
             message: "error while saving data in dB",
@@ -422,58 +421,3 @@ exports.deleteCourse = async (req, res) => {
 };
 
 
-// Delete the Course
-// exports.deleteCourse = async (req, res) => {
-//     console.log("STARTED COUSE DELETE CONTROLLER")
-//     try {
-//         const { courseId } = req.body
-//         console.log("courseID", courseId)
-//         // Find the course
-//         const course = await Course.findById(courseId)
-//         if (!course) {
-//             return res.status(404).json({ message: "Course not found" })
-//         }
-
-//         // Unenroll students from the course
-//         const studentsEnrolled = course.studentsEnrolled
-//         for (const studentId of studentsEnrolled) {
-//             await user.findByIdAndUpdate(studentId, {
-//                 $pull: { courses: courseId },
-//             })
-//         }
-//         console.log("SECTION COUSE DELETE ")
-
-//         // Delete sections and sub-sections
-//         const courseSections = course.courseContent
-//         for (const sectionId of courseSections) {
-//             // Delete sub-sections of the section
-//             // const section = await section.findById(sectionId)
-
-//             // if (section) {
-//             //     const subSections = section.subSection
-//             //     for (const subSectionId of subSections) {
-//             //         await subSection.findByIdAndDelete(subSectionId)
-//             //     }
-//             // }
-
-//             // // Delete the section
-//             // await section.findByIdAndDelete(sectionId)
-//         }
-
-//         // Delete the course
-//         console.log("END COUSE DELETE CONTROLLER")
-//         await Course.findByIdAndDelete(courseId)
-
-//         return res.status(200).json({
-//             success: true,
-//             message: "Course deleted successfully",
-//         })
-//     } catch (error) {
-//         console.error(error)
-//         return res.status(500).json({
-//             success: false,
-//             message: "Server error",
-//             error: error.message,
-//         })
-//     }
-// }
